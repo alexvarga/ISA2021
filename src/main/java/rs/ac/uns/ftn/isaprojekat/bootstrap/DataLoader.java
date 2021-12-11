@@ -3,17 +3,21 @@ package rs.ac.uns.ftn.isaprojekat.bootstrap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
+import rs.ac.uns.ftn.isaprojekat.service.BoatService;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
 
     private final VacationHouseService vacationHouseService;
+    private final BoatService boatService;
 
     @Autowired
-    public DataLoader(VacationHouseService vacationHouseService) {
+    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService) {
         this.vacationHouseService = vacationHouseService;
+        this.boatService = boatService;
     }
 
     @Override
@@ -38,7 +42,16 @@ public class DataLoader implements CommandLineRunner {
 
         vacationHouseService.save(vh2.getId(), vh2);
         System.out.println("saved vh2");
-        //test //test
+
+
+        Boat b1 = new Boat();
+        b1.setId(1l);
+        b1.setName("Boat name");
+        b1.setInfo("boat 1 info");
+        b1.setAvgRating(5f);
+        vh2.setAddress("adresa");
+        boatService.save(b1.getId(), b1);
+        System.out.println("saved b1");
 
 
     }
