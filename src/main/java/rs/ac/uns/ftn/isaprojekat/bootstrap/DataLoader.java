@@ -38,6 +38,7 @@ public class DataLoader implements CommandLineRunner {
 
         vacationHouseService.save(vh2.getId(), vh2);
         System.out.println("saved vh2");
+        //test
 
 
     }
