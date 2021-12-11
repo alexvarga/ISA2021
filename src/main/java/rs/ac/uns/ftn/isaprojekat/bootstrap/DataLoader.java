@@ -29,6 +29,16 @@ public class DataLoader implements CommandLineRunner {
         vacationHouseService.save(vh1.getId(), vh1);
         System.out.println("saved vh1");
 
+        VacationHouse vh2 = new VacationHouse();
+        vh2.setId(2L);
+        vh2.setName("Nova vikendinca 2");
+        vh2.setInfo("info o novoj vikendici 2");
+        vh2.setAvgRating(5f);
+        vh2.setAddress("adresa 2");
+
+        vacationHouseService.save(vh2.getId(), vh2);
+        System.out.println("saved vh2");
+
 
     }
 }
