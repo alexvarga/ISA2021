@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Avanture</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
 </head>
 <body>
+<header th:insert="/index.html :: header"></header>
 
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>address</td>
+            <td>info</td>
+            <td>rating</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="adventure:${adventures}">
+            <td th:text="${adventure.id}">id</td>
+            <td th:text="${adventure.name}">name</td>
+            <td th:text="${adventure.address}">address</td>
+            <td th:text="${adventure.info}">info</td>
+            <td th:text="${adventure.avgRating}">rating</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
 </body>
 </html>
