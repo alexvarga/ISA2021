@@ -4,8 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Brodovi</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 </head>
 <body>
+<header th:insert="/index.html :: header"> </header>
+
+
+<!--
 <p th:text="${boats}"></p>
+-->
+<div class="container">
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>address</td>
+        <td>info</td>
+        <td>rating</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="boat:${boats}">
+        <td th:text="${boat.id}">id</td>
+        <td th:text="${boat.name}">name</td>
+        <td th:text="${boat.address}">address</td>
+        <td th:text="${boat.info}">info</td>
+        <td th:text="${boat.avgRating}">rating</td>
+    </tr>
+    </tbody>
+
+</table>
+
+</div>
+
+
+<div th:insert="/index.html :: scripts">
+</div>
 </body>
 </html>

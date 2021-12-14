@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Vikendice</title>
+
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 </head>
 <body>
+<header th:insert="/index.html :: header"></header>
+
+<div class="container">
 
 <table class="table table-striped">
     <thead>
@@ -28,6 +33,7 @@
 
 </table>
 
-
+</div>
+<div th:replace="/index.html :: scripts"></div>
 </body>
 </html>
