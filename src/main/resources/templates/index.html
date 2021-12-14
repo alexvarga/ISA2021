@@ -15,48 +15,48 @@
 </head>
 <body>
 <div th:fragment="header">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
 
-    </div>
+        </div>
 
-    <div class="d-flex flex-row order-2 order-lg-3">
-        <a class="btn btn-outline-primary" href="#">Sign up</a>
-    </div>
-</nav>
+        <div class="d-flex flex-row order-2 order-lg-3">
+            <a class="btn btn-outline-primary" href="#">Sign up</a>
+        </div>
+    </nav>
 </div>
 
 <div class="container">
-
 
     <div class="row">
         <div class="col-12 text-center">
@@ -64,16 +64,33 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-6 col-md-6 mx-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <p></p>
+    </div>
+
+
     <div class="row text-center justify-content-center">
 
-        <div class="col ">
-            <a th:href="@{/houses}" class="btn btn-dark">Vikendice</a>
+        <div class="col-sm-4 col-md-3">
+            <a th:href="@{/houses}" class="btn btn-dark ">Vikendice</a>
         </div>
-        <div class="col">
+        <div class="col-sm-4 col-md-2">
             <a th:href="@{/boats}" class="btn btn-dark">Brodovi</a>
         </div>
-        <div class="col">
-            <a th:href="@{/adventures}" class="btn btn-dark">Avanture</a>
+        <div class="col-sm-4 col-md-3">
+            <a th:href="@{/adventures}" class="btn btn-dark ">Avanture</a>
         </div>
 
     </div>
@@ -111,8 +128,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
  -->
 <div th:fragment="scripts">
-<script th:src="@{/jquery-3.6.0.min.js}"></script>
-<script th:src="@{/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/bootstrap.bundle.min.js}"></script>
 </div>
 </body>
 </html>
