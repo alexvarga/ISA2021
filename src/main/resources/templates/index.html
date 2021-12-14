@@ -12,12 +12,13 @@
      -->
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 
-    </head>
+</head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -30,7 +31,8 @@
                 <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     Dropdown
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -44,17 +46,40 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+
+    </div>
+
+    <div class="d-flex flex-row order-2 order-lg-3">
+        <a class="btn btn-outline-primary" href="#">Sign up</a>
     </div>
 </nav>
 
+<div class="container">
 
-<h1>Hello</h1>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Hello....</h2>
+        </div>
+    </div>
+
+    <div class="row text-center justify-content-center">
+
+        <div class="col ">
+            <a th:href="@{/houses}" class="btn btn-dark">Vikendice</a>
+        </div>
+        <div class="col">
+            <a th:href="@{/boats}" class="btn btn-dark">Brodovi</a>
+        </div>
+        <div class="col">
+            <a th:href="@{/adventures}" class="btn btn-dark">Avanture</a>
+        </div>
+
+    </div>
+</div>
 
 
+<!--
 <table class="table table-striped">
     <thead>
     <tr>
@@ -76,7 +101,7 @@
     </tbody>
 
 </table>
-
+-->
 
 <!--
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

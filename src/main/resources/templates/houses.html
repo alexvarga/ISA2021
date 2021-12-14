@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vikendice</title>
+</head>
+<body>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>address</td>
+        <td>info</td>
+        <td>rating</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="house:${houses}">
+        <td th:text="${house.id}">id</td>
+        <td th:text="${house.name}">name</td>
+        <td th:text="${house.address}">address</td>
+        <td th:text="${house.info}">info</td>
+        <td th:text="${house.avgRating}">rating</td>
+    </tr>
+    </tbody>
+
+</table>
+
+
+</body>
+</html>
