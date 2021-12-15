@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -26,7 +25,8 @@
     </thead>
     <tbody>
     <tr th:each="boat:${boats}">
-        <td th:text="${boat.id}">id</td>
+        <td> <a th:href="@{boats/{id}(id=${boat.id})}" th:text="${boat.id}">id</a>
+        </td>
         <td th:text="${boat.name}">name</td>
         <td th:text="${boat.address}">address</td>
         <td th:text="${boat.info}">info</td>
