@@ -22,7 +22,8 @@
         </thead>
         <tbody>
         <tr th:each="adventure:${adventures}">
-            <td th:text="${adventure.id}">id</td>
+            <td> <a th:href="@{adventures/{id}(id=${adventure.id})}" th:text="${adventure.id}">id</a>
+            </td>
             <td th:text="${adventure.name}">name</td>
             <td th:text="${adventure.address}">address</td>
             <td th:text="${adventure.info}">info</td>
@@ -33,6 +34,8 @@
     </table>
 
 </div>
+
+
 
 
 <div th:insert="/index.html :: scripts"></div>

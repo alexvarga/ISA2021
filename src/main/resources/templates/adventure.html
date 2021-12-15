@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Avanture</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+<p th:text="${adventure.name}"></p>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

@@ -63,7 +63,7 @@ public class DataLoader implements CommandLineRunner {
         b1.setName("Boat name");
         b1.setInfo("boat 1 info");
         b1.setAvgRating(5f);
-        vh2.setAddress("adresa");
+        b1.setAddress("adresa");
         boatService.save(b1.getId(), b1);
         System.out.println("saved b1");
 
@@ -73,9 +73,18 @@ public class DataLoader implements CommandLineRunner {
         a1.setName("Adventure 1 name");
         a1.setInfo("Adventure 1 info");
         a1.setAvgRating(5f);
-        vh2.setAddress("adresa");
+        a1.setAddress("adresa");
         adventureService.save(a1.getId(), a1);
         System.out.println("saved a1");
+
+        Adventure a2 = new Adventure();
+        a2.setId(2l);
+        a2.setName("Adventure 2 name");
+        a2.setInfo("Adventure 2 info");
+        a2.setAvgRating(5f);
+        a2.setAddress("adresa");
+        adventureService.save(a2.getId(), a2);
+        System.out.println("saved a2");
 
 
     }

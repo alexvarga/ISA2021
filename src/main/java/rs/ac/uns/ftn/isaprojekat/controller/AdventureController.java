@@ -2,8 +2,11 @@ package rs.ac.uns.ftn.isaprojekat.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RequestMapping({"/adventures"})
 @Controller
@@ -16,10 +19,21 @@ public class AdventureController {
     }
 
     @RequestMapping({""})
-    String listAdventures(Model model){
+    public String listAdventures(Model model){
 
         model.addAttribute("adventures", adventureService.findAll());
         System.out.println("hello from adventure controller");
         return "adventures";
     }
+
+
+    @RequestMapping(value = "/{id}", method = GET)
+    public String printId(Model model, @PathVariable("id") long id) {
+        System.out.println(id);
+
+        model.addAttribute("adventure", adventureService.findById(id));
+
+        return "adventure";
+    }
+
 }
