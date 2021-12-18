@@ -1,11 +1,13 @@
 package rs.ac.uns.ftn.isaprojekat.service.map;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.service.BoatService;
 
 import java.util.Set;
 
+@Profile("map")
 @Service
 public class BoatServiceMap extends AbstractMapService<Boat, Long> implements BoatService {
     @Override

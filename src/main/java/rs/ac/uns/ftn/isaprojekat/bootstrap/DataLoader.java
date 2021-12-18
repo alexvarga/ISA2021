@@ -29,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
 
         VacationHouse vh1 = new VacationHouse();
         vh1.setId(1L);
-        vh1.setName("Nova vikendinca 1");
+        vh1.setName("Nova vikendinca test test test");
         vh1.setInfo("info o novoj vikendici 1");
         vh1.setAvgRating(2.5f);
         vh1.setAddress("adresa 1");

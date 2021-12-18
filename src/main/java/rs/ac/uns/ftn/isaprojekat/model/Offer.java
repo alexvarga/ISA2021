@@ -1,6 +1,10 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class Offer extends BaseEntity {
+
     private String name;
     private String address;
     private String info;

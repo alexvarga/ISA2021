@@ -1,6 +1,11 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class User extends BaseEntity {
+
+
     private String email;
     private String password; // for now
     private String firstName;
