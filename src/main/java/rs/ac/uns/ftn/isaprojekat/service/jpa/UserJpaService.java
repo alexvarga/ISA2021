@@ -21,9 +21,9 @@ public class UserJpaService implements UserService {
 
     @Override
     public Set<User> findAll() {
-        Set<User> users = new HashSet<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+        Set<User> people = new HashSet<>();
+        userRepository.findAll().forEach(people::add);
+        return people;
     }
 
     @Override
