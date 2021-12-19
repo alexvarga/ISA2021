@@ -3,14 +3,8 @@ package rs.ac.uns.ftn.isaprojekat.bootstrap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import rs.ac.uns.ftn.isaprojekat.model.Adventure;
-import rs.ac.uns.ftn.isaprojekat.model.Boat;
-import rs.ac.uns.ftn.isaprojekat.model.Instructor;
-import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
-import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
-import rs.ac.uns.ftn.isaprojekat.service.BoatService;
-import rs.ac.uns.ftn.isaprojekat.service.InstructorService;
-import rs.ac.uns.ftn.isaprojekat.service.VacationHouseService;
+import rs.ac.uns.ftn.isaprojekat.model.*;
+import rs.ac.uns.ftn.isaprojekat.service.*;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -19,17 +13,31 @@ public class DataLoader implements CommandLineRunner {
     private final BoatService boatService;
     private final AdventureService adventureService;
     private final InstructorService instructorService;
+    private final VacationHouseOwnerService vacationHouseOwnerService;
+    private final BoatOwnerService boatOwnerService;
+
 
     @Autowired
-    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService) {
+    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService) {
         this.vacationHouseService = vacationHouseService;
         this.boatService = boatService;
         this.adventureService = adventureService;
         this.instructorService = instructorService;
+        this.vacationHouseOwnerService = vacationHouseOwnerService;
+        this.boatOwnerService = boatOwnerService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+
+        VacationHouseOwner vho1 = new VacationHouseOwner();
+        vho1.setId(1L);
+        vho1.setFirstName("milan");
+        vho1.setLastName("milanović");
+        vho1.setEmail("aasdf");
+        vacationHouseOwnerService.save(vho1.getId(), vho1);
+
 
         VacationHouse vh1 = new VacationHouse();
         vh1.setId(1L);
@@ -37,7 +45,7 @@ public class DataLoader implements CommandLineRunner {
         vh1.setInfo("info o novoj vikendici 1");
         vh1.setAvgRating(2.5f);
         vh1.setAddress("adresa 1");
-
+        vh1.setVacationHouseOwner(vho1);
         vacationHouseService.save(vh1.getId(), vh1);
         System.out.println("saved vh1");
 
@@ -48,6 +56,7 @@ public class DataLoader implements CommandLineRunner {
         vh2.setInfo("info o novoj vikendici 2");
         vh2.setAvgRating(5f);
         vh2.setAddress("adresa 2");
+        vh2.setVacationHouseOwner(vho1);
 
         vacationHouseService.save(vh2.getId(), vh2);
         System.out.println("saved vh2");
@@ -63,6 +72,12 @@ public class DataLoader implements CommandLineRunner {
         vacationHouseService.save(vh3.getId(), vh3);
         System.out.println("saved vh3");
 
+        BoatOwner bo1 = new BoatOwner();
+        bo1.setId(1L);
+        bo1.setFirstName("boat");
+        bo1.setLastName("owner");
+        boatOwnerService.save(bo1.getId(), bo1);
+
 
         Boat b1 = new Boat();
         b1.setId(1l);
@@ -70,12 +85,12 @@ public class DataLoader implements CommandLineRunner {
         b1.setInfo("boat 1 info");
         b1.setAvgRating(5f);
         b1.setAddress("adresa");
+        b1.setOwner(bo1);
         boatService.save(b1.getId(), b1);
         System.out.println("saved b1");
 
         Instructor i1 = new Instructor();
         i1.setId(1L);
-        System.out.println("ovo je id instruktora "+i1.getId());
         i1.setFirstName("ivan");
         i1.setLastName("ivanovic");
         i1.setEmail("super@cool.com");
@@ -84,7 +99,6 @@ public class DataLoader implements CommandLineRunner {
 
         Adventure a1 = new Adventure();
         a1.setId(1L);
-        System.out.println(a1.getId() +" ovo je id");
         a1.setName("Adventure 1 name");
         a1.setInfo("Adventure 1 info");
         a1.setAvgRating(5f);

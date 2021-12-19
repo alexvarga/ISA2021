@@ -12,4 +12,12 @@ public class VacationHouse extends Offer {
     @ManyToOne
     @JoinColumn(name="owner_id")
     private VacationHouseOwner vacationHouseOwner;
+
+    public VacationHouseOwner getVacationHouseOwner() {
+        return vacationHouseOwner;
+    }
+
+    public void setVacationHouseOwner(VacationHouseOwner vacationHouseOwner) {
+        this.vacationHouseOwner = vacationHouseOwner;
+    }
 }
