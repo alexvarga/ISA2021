@@ -10,8 +10,20 @@ public class Person extends BaseEntity {
     private String password; // for now
     private String firstName;
     private String lastName;
+    private String username;
     //....
 
+
+    public Person() {
+    }
+
+    public Person(String email, String password, String firstName, String lastName, String username) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+    }
 
     public String getEmail() {
         return email;
@@ -43,5 +55,13 @@ public class Person extends BaseEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
