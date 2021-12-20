@@ -59,7 +59,7 @@ public class DataLoader implements CommandLineRunner {
         vh1.setAddress("adresa 1");
         vh1.setVacationHouseOwner(vho1);
         vacationHouseService.save(vh1.getId(), vh1);
-        System.out.println("saved vh1");
+
 
 
         VacationHouse vh2 = new VacationHouse();
@@ -71,7 +71,7 @@ public class DataLoader implements CommandLineRunner {
         vh2.setVacationHouseOwner(vho1);
 
         vacationHouseService.save(vh2.getId(), vh2);
-        System.out.println("saved vh2");
+
 
 
         VacationHouse vh3 = new VacationHouse();
@@ -82,7 +82,7 @@ public class DataLoader implements CommandLineRunner {
         vh3.setAddress("adresa 3");
 
         vacationHouseService.save(vh3.getId(), vh3);
-        System.out.println("saved vh3");
+
 
         BoatOwner bo1 = new BoatOwner();
         //bo1.setId(1L);
@@ -99,7 +99,6 @@ public class DataLoader implements CommandLineRunner {
         b1.setAddress("adresa");
         b1.setOwner(bo1);
         boatService.save(b1.getId(), b1);
-        System.out.println("saved b1");
 
         Instructor i1 = new Instructor();
         //i1.setId(1L);
@@ -118,11 +117,8 @@ public class DataLoader implements CommandLineRunner {
 
         a1.setInstructor(i1);
         adventureService.save(a1.getId(), a1);
-        System.out.println("saved a1");
 
 
-       //instructorService.save(i1.getId(), i1);
-        System.out.println("saved instructor");
 
 
         Adventure a2 = new Adventure();
@@ -134,7 +130,6 @@ public class DataLoader implements CommandLineRunner {
 
         a2.setInstructor(i1);
         adventureService.save(a2.getId(), a2);
-        System.out.println("saved a2");
 
 
 

@@ -27,7 +27,6 @@ public class LoginRegisterController {
     public String processRegistration(User user){
         //
         userService.save(1L, user);
-        System.out.println(user.getEmail()+" "+user.getFirstName());
 
         return "index";
 
