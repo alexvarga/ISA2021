@@ -38,7 +38,6 @@ public class DataLoader implements CommandLineRunner {
         user.setEnabled(true);
         user.setLocked(false);
         user.setUserRole(UserRole.ADMIN);
-        System.out.println(user.getPassword());
         userService.save(user.getId(), user);
 
         User user2 = new User();
@@ -48,8 +47,16 @@ public class DataLoader implements CommandLineRunner {
         user2.setEnabled(true);
         user2.setLocked(false);
         user2.setUserRole(UserRole.ADMIN);
-        System.out.println(user2.getPassword());
         userService.save(user2.getId(), user2);
+
+        User user3 = new User();
+        user3.setEmail("disabledUser");
+        //password: test
+        user3.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
+        user3.setEnabled(false);
+        user3.setLocked(false);
+        user3.setUserRole(UserRole.ADMIN);
+        userService.save(user3.getId(), user3);
 
         VacationHouseOwner vho1 = new VacationHouseOwner();
         //vho1.setId(1L);

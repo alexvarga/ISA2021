@@ -51,12 +51,17 @@ public class UserJpaService implements UserService {
     }
 
     @Override
+    public User findByVerificationCode(String verificationCode) {
+        return userRepository.findByVerificationCode(verificationCode);
+    }
+
+    @Override
     public void sendVerificationEmail(User user, String siteUrl) throws UnsupportedEncodingException, MessagingException {
         String subject = "Verify registration";
         String sender = "isa-projekat";
         String content = "<p>Hello "+user.getFirstName() + ",</p>";
         content+="<p>Please click the link below to verify your registration. </p>";
-        String verifyUrl = siteUrl+"/verify?code="+user.getVerificationCode(); //todo
+        String verifyUrl = siteUrl+"/register/verify?code="+user.getVerificationCode(); //todo
 
         content+="<a href=\""+verifyUrl+"\">VERIFY</a>";
 
@@ -66,15 +71,27 @@ public class UserJpaService implements UserService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("mail-goes-here", sender);
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
         helper.setTo(user.getEmail());
         helper.setSubject(subject);
         helper.setText(content, true);
 
-        //mailSender.send(message);
+        mailSender.send(message);
 
 
     }
 
+    @Override
+    public boolean verifyUser(String verificationCode) {
+        User user = findByVerificationCode(verificationCode);
 
+        if(user==null || user.getEnabled()){
+            return false;
+        }else{
+            user.setEnabled(true);
+            userRepository.save(user);
+            return true;
+        }
+
+    }
 }

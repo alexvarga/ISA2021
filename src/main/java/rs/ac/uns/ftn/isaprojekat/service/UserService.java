@@ -10,5 +10,11 @@ public interface UserService extends CrudService<User, Long> {
 
     User findByEmail(String email);
 
+    User findByVerificationCode(String verificationCode);
+
     void sendVerificationEmail(User user, String url) throws UnsupportedEncodingException, MessagingException;
+
+    boolean verifyUser(String verificationCode);
+
+
 }

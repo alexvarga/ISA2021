@@ -1,13 +1,16 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
 import net.bytebuddy.utility.RandomString;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isaprojekat.MyAppUrl;
 import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.UserRole;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import javax.mail.MessagingException;
@@ -27,7 +30,7 @@ public class LoginRegisterController {
     @RequestMapping({"", "/"})
     public String register(Model model){
         model.addAttribute("user", new User());
-        return "register";
+        return "register/register";
     }
 
     @PostMapping("/proccess_registration")
@@ -39,13 +42,27 @@ public class LoginRegisterController {
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
 
-        userService.save(1L, user);
+        user.setUserRole(UserRole.ADMIN);
+        user.setEnabled(false);
+        user.setLocked(false);
+
+
+        userService.save(1L, user); //id here does nothing todo
 
 
         String siteUrl = MyAppUrl.getSiteUrl(request);
         userService.sendVerificationEmail(user, siteUrl);
 
-        return "register_success";
+        return "register/register_verify_sent";
+
+    }
+
+    @GetMapping("/verify")
+    public String verifyAccount(@Param("code") String code, Model model){
+        boolean verified = userService.verifyUser(code);
+
+        return verified ? "register/registration_success" : "register/registration_fail";
+
 
     }
 
