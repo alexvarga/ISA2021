@@ -1,11 +1,17 @@
 package rs.ac.uns.ftn.isaprojekat.service.jpa;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.UserRepository;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +20,9 @@ import java.util.Set;
 public class UserJpaService implements UserService {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     public UserJpaService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,4 +49,32 @@ public class UserJpaService implements UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public void sendVerificationEmail(User user, String siteUrl) throws UnsupportedEncodingException, MessagingException {
+        String subject = "Verify registration";
+        String sender = "isa-projekat";
+        String content = "<p>Hello "+user.getFirstName() + ",</p>";
+        content+="<p>Please click the link below to verify your registration. </p>";
+        String verifyUrl = siteUrl+"/verify?code="+user.getVerificationCode(); //todo
+
+        content+="<a href=\""+verifyUrl+"\">VERIFY</a>";
+
+        content+= "<p>Thank you.</p>";
+
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("mail-goes-here", sender);
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        helper.setText(content, true);
+
+        //mailSender.send(message);
+
+
+    }
+
+
 }
