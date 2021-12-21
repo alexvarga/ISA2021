@@ -33,15 +33,23 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         User user = new User();
-        user.setEmail("user2");
-        user.setPassword("test2");
-
+        user.setEmail("test");
+        user.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
         user.setEnabled(true);
         user.setLocked(false);
         user.setUserRole(UserRole.ADMIN);
-        user.setPassword("testing");
+        System.out.println(user.getPassword());
         userService.save(user.getId(), user);
 
+        User user2 = new User();
+        user2.setEmail("useruseruser");
+        //password: test
+        user2.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
+        user2.setEnabled(true);
+        user2.setLocked(false);
+        user2.setUserRole(UserRole.ADMIN);
+        System.out.println(user2.getPassword());
+        userService.save(user2.getId(), user2);
 
         VacationHouseOwner vho1 = new VacationHouseOwner();
         //vho1.setId(1L);

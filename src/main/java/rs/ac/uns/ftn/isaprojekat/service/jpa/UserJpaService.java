@@ -35,4 +35,9 @@ public class UserJpaService implements UserService {
     public User save(Long aLong, User object) {
         return userRepository.save(object);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

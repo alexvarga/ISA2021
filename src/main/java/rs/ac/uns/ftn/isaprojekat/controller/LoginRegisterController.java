@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,9 @@ public class LoginRegisterController {
 
     @PostMapping("/proccess_registration")
     public String processRegistration(User user){
-        //
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPass = user.getPassword();
+        user.setPassword(encoder.encode(rawPass));
         userService.save(1L, user);
 
         return "index";

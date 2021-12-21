@@ -9,7 +9,9 @@
 <body>
 <header th:insert="/index.html :: header"></header>
 <p th:text="${house.name}"></p>
+<p th:text="${loggedin}"></p>
 
+<a th:href="@{/index}">[[${#request.userPrincipal.principal.getUsername}]]</a>
 
 <div th:insert="/index.html :: scripts"></div>
 </body>
