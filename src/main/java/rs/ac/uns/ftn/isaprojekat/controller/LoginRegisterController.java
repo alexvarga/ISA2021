@@ -42,7 +42,7 @@ public class LoginRegisterController {
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
 
-        user.setUserRole(UserRole.ADMIN);
+        user.setUserRole(UserRole.USER);
         user.setEnabled(false);
         user.setLocked(false);
 
@@ -61,7 +61,7 @@ public class LoginRegisterController {
     public String verifyAccount(@Param("code") String code, Model model){
         boolean verified = userService.verifyUser(code);
 
-        return verified ? "register/registration_success" : "register/registration_fail";
+        return verified ? "register/validation_success" : "register/validation_fail";
 
 
     }

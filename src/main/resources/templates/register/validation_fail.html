@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 </head>
 <body>
 
-uspešna registracija
+neuspešna aktivacija
 <a th:href="@{/index}">home</a>
 
+<div th:insert="/index.html :: scripts"></div>
 </body>
 </html>
