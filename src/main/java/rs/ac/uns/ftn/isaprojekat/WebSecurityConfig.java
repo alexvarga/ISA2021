@@ -48,6 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/houses/?").authenticated()
                 .anyRequest().permitAll().and().formLogin().usernameParameter("email")
-        .defaultSuccessUrl("/houses/{?}").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
+        .defaultSuccessUrl("/index/").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
     }
 }

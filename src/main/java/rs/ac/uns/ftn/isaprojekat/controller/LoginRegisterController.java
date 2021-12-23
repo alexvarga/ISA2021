@@ -89,7 +89,7 @@ public class LoginRegisterController {
             String siteUrl = MyAppUrl.getSiteUrl(request);
             userService.sendVerificationEmail(user, siteUrl);
 
-            return "redirect:index";
+            return "register/register_verify_sent";
         }
 
     }
