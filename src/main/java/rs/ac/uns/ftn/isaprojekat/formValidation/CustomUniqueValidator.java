@@ -15,7 +15,6 @@ public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, 
     @Override
     public boolean isValid(String o, ConstraintValidatorContext constraintValidatorContext) {
 
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+userService.existsByEmail(o)+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
         if( userService.existsByEmail(o)){
             return false;

@@ -49,7 +49,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/houses/?").authenticated()
                 .antMatchers("/login/").anonymous()
                 .antMatchers("/register/").anonymous()
-                .anyRequest().permitAll().and().formLogin().usernameParameter("email")
-        .defaultSuccessUrl("/index/").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
+                .anyRequest()
+                .permitAll()
+                .and().formLogin()
+                .usernameParameter("email")
+                .defaultSuccessUrl("/index/").permitAll()
+                .and().logout().logoutSuccessUrl("/").permitAll();
     }
 }

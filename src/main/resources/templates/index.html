@@ -53,7 +53,13 @@
 
         <div class="d-flex flex-row order-2 order-lg-3">
             <div sec:authorize="isAnonymous()">
-            <a class="btn btn-outline-primary" th:href="@{/register}">Sign up</a>
+            <a class="btn btn-outline-primary" th:href="@{/register}">registracija</a>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row order-2 order-lg-3">
+            <div sec:authorize="isAnonymous()">
+                <a class="btn btn-outline-primary" th:href="@{/login}">login</a>
             </div>
         </div>
         <div class="d-flex flex-row order-2 order-lg-3">

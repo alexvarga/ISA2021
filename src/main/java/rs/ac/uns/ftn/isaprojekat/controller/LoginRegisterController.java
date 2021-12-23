@@ -68,7 +68,7 @@ public class LoginRegisterController {
         }
 
         if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getErrorCount());
+
 
 
             return ("register/register");
