@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Index page</title>
@@ -21,6 +21,7 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -51,7 +52,16 @@
         </div>
 
         <div class="d-flex flex-row order-2 order-lg-3">
-            <a class="btn btn-outline-primary" href="#">Sign up</a>
+            <div sec:authorize="isAnonymous()">
+            <a class="btn btn-outline-primary" th:href="@{/register}">Sign up</a>
+            </div>
+        </div>
+        <div class="d-flex flex-row order-2 order-lg-3">
+            <div sec:authorize="isAuthenticated()">
+                <b><span sec:authentication="name">Username</span></b>
+                <a href="/logout" class="btn btn-outline-primary">logout</a>
+            </div>
+
         </div>
     </nav>
 </div>
@@ -87,6 +97,11 @@
     </div>
 </div>
 
+<div sec:authorize="isAuthenticated()">
+    Welcome <b><span sec:authentication="name">Username</span></b>
+    &nbsp;
+    <!-- <i><span sec:authentication="principal.authorities">Roles</span></i> -->
+</div>
 
 <!--
 <table class="table table-striped">

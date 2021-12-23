@@ -21,14 +21,12 @@ public class BoatController {
     @RequestMapping({""})
     public String listBoats(Model model){
         model.addAttribute("boats", boatService.findAll());
-        System.out.println("hello from boats controller");
         return "boats";
     }
 
 
     @RequestMapping(value = "/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
-        System.out.println(id);
 
         model.addAttribute("boat", boatService.findById(id));
 

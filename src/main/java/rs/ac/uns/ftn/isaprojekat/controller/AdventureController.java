@@ -22,14 +22,12 @@ public class AdventureController {
     public String listAdventures(Model model){
 
         model.addAttribute("adventures", adventureService.findAll());
-        System.out.println("hello from adventure controller");
         return "adventures";
     }
 
 
     @RequestMapping(value = "/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
-        System.out.println(id);
 
         model.addAttribute("adventure", adventureService.findById(id));
 

@@ -33,7 +33,7 @@ public class InstructorJpaService implements InstructorService {
 
     @Override //TODO just object
     public Instructor save(Long aLong, Instructor object) {
-        System.out.println("instructor jpa service");
+
         return instructorRepository.save(object);
     }
 }

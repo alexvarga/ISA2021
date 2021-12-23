@@ -1,5 +1,8 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,15 +25,25 @@ public class VacationHouseController {
     @RequestMapping({"", "/", "index", "index.html"})
     public String listHouses(Model model){
         model.addAttribute("houses", vacationHouseService.findAll());
-        System.out.println("hello from vacation houses controller");
         return "houses";
     }
 
     @RequestMapping(value = "/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
-        System.out.println(id);
 
-        model.addAttribute("house", vacationHouseService.findById(id));
+        if(vacationHouseService.findById(id)!=null) {
+            model.addAttribute("house", vacationHouseService.findById(id));
+        }else {
+            return "houses";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            System.out.println(currentUserName); ;
+            model.addAttribute("loggedin", currentUserName);
+        }
+
+
 
         return "house";
     }

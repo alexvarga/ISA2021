@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+
+hello
+
+<div class="container text-center">
+    <div><h2>user registration </h2></div>
+<form th:action="@{/register/}" method="post"
+      th:object="${user}"
+      style="max-width: 600px; margin: 0 auto"
+    >
+
+    <div class="m-3">
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="">email</label>
+            <div class="col-8">
+                <input id="email" type="email" class="form-control" th:field="*{email}" required minlength="6" maxlength="64" />
+                <div id="email-error" class="alert alert-danger " th:if="${#fields.hasErrors('email')}" th:errors="*{email}">a</div>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="">password</label>
+            <div class="col-8">
+                <input id="password" type="password" class="form-control" th:field="*{password}" required />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="">confirm password</label>
+            <div class="col-8">
+                <input id="password-confirm" type="password" th:name="password-confirm" class="form-control" required />
+                <div id="password-error" class="alert alert-danger " th:if="${#fields.hasErrors('password')}" th:errors="*{password}">a</div>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="">first name</label>
+            <div class="col-8">
+                <input type="text" class="form-control" th:field="*{firstName}" required />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="">last name</label>
+            <div class="col-8">
+                <input type="text" class="form-control" th:field="*{lastName}" required/>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+
+    </div>
+</form>
+</div>
+
+<script>
+    var sub = document.getElementById("email");
+    sub.addEventListener("focus", function () { return showOrHideDiv("email-error") });
+
+
+
+    var sub2 = document.getElementById("password-confirm");
+    sub2.addEventListener("focus", function () { return showOrHideDiv("password-error")
+
+    });
+
+    function showOrHideDiv(element) {
+        var v = document.getElementById(element);
+
+        v.style.display = "none";
+
+    }
+</script>
+
+
+
+<div th:fragment="scripts">
+    <script th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
