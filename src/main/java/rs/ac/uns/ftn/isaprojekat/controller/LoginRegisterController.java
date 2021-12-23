@@ -6,10 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.MyAppUrl;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.UserRole;
@@ -62,7 +60,12 @@ public class LoginRegisterController {
 
 
     @PostMapping("/")
-    public String process(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+    public String process(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request,
+                          @RequestParam(value = "password-confirm", required = false) String passwordConfirm) throws UnsupportedEncodingException, MessagingException {
+
+        if(!user.getPassword().equals(passwordConfirm)){
+            bindingResult.addError(new FieldError("user", "password", "Lozinke se ne poklapaju."));
+        }
 
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getErrorCount());
