@@ -1,15 +1,21 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
+import rs.ac.uns.ftn.isaprojekat.formValidation.CustomUnique;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @MappedSuperclass
 public class Person extends BaseEntity {
 
-
+    @Email
+    @CustomUnique(message = "Korisnik sa ovom adresom već postoji.")
     @Column(unique = true)
     private String email;
-    private String password; // for now
+    private String password;
+    @Size(min=4, max=20)
     private String firstName;
     private String lastName;
     private String username;

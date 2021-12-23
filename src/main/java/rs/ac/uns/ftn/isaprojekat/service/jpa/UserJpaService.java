@@ -51,6 +51,11 @@ public class UserJpaService implements UserService {
     }
 
     @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
     public User findByVerificationCode(String verificationCode) {
         return userRepository.findByVerificationCode(verificationCode);
     }
@@ -94,4 +99,6 @@ public class UserJpaService implements UserService {
         }
 
     }
+
+
 }

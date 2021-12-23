@@ -5,7 +5,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isaprojekat.MyAppUrl;
@@ -15,6 +17,7 @@ import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 
 @Controller
@@ -27,13 +30,13 @@ public class LoginRegisterController {
         this.userService = userService;
     }
 
-    @RequestMapping({"", "/"})
+    @GetMapping({"", "/"})
     public String register(Model model){
         model.addAttribute("user", new User());
         return "register/register";
     }
 
-    @PostMapping("/proccess_registration")
+/*    @PostMapping("/proccess_registration")
     public String processRegistration(User user, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPass = user.getPassword();
@@ -54,6 +57,40 @@ public class LoginRegisterController {
         userService.sendVerificationEmail(user, siteUrl);
 
         return "register/register_verify_sent";
+
+    }*/
+
+
+    @PostMapping("/")
+    public String process(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getErrorCount());
+
+
+            return ("register/register");
+        }else {
+
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String rawPass = user.getPassword();
+            user.setPassword(encoder.encode(rawPass));
+
+            String randomCode = RandomString.make(64);
+            user.setVerificationCode(randomCode);
+
+            user.setUserRole(UserRole.USER);
+            user.setEnabled(false);
+            user.setLocked(false);
+
+
+            userService.save(1L, user); //id here does nothing todo
+
+
+            String siteUrl = MyAppUrl.getSiteUrl(request);
+            userService.sendVerificationEmail(user, siteUrl);
+
+            return "redirect:index";
+        }
 
     }
 

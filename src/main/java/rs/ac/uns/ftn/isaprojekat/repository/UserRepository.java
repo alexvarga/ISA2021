@@ -11,6 +11,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByVerificationCode(String verificationCode);
 
-
+    Boolean existsByEmail(String email);
 
 }
