@@ -141,3 +141,5 @@ Desktop.ini
 .eslintcache
 /src/main/resources/static/bootstrap.bundle.min.js.map
 /src/main/resources/static/bootstrap.min.css.map
+
+src/main/resources/application.properties

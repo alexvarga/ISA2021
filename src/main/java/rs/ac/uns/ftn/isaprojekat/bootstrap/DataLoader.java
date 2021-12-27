@@ -34,6 +34,12 @@ public class DataLoader implements CommandLineRunner {
 
         User user = new User();
         user.setEmail("test");
+        user.setFirstName("pera");
+        user.setLastName("perić");
+        user.setAddress("a street 1");
+        user.setCity("a city 1");
+        user.setState("a state 1");
+        user.setPhoneNumber("000999000");
         user.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
         user.setEnabled(true);
         user.setLocked(false);

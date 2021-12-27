@@ -16,12 +16,18 @@ public class LoggedInUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserService userService;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findByEmail(email);
-        if (user==null){
-           throw new UsernameNotFoundException("user not found");
+        if (user != null && user.getEnabled()) {
+
+            return new LoggedInUserDetails(user);
+
+        } else {
+            throw new UsernameNotFoundException("user not found");
+
         }
-        return new LoggedInUserDetails(user);
+
     }
 }

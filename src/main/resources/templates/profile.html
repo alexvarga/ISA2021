@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+
+<div class="container">
+    <div class="row-5">
+        <div class="row">
+            <div class="col">
+                ime
+            </div>
+            <div class="col">
+                <div th:text="${user.firstName}"> name</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                prezime
+            </div>
+            <div class="col">
+                <div th:text="${user.lastName}"> name</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                adresa
+            </div>
+            <div class="col">
+                <div th:text="${user.address}"> name</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                grad
+            </div>
+            <div class="col">
+                <div th:text="${user.city}"> name</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                država
+            </div>
+            <div class="col">
+                <div th:text="${user.state}"> name</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                broj telefona
+            </div>
+            <div class="col">
+                <div th:text="${user.phoneNumber}"> name</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#asdf">
+        izmeni
+    </button>
+
+</div>
+
+
+<th:block th:replace="fragments/modal/_modals::frag">modal</th:block>
+<th:block th:replace="fragments/modal/_modals :: modal('exampleModal')">modal</th:block>
+
+
+<div th:insert="/index.html :: scripts"></div>
+
+
+</body>
+</html>
