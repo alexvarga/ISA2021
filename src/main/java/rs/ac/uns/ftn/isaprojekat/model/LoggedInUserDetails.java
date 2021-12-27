@@ -1,11 +1,16 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LoggedInUserDetails implements UserDetails {
+
+    String ROLE_PREFIX = "ROLE_";
 
     private User user;
 
@@ -14,8 +19,26 @@ public class LoggedInUserDetails implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities() { //in my case one user can only have one role
+
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+
+        list.add(new SimpleGrantedAuthority(ROLE_PREFIX+user.getUserRole()));
+        return list;
+    }
+
+    public String getRole(){
+        if(user.getUserRole()==UserRole.ADMIN){
+            System.out.println("user je admin - iz UserDetailsIMPL");
+            return "admin";
+        }else if (user.getUserRole()==UserRole.USER){
+            System.out.println("user je user - iz UserDetailsIMPL");
+            return "user";
+        }else {
+            System.out.println("ovo ne bi trebalo da vidiš");
+            return "aaaaaaaaa";
+        }
+
     }
 
     @Override

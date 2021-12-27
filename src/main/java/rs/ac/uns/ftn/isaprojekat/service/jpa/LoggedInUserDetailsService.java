@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.isaprojekat.service.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.LoggedInUserDetails;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
+
+import java.util.Collections;
+import java.util.List;
 
 @Profile("default")
 @Service
@@ -20,6 +25,7 @@ public class LoggedInUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findByEmail(email);
+
         if (user != null && user.getEnabled()) {
 
             return new LoggedInUserDetails(user);
@@ -30,4 +36,12 @@ public class LoggedInUserDetailsService implements UserDetailsService {
         }
 
     }
+
+    private List<GrantedAuthority> getAuthority(String role){
+
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
+    }
+
+
+
 }

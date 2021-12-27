@@ -114,6 +114,10 @@
 
 </div>
 
+<div sec:authorize="hasRole('ROLE_USER')">
+    This content is only shown to users.
+</div>
+
 <!--
 <table class="table table-striped">
     <thead>
