@@ -21,6 +21,12 @@ public class User extends Person  {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<VacationHouseReservation> vacationHouseReservations = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<BoatReservation> boatReservations = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<AdventureReservation> adventureReservations = new HashSet<>();
+
     public User() {
     }
 

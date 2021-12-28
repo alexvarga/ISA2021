@@ -2,8 +2,9 @@ package rs.ac.uns.ftn.isaprojekat.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import rs.ac.uns.ftn.isaprojekat.model.Instructor;
+import rs.ac.uns.ftn.isaprojekat.model.AdventureReservation;
 
 @Repository
-public interface InstructorRepository extends CrudRepository<Instructor, Long> {
+public interface AdventureReservationRepository extends CrudRepository<AdventureReservation, Long> {
+
 }
