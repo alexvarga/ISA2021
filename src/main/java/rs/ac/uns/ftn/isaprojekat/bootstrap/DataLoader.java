@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import java.time.LocalDateTime;
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -16,10 +18,13 @@ public class DataLoader implements CommandLineRunner {
     private final VacationHouseOwnerService vacationHouseOwnerService;
     private final BoatOwnerService boatOwnerService;
     private final UserService userService;
+    private final BoatReservationService boatReservationService;
+    private final VacationHouseReservationService vacationHouseReservationService;
+    private final AdventureReservationService adventureReservationService;
 
 
     @Autowired
-    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService) {
+    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService) {
         this.vacationHouseService = vacationHouseService;
         this.boatService = boatService;
         this.adventureService = adventureService;
@@ -27,6 +32,9 @@ public class DataLoader implements CommandLineRunner {
         this.vacationHouseOwnerService = vacationHouseOwnerService;
         this.boatOwnerService = boatOwnerService;
         this.userService = userService;
+        this.boatReservationService = boatReservationService;
+        this.vacationHouseReservationService = vacationHouseReservationService;
+        this.adventureReservationService = adventureReservationService;
     }
 
     @Override
@@ -121,6 +129,15 @@ public class DataLoader implements CommandLineRunner {
         b1.setOwner(bo1);
         boatService.save(b1.getId(), b1);
 
+        Boat b2 = new Boat();
+        //b1.setId(1l);
+        b2.setName("Super Kul Brod");
+        b2.setInfo("boat 2 info");
+        b2.setAvgRating(5f);
+        b2.setAddress("adresa");
+        b2.setOwner(bo1);
+        boatService.save(b2.getId(), b2);
+
         Instructor i1 = new Instructor();
         //i1.setId(1L);
         i1.setFirstName("ivan");
@@ -151,6 +168,36 @@ public class DataLoader implements CommandLineRunner {
 
         a2.setInstructor(i1);
         adventureService.save(a2.getId(), a2);
+
+        BoatReservation br1 = new BoatReservation();
+        br1.setBoat(b1);
+        br1.setUser(user);
+        br1.setReservationType(ReservationType.RESERVATION);
+        br1.setReservationTime(LocalDateTime.now());
+        boatReservationService.save(1L, br1);
+
+        BoatReservation br2 = new BoatReservation();
+        br2.setBoat(b2);
+        br2.setUser(user);
+        br2.setReservationType(ReservationType.RESERVATION);
+        br2.setReservationTime(LocalDateTime.now());
+        boatReservationService.save(1L, br2);
+
+
+        VacationHouseReservation vhr1 = new VacationHouseReservation();
+        vhr1.setVacationHouse(vh1);
+        vhr1.setUser(user);
+        vhr1.setReservationType(ReservationType.RESERVATION);
+        vhr1.setReservationTime(LocalDateTime.now());
+        vacationHouseReservationService.save(1L, vhr1);
+
+        AdventureReservation ar1 = new AdventureReservation();
+        ar1.setAdventure(a1);
+        ar1.setUser(user);
+        ar1.setReservationType(ReservationType.RESERVATION);
+        ar1.setReservationTime(LocalDateTime.now());
+        adventureReservationService.save(1L, ar1);
+
 
 
 

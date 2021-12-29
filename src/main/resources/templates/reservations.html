@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervacije</title>
+
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="row"><p></p></div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 mx-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row"><p></p></div>
+
+
+    <div class="row">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>restime</td>
+                <td>datefrom</td>
+                <td>datend</td>
+                <td>boat id</td>
+                <td>boat rating</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation:${boatReservations}">
+                <td th:text="${reservation.id}">
+                </td>
+                <td th:text="${reservation.reservationTime}">name</td>
+                <td th:text="${reservation.dateFrom}">address</td>
+                <td th:text="${reservation.dateEnd}">info</td>
+                <td th:text="${reservation.boat.id}">rating</td>
+                <td th:text="${reservation.boat.avgRating}">rating</td>
+                <td th:text="${reservation.boat.owner.lastName}">rating</td>
+                <td th:text="${reservation.boat.owner.firstName}">rating</td>
+                <td><a th:href="@{boats/{id}(id=${reservation.boat.id})}" th:text="${reservation.boat.id}">id</a></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <p></p>
+    <div class="row">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>restime</td>
+                <td>datefrom</td>
+                <td>datend</td>
+                <td>boat id</td>
+                <td>boat rating</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation:${adventureReservations}">
+                <td th:text="${reservation.id}">
+                </td>
+                <td th:text="${reservation.reservationTime}">name</td>
+                <td th:text="${reservation.dateFrom}">address</td>
+                <td th:text="${reservation.dateEnd}">info</td>
+                <td th:text="${reservation.adventure.id}">rating</td>
+                <td th:text="${reservation.adventure.avgRating}">rating</td>
+                <td th:text="${reservation.adventure.instructor.lastName}">rating</td>
+                <td th:text="${reservation.adventure.instructor.firstName}">rating</td>
+                <td><a th:href="@{adventures/{id}(id=${reservation.adventure.id})}" th:text="${reservation.adventure.id}">id</a></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <p></p>
+    <div class="row">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Vreme rezervacije</td>
+                <td>Rezervisano od</td>
+                <td>Rezervisano do</td>
+                <td>-----</td>
+                <td>---</td>
+                <td>---</td>
+                <td>---</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation:${vacationHouseReservations}">
+                <td th:text="${reservation.id}">
+                </td>
+                <td th:text="${reservation.reservationTime}">name</td>
+                <td th:text="${reservation.dateFrom}">address</td>
+                <td th:text="${reservation.dateEnd}">info</td>
+
+                <td th:text="${reservation.vacationHouse.avgRating}">rating</td>
+                <td th:text="${reservation.vacationHouse.vacationHouseOwner.lastName}">rating</td>
+                <td th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</td>
+                <td><a th:href="@{houses/{id}(id=${reservation.vacationHouse.id})}" th:text="${reservation.vacationHouse.id}">id</a></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+</div>
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

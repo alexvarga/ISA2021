@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.isaprojekat.service.jpa;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.BoatReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 
@@ -34,5 +35,10 @@ public class BoatReservationJpaService implements BoatReservationService {
     @Override
     public BoatReservation save(Long aLong, BoatReservation object) {
         return boatReservationRepository.save(object);
+    }
+
+    @Override
+    public Set<BoatReservation> getAllByUser(User user) {
+        return boatReservationRepository.getAllByUser(user);
     }
 }

@@ -10,14 +10,14 @@ import javax.persistence.Table;
 public class AdventureReservation extends Reservation {
 
     @ManyToOne
-    @JoinColumn(name="instructor_id")
-    private Instructor instructor;
+    @JoinColumn(name="adventure_id")
+    private Adventure adventure;
 
-    public Instructor getInstructor() {
-        return instructor;
+    public Adventure getAdventure() {
+        return adventure;
     }
 
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
+    public void setAdventure(Adventure adventure) {
+        this.adventure = adventure;
     }
 }
