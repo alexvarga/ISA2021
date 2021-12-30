@@ -138,6 +138,15 @@ public class DataLoader implements CommandLineRunner {
         b2.setOwner(bo1);
         boatService.save(b2.getId(), b2);
 
+        Boat b3 = new Boat();
+        //b1.setId(1l);
+        b3.setName("33333333333");
+        b3.setInfo("boat 3 info");
+        b3.setAvgRating(5f);
+        b3.setAddress("adresa");
+        b3.setOwner(bo1);
+        boatService.save(b3.getId(), b3);
+
         Instructor i1 = new Instructor();
         //i1.setId(1L);
         i1.setFirstName("ivan");

@@ -5,11 +5,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import rs.ac.uns.ftn.isaprojekat.model.AdventureReservation;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Controller
 public class AdventureReservationHistoryController {
@@ -27,8 +29,11 @@ public class AdventureReservationHistoryController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
+        Set<AdventureReservation> adventureReservations =
+                adventureReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now());
 
-        model.addAttribute("adventureReservations", adventureReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now()));
+        if(!adventureReservations.isEmpty())
+            model.addAttribute("adventureReservations", adventureReservations);
         return "reservations";
     }
 

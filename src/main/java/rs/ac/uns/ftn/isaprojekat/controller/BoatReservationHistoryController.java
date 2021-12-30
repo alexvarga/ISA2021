@@ -6,11 +6,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Profile("default")
 @Controller
@@ -31,8 +33,12 @@ public class BoatReservationHistoryController {
         String email = authentication.getName();
         User user = userService.findByEmail(email);
 
+        Set<BoatReservation> boatReservations = boatReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now());
 
-        model.addAttribute("boatReservations", boatReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now()));
+        if(!boatReservations.isEmpty())
+            model.addAttribute("boatReservations", boatReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now()));
+
+
         return "reservations";
     }
 

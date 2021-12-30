@@ -6,10 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Controller
 public class VacationHouseReservationHistoryController {
@@ -29,7 +31,9 @@ public class VacationHouseReservationHistoryController {
         String email = authentication.getName();
         User user = userService.findByEmail(email);
 
-        model.addAttribute("vacationHouseReservations", vacationHouseReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now()));
+        Set<VacationHouseReservation> vacationHouseReservations = vacationHouseReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now());
+
+        if(!vacationHouseReservations.isEmpty()) model.addAttribute("vacationHouseReservations", vacationHouseReservations);
         return "reservations";
     }
 

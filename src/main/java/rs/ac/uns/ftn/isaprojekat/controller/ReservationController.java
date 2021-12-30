@@ -54,10 +54,9 @@ public class ReservationController {
                 adventureReservation.getDateEnd().isBefore(LocalDateTime.now()));
         vacationHouseReservations.removeIf(vacationHouseReservation -> vacationHouseReservation.getDateEnd().isBefore(LocalDateTime.now()));
 
-
-        model.addAttribute("boatReservations", boatReservations);
-        model.addAttribute("adventureReservations", adventureReservations);
-        model.addAttribute("vacationHouseReservations", vacationHouseReservations);
+        if (!boatReservations.isEmpty()) model.addAttribute("boatReservations", boatReservations);
+        if (!adventureReservations.isEmpty())  model.addAttribute("adventureReservations", adventureReservations);
+        if (!vacationHouseReservations.isEmpty())  model.addAttribute("vacationHouseReservations", vacationHouseReservations);
 
         return "reservations";
     }

@@ -1,10 +1,15 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.service.BoatService;
+
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -18,9 +23,24 @@ public class BoatController {
         this.boatService = boatService;
     }
 
-    @RequestMapping({""})
+    @GetMapping({"/", ""})
     public String listBoats(Model model){
-        model.addAttribute("boats", boatService.findAll());
+        return listBoatsByPage(model, 1);
+    }
+
+    @GetMapping({"/page/{pageNumber}"})
+    public String listBoatsByPage(Model model, @PathVariable("pageNumber") int currentPage){
+       // currentPage = 1;
+        Page<Boat> page = boatService.findAll(currentPage);
+        List<Boat> listBoats = page.getContent();
+
+        Long numberOfElements = page.getTotalElements();
+        int numberOfPages = page.getTotalPages();
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("numberOfElements", numberOfElements);
+        model.addAttribute("numberOfPages", numberOfPages);
+        model.addAttribute("boats", listBoats);
         return "boats";
     }
 
