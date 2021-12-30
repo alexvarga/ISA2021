@@ -7,6 +7,7 @@ import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.AdventureReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,5 +42,15 @@ public class AdventureReservationJpaService implements AdventureReservationServi
     @Override
     public Set<AdventureReservation> getAllByUser(User user) {
         return adventureReservationRepository.getAllByUser(user);
+    }
+
+    @Override
+    public Set<AdventureReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time) {
+        return adventureReservationRepository.getAllByUserAndDateEndBefore(user, time);
+    }
+
+    @Override
+    public Set<AdventureReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time) {
+        return adventureReservationRepository.getAllByUserAndDateFromAfter(user, time);
     }
 }

@@ -7,8 +7,11 @@ import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.BoatReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+
 
 @Profile("default")
 @Service
@@ -40,5 +43,15 @@ public class BoatReservationJpaService implements BoatReservationService {
     @Override
     public Set<BoatReservation> getAllByUser(User user) {
         return boatReservationRepository.getAllByUser(user);
+    }
+
+    @Override
+    public Set<BoatReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time) {
+        return boatReservationRepository.getAllByUserAndDateEndBefore(user, time);
+    }
+
+    @Override
+    public Set<BoatReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time) {
+        return boatReservationRepository.getAllByUserAndDateEndBefore(user, time);
     }
 }

@@ -7,6 +7,7 @@ import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
 import rs.ac.uns.ftn.isaprojekat.repository.VacationHouseReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,5 +41,15 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
     @Override
     public Set<VacationHouseReservation> getAllByUser(User user) {
         return vacationHouseReservationRepository.getAllByUser(user);
+    }
+
+    @Override
+    public Set<VacationHouseReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time) {
+        return vacationHouseReservationRepository.getAllByUserAndDateEndBefore(user, time);
+    }
+
+    @Override
+    public Set<VacationHouseReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time) {
+        return vacationHouseReservationRepository.getAllByUserAndDateFromAfter(user, time);
     }
 }

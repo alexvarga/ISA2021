@@ -14,7 +14,10 @@ import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
 
+import java.time.LocalDateTime;
 import java.util.Set;
+
+//TODO change the name of this class
 
 @Controller
 public class ReservationController {
@@ -44,6 +47,12 @@ public class ReservationController {
         Set<BoatReservation> boatReservations = boatReservationService.getAllByUser(user);
         Set<AdventureReservation> adventureReservations = adventureReservationService.getAllByUser(user);
         Set<VacationHouseReservation> vacationHouseReservations = vacationHouseReservationService.getAllByUser(user);
+
+        boatReservations.removeIf(boatReservation ->
+                boatReservation.getDateEnd().isBefore(LocalDateTime.now()));
+        adventureReservations.removeIf(adventureReservation ->
+                adventureReservation.getDateEnd().isBefore(LocalDateTime.now()));
+        vacationHouseReservations.removeIf(vacationHouseReservation -> vacationHouseReservation.getDateEnd().isBefore(LocalDateTime.now()));
 
 
         model.addAttribute("boatReservations", boatReservations);
