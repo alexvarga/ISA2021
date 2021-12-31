@@ -1,13 +1,14 @@
 package rs.ac.uns.ftn.isaprojekat.service.jpa;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.Adventure;
 import rs.ac.uns.ftn.isaprojekat.repository.AdventureRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Profile("default")
 @Service
@@ -19,11 +20,17 @@ public class AdventureJpaService implements AdventureService {
     }
 
     @Override
-    public Set<Adventure> findAll() {
-        Set<Adventure> adventures = new HashSet<>();
-        adventureRepository.findAll().forEach(adventures::add);
+    public Page<Adventure> findAll(int pageNumber, String sortField, String sortDirection) {
+        Sort sort;
+        if (sortDirection.equals("asc")){
+            sort = Sort.by(sortField).ascending();
+        }else{
+            sort = Sort.by(sortField).descending();
+        }
 
-        return adventures;
+        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+
+        return adventureRepository.findAll(pageable);
     }
 
     @Override
