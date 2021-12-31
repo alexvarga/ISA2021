@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,19 @@ public class BoatController {
 
     @GetMapping({"/", ""})
     public String listBoats(Model model){
-        return listBoatsByPage(model, 1);
+        return listBoatsByPage(model, 1, "name", "asc");
     }
 
     @GetMapping({"/page/{pageNumber}"})
-    public String listBoatsByPage(Model model, @PathVariable("pageNumber") int currentPage){
+    public String listBoatsByPage(Model model,
+                                  @PathVariable("pageNumber") int currentPage,
+                                  @Param(value="sortField") String sortField,
+                                  @Param(value="sortDirection") String sortDirection){
        // currentPage = 1;
-        Page<Boat> page = boatService.findAll(currentPage);
+        System.out.println(sortField);
+        if (sortField==null){sortField="id";}
+        if(sortDirection==null){sortDirection="asc";}
+        Page<Boat> page = boatService.findAll(currentPage, sortField, sortDirection);
         List<Boat> listBoats = page.getContent();
 
         Long numberOfElements = page.getTotalElements();
@@ -41,6 +48,12 @@ public class BoatController {
         model.addAttribute("numberOfElements", numberOfElements);
         model.addAttribute("numberOfPages", numberOfPages);
         model.addAttribute("boats", listBoats);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDirection", reverseSortDirection);
+
         return "boats";
     }
 

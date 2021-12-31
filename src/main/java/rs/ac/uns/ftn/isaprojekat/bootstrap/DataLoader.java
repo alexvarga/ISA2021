@@ -122,7 +122,7 @@ public class DataLoader implements CommandLineRunner {
 
         Boat b1 = new Boat();
         //b1.setId(1l);
-        b1.setName("Boat name");
+        b1.setName("zBoat name");
         b1.setInfo("boat 1 info");
         b1.setAvgRating(5f);
         b1.setAddress("adresa");
@@ -134,7 +134,7 @@ public class DataLoader implements CommandLineRunner {
         b2.setName("Super Kul Brod");
         b2.setInfo("boat 2 info");
         b2.setAvgRating(5f);
-        b2.setAddress("adresa");
+        b2.setAddress("badresa");
         b2.setOwner(bo1);
         boatService.save(b2.getId(), b2);
 
@@ -142,10 +142,19 @@ public class DataLoader implements CommandLineRunner {
         //b1.setId(1l);
         b3.setName("33333333333");
         b3.setInfo("boat 3 info");
-        b3.setAvgRating(5f);
+        b3.setAvgRating(3.2f);
         b3.setAddress("adresa");
         b3.setOwner(bo1);
         boatService.save(b3.getId(), b3);
+
+        Boat b4 = new Boat();
+        //b1.setId(1l);
+        b4.setName("zzzzzzz");
+        b4.setInfo("boat 3 info");
+        b4.setAvgRating(3f);
+        b4.setAddress("gadresa");
+        b4.setOwner(bo1);
+        boatService.save(b4.getId(), b4);
 
         Instructor i1 = new Instructor();
         //i1.setId(1L);
@@ -159,7 +168,7 @@ public class DataLoader implements CommandLineRunner {
         //a1.setId(1L);
         a1.setName("Adventure 1 name");
         a1.setInfo("Adventure 1 info");
-        a1.setAvgRating(5f);
+        a1.setAvgRating(2f);
         a1.setAddress("adresa");
 
         a1.setInstructor(i1);
