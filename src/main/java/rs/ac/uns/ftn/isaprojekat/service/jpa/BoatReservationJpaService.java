@@ -1,6 +1,10 @@
 package rs.ac.uns.ftn.isaprojekat.service.jpa;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
 import rs.ac.uns.ftn.isaprojekat.model.User;
@@ -8,9 +12,6 @@ import rs.ac.uns.ftn.isaprojekat.repository.BoatReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
 
 
 @Profile("default")
@@ -24,10 +25,16 @@ public class BoatReservationJpaService implements BoatReservationService {
     }
 
     @Override
-    public Set<BoatReservation> findAll() {
-        Set<BoatReservation> reservations = new HashSet<>();
-        boatReservationRepository.findAll().forEach(reservations::add);
-        return reservations;
+    public Page<BoatReservation> findAll(int pageNumber, String sortField, String sortDirection) {
+        Sort sort;
+        if (sortDirection.equals("asc")) {
+            sort = Sort.by(sortField).ascending();
+        } else {
+            sort = Sort.by(sortField).descending();
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
+        return boatReservationRepository.findAll(pageable);
     }
 
     @Override
@@ -41,17 +48,41 @@ public class BoatReservationJpaService implements BoatReservationService {
     }
 
     @Override
-    public Set<BoatReservation> getAllByUser(User user) {
-        return boatReservationRepository.getAllByUser(user);
+    public Page<BoatReservation> getAllByUser(User user, int pageNumber, String sortField, String sortDirection) {
+        Sort sort;
+        if (sortDirection.equals("asc")) {
+            sort = Sort.by(sortField).ascending();
+        } else {
+            sort = Sort.by(sortField).descending();
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
+        return boatReservationRepository.getAllByUser(user, pageable);
     }
 
     @Override
-    public Set<BoatReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time) {
-        return boatReservationRepository.getAllByUserAndDateEndBefore(user, time);
+    public Page<BoatReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+        Sort sort;
+        if (sortDirection.equals("asc")) {
+            sort = Sort.by(sortField).ascending();
+        } else {
+            sort = Sort.by(sortField).descending();
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
+        return boatReservationRepository.getAllByUserAndDateEndBefore(user, time, pageable);
     }
 
     @Override
-    public Set<BoatReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time) {
-        return boatReservationRepository.getAllByUserAndDateEndBefore(user, time);
+    public Page<BoatReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+        Sort sort;
+        if (sortDirection.equals("asc")) {
+            sort = Sort.by(sortField).ascending();
+        } else {
+            sort = Sort.by(sortField).descending();
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
+        return boatReservationRepository.getAllByUserAndDateFromAfter(user, time, pageable);
     }
 }

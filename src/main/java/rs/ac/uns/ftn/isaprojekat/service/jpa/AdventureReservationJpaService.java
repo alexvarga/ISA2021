@@ -1,6 +1,10 @@
 package rs.ac.uns.ftn.isaprojekat.service.jpa;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.AdventureReservation;
 import rs.ac.uns.ftn.isaprojekat.model.User;
@@ -8,12 +12,12 @@ import rs.ac.uns.ftn.isaprojekat.repository.AdventureReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Profile("default")
 @Service
 public class AdventureReservationJpaService implements AdventureReservationService {
+
+    private int itemsPerPage = 2;
 
     private final AdventureReservationRepository adventureReservationRepository;
 
@@ -22,11 +26,18 @@ public class AdventureReservationJpaService implements AdventureReservationServi
     }
 
     @Override
-    public Set<AdventureReservation> findAll() {
-        Set<AdventureReservation> reservations = new HashSet<>();
-        adventureReservationRepository.findAll().forEach(reservations::add);
+    public Page<AdventureReservation> findAll(int pageNumber, String sortField, String sortDirection) {
+        Sort sort;
+        if (sortDirection.equals("asc")){
+            sort = Sort.by(sortField).ascending();
+        }else{
+            sort = Sort.by(sortField).descending();
+        }
 
-        return reservations;
+        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+
+
+        return adventureReservationRepository.findAll(pageable);
     }
 
     @Override
@@ -40,17 +51,34 @@ public class AdventureReservationJpaService implements AdventureReservationServi
     }
 
     @Override
-    public Set<AdventureReservation> getAllByUser(User user) {
-        return adventureReservationRepository.getAllByUser(user);
+    public Page<AdventureReservation> getAllByUser(User user, int pageNumber, String sortField, String sortDirection) {
+//        Sort sort = sortDirection.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+//        Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort);
+        Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
+
+        return adventureReservationRepository.getAllByUser(user, pageable);
     }
 
     @Override
-    public Set<AdventureReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time) {
-        return adventureReservationRepository.getAllByUserAndDateEndBefore(user, time);
+    public Page<AdventureReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+        Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
+
+        return adventureReservationRepository.getAllByUserAndDateEndBefore(user, time, pageable);
     }
 
     @Override
-    public Set<AdventureReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time) {
-        return adventureReservationRepository.getAllByUserAndDateFromAfter(user, time);
+    public Page<AdventureReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+        Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
+
+        return adventureReservationRepository.getAllByUserAndDateFromAfter(user, time, pageable);
     }
+
+
+    private Pageable sortAndPage(int pageNumber, String sortField, String sortDirection){
+        Sort sort = sortDirection.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort);
+
+        return pageable;
+    }
+
 }
