@@ -27,30 +27,72 @@
     <div class="row"><p></p></div>
 
 
-<div class="row">
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <td>id</td>
-        <td>name</td>
-        <td>address</td>
-        <td>info</td>
-        <td>rating</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="house:${houses}">
-        <td> <a th:href="@{houses/{id}(id=${house.id})}" th:text="${house.id}">id</a>
-        </td>
-        <td th:text="${house.name}">name</td>
-        <td th:text="${house.address}">address</td>
-        <td th:text="${house.info}">info</td>
-        <td th:text="${house.avgRating}">rating</td>
-    </tr>
-    </tbody>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">name</a>
+                </td>
+                <td>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">addressa</a>
+                <td>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">rating</a>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="house:${houses}">
+                <td><a th:href="@{/houses/{id}(id=${house.id})}" th:text="${house.id}">id</a>
+                </td>
+                <td th:text="${house.name}">name</td>
+                <td th:text="${house.address}">address</td>
+                <td th:text="${house.info}">info</td>
+                <td th:text="${house.avgRating}">rating</td>
+            </tr>
+            </tbody>
 
-</table>
-</div>
+        </table>
+    </div>
+    <div class="row justify-content-center">
+        Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+        &nbsp; - &nbsp;
+
+        <a th:if="${currentPage>1}"
+           th:href="@{'/houses/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <span th:unless="${currentPage>1}">Prva</span>
+        &nbsp;
+        <a th:if="${currentPage>1}"
+           th:href="@{'/houses/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+        <span th:unless="${currentPage>1}">prethodna</span>
+        &nbsp;
+
+        <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/houses/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/houses/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+        <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+        &nbsp;
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/houses/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+        <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+        &nbsp;
+
+
+    </div>
+
+
 </div>
 <div th:replace="/index.html :: scripts"></div>
 </body>

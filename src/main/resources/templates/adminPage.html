@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>ADMIN</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+<header th:insert="/index.html :: header"> </header>
+<div sec:authorize="isAuthenticated()">
+    Welcome admin <b><span sec:authentication="name">Username</span></b>
+    &nbsp;
+
+</div>
+
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

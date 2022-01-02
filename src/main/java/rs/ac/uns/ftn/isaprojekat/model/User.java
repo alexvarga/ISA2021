@@ -2,10 +2,9 @@ package rs.ac.uns.ftn.isaprojekat.model;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -18,6 +17,15 @@ public class User extends Person  {
     private Boolean enabled;
     private Boolean locked;
     private String verificationCode;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<VacationHouseReservation> vacationHouseReservations = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<BoatReservation> boatReservations = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<AdventureReservation> adventureReservations = new HashSet<>();
 
     public User() {
     }
@@ -73,5 +81,13 @@ public class User extends Person  {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public Set<VacationHouseReservation> getVacationHouseReservations() {
+        return vacationHouseReservations;
+    }
+
+    public void setVacationHouseReservations(Set<VacationHouseReservation> vacationHouseReservations) {
+        this.vacationHouseReservations = vacationHouseReservations;
     }
 }

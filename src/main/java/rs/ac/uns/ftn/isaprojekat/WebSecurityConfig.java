@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isaprojekat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,6 +17,8 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired private LoginSuccessHandler loginSuccessHandler;
 
     private DataSource dataSource;
 
@@ -50,11 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/houses/?").authenticated()
                 .antMatchers("/login/").anonymous()
                 .antMatchers("/register/").anonymous()
+                .antMatchers("/adminPage").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/userHomePage").hasAuthority("ROLE_USER")
+                .antMatchers("/reservations").hasAuthority("ROLE_USER")
                 .anyRequest()
                 .permitAll()
                 .and().formLogin()
-                .usernameParameter("email")
-                .defaultSuccessUrl("/index/").permitAll()
+                .usernameParameter("email").successHandler(loginSuccessHandler)
+                .permitAll()
                 .and().logout().logoutSuccessUrl("/").permitAll();
     }
 }
