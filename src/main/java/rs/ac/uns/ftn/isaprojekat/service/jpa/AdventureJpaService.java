@@ -10,6 +10,8 @@ import rs.ac.uns.ftn.isaprojekat.model.Adventure;
 import rs.ac.uns.ftn.isaprojekat.repository.AdventureRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
 
+import java.time.LocalDateTime;
+
 @Profile("default")
 @Service
 public class AdventureJpaService implements AdventureService {
@@ -41,5 +43,20 @@ public class AdventureJpaService implements AdventureService {
     @Override
     public Adventure save(Long aLong, Adventure object) {
         return adventureRepository.save(object);
+    }
+
+    @Override
+    public Page<Adventure> findAdventureNotReserved(int pageNumber, String sortField, String sortDirection, LocalDateTime dateFrom, LocalDateTime dateEnd) {
+        Sort sort;
+        if (sortDirection.equals("asc")){
+            sort = Sort.by(sortField).ascending();
+        }else{
+            sort = Sort.by(sortField).descending();
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+
+
+        return adventureRepository.findAdventuresNotReserved(dateFrom, dateEnd, pageable);
     }
 }
