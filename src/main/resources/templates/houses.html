@@ -74,6 +74,12 @@
                 <td th:text="${house.address}">address</td>
                 <td th:text="${house.info}">info</td>
                 <td th:text="${house.avgRating}">rating</td>
+                <td><form th:if="${search==true}" th:action="@{/reserve}" method="post">
+                    <input hidden th:value="${house.id}" th:name="id">
+                    <input hidden th:value="${dateFrom}" th:name="dateFrom">
+                    <input hidden th:value="${dateEnd}" th:name="dateEnd">
+                    <button type="submit" class="btn btn-primary">Rez</button>
+                </form></td>
             </tr>
             </tbody>
 
