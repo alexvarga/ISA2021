@@ -49,7 +49,23 @@
     <div class="row">
         <table class="table table-striped">
             <thead>
-            <tr>
+            <tr th:if="${search==true}">
+                <td>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">name</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">addressa</a>
+                <td>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">rating</a>
+                </td>
+            </tr>
+            <tr th:unless="${search==true}">
                 <td>
                     <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
                 </td>

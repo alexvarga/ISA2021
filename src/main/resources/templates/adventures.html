@@ -64,7 +64,24 @@
 
         <table class="table table-striped">
             <thead>
-            <tr>
+            <tr th:if="${search==true}">
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">name</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">addressa</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">rating</a>
+                </td>
+            </tr>
+            <tr th:unless="${search==true}">
                 <td>
                     <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
                 </td>
@@ -90,6 +107,12 @@
                 <td th:text="${adventure.address}">address</td>
                 <td th:text="${adventure.info}">info</td>
                 <td th:text="${adventure.avgRating}">rating</td>
+                <td><form th:if="${search==true}" th:action="@{/reserve}" method="post">
+                    <input hidden th:value="${adventure.id}" th:name="id">
+                    <input hidden th:value="${dateFrom}" th:name="dateFrom">
+                    <input hidden th:value="${dateEnd}" th:name="dateEnd">
+                    <button type="submit" class="btn btn-primary">Rez</button>
+                </form></td>
             </tr>
             </tbody>
 
@@ -103,7 +126,7 @@
 
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
-        <a th:if="${currentPage>1}" th:href="@{'/search/adventures/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prethodna </a>
+        <a th:if="${currentPage>1}" th:href="@{'/search/adventures/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prethodna </a>
         <span th:unless="${currentPage>1}">prethodna</span>
         &nbsp;
 
@@ -134,7 +157,7 @@
         <a th:if="${currentPage>1}" th:href="@{'/adventures/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
-        <a th:if="${currentPage>1}" th:href="@{'/adventures/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+        <a th:if="${currentPage>1}" th:href="@{'/adventures/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
         <span th:unless="${currentPage>1}">prethodna</span>
         &nbsp;
 
