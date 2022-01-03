@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
 import rs.ac.uns.ftn.isaprojekat.repository.VacationHouseRepository;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseService;
 
+import java.time.LocalDateTime;
 
 
 @Profile("default")
@@ -44,5 +45,22 @@ public class VacationHouseJpaService implements VacationHouseService {
     @Override
     public VacationHouse save(Long aLong, VacationHouse object) {
         return vacationHouseRepository.save(object);
+    }
+
+    @Override
+    public Page<VacationHouse> findVacationHousesNotReserved(int pageNumber, String sortField, String sortDirection, LocalDateTime dateFrom, LocalDateTime dateEnd) {
+        Sort sort;
+        if (sortDirection.equals("asc")){
+            sort = Sort.by(sortField).ascending();
+        }else{
+            sort = Sort.by(sortField).descending();
+        }
+
+        //sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+
+
+        return vacationHouseRepository.findVacationHousesNotReserved(dateFrom, dateEnd, pageable);
     }
 }
