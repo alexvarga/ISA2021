@@ -18,12 +18,18 @@
 
     <div class="row">
         <div class="col-lg-6 col-md-6 mx-auto">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">Go!</button>
+            <form th:action="@{/search/boats}" method="post">
+                <div class="input-group">
+                    <label class="form-label" for="from">Od</label>
+                    <input id="from" type="date" class="form-control" th:name="dateFrom" placeholder="">
+                    <label class="form-label" for="from">Do</label>
+                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022" >
+
+                    <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit">Go!</button>
                 </span>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -56,10 +62,43 @@
         </table>
 
     </div>
-    <div class="row justify-content-center">
+
+    <div th:if="${search==true}" class="row justify-content-center">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
+        <a th:if="${currentPage>1}" th:href="@{'/search/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prva</a>
+
+        <span th:unless="${currentPage>1}">Prva</span>
+        &nbsp;
+        <a th:if="${currentPage>1}" th:href="@{'/search/boats/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prethodna </a>
+        <span th:unless="${currentPage>1}">prethodna</span>
+        &nbsp;
+
+        <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a></a>
+                <a th:if="${i != currentPage}" th:href="@{'/search/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+
+        <a th:if="${currentPage<numberOfPages}" th:href="@{'/search/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Sledeća</a>
+        <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+        &nbsp;
+        <a th:if="${currentPage<numberOfPages}" th:href="@{'/search/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Poslednja </a>
+        <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+        &nbsp;
+
+
+    </div>
+
+
+    <div th:unless="${search==true}" class="row justify-content-center">
+        Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+        &nbsp; - &nbsp;
+
+        <a th:if="${currentPage>1}" th:href="@{'/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <a th:if="${currentPage>1}" th:href="@{'/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
@@ -68,6 +107,7 @@
         &nbsp;
 
         <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a></a>
                 <a th:if="${i != currentPage}" th:href="@{'/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
                 <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
             </span>

@@ -187,6 +187,7 @@ public class DataLoader implements CommandLineRunner {
         a2.setInstructor(i1);
         adventureService.save(a2.getId(), a2);
 
+
         BoatReservation br1 = new BoatReservation();
         br1.setBoat(b1);
         br1.setUser(user);
@@ -268,6 +269,7 @@ public class DataLoader implements CommandLineRunner {
         br3.setDateEnd(LocalDateTime.of(2010, 11, 6, 0, 0));
         br3.setReservationType(ReservationType.ACTIVE);
         boatReservationService.save(1L, br3);
+
 
 
 

@@ -10,6 +10,8 @@ import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.repository.BoatRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatService;
 
+import java.time.LocalDateTime;
+
 @Profile("default")
 @Service
 public class BoatJpaService implements BoatService {
@@ -45,4 +47,24 @@ public class BoatJpaService implements BoatService {
     public Boat save(Long aLong, Boat object) {
         return boatRepository.save(object);
     }
+
+    @Override
+    public Page<Boat> findBoatsNotReserved( int pageNumber, String sortField, String sortDirection, LocalDateTime dateFrom, LocalDateTime dateEnd) {
+
+        Sort sort;
+        if (sortDirection.equals("asc")){
+            sort = Sort.by(sortField).ascending();
+        }else{
+            sort = Sort.by(sortField).descending();
+        }
+
+        //sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+
+
+       return boatRepository.findBoatsNotReserved(dateFrom, dateEnd, pageable);
+       // return null;
+    }
+
 }
