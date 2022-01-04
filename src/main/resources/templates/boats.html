@@ -24,7 +24,7 @@
                     <label class="form-label" for="from">Od</label>
                     <input id="from" type="date" class="form-control" th:name="dateFrom" placeholder="">
                     <label class="form-label" for="from">Do</label>
-                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022" >
+                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022">
 
                     <span class="input-group-btn">
                     <button class="btn btn-secondary" type="submit">Go!</button>
@@ -42,18 +42,38 @@
         <table class="table table-striped">
             <thead>
             <tr th:if="${search==true}">
-                <td> <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">id </a></td>
-                <td> <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">name</a></td>
-                <td> <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">addressa</a></td>
-                <td> <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">info</a></td>
-                <td> <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">rating</a></td>
+                <td>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">name</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">addressa</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">rating</a>
+                </td>
             </tr>
             <tr th:unless="${search==true}">
-                <td> <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a></td>
-                <td> <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">name</a></td>
-                <td> <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">addressa</a></td>
-                <td> <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">info</a></td>
-                <td> <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">rating</a></td>
+                <td>
+                    <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">name</a>
+                </td>
+                <td>
+                    <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">addressa</a>
+                </td>
+                <td>
+                    <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">rating</a>
+                </td>
             </tr>
             </thead>
             <tbody>
@@ -63,12 +83,12 @@
                 <td th:text="${boat.address}">address</td>
                 <td th:text="${boat.info}">info</td>
                 <td th:text="${boat.avgRating}">rating</td>
-                <td><form th:if="${search==true}" th:action="@{/reserve}" method="post">
-                    <input hidden th:value="${boat.id}" th:name="id">
-                    <input hidden th:value="${dateFrom}" th:name="dateFrom">
-                    <input hidden th:value="${dateEnd}" th:name="dateEnd">
-                    <button type="submit" class="btn btn-primary">Rez</button>
-                </form></td>
+
+                <td th:if="${search==true}">
+                    <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
+                       th:attr="data-boat-id=''+${boat.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">rez</a>
+
+                </td>
             </tr>
             </tbody>
 
@@ -80,26 +100,30 @@
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
-        <a th:if="${currentPage>1}" th:href="@{'/search/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prva</a>
+        <a th:if="${currentPage>1}"
+           th:href="@{'/search/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prva</a>
 
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
-        <a th:if="${currentPage>1}" th:href="@{'/search/boats/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prethodna </a>
+        <a th:if="${currentPage>1}"
+           th:href="@{'/search/boats/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prethodna </a>
         <span th:unless="${currentPage>1}">prethodna</span>
         &nbsp;
 
         <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
                 <a></a>
-                <a th:if="${i != currentPage}" th:href="@{'/search/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}"> [[${i}]] </a>
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/search/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}"> [[${i}]] </a>
                 <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
             </span>
 
 
-
-        <a th:if="${currentPage<numberOfPages}" th:href="@{'/search/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Sledeća</a>
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/search/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Sledeća</a>
         <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
         &nbsp;
-        <a th:if="${currentPage<numberOfPages}" th:href="@{'/search/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Poslednja </a>
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/search/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
 
@@ -111,26 +135,31 @@
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
-        <a th:if="${currentPage>1}" th:href="@{'/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
-        <a th:if="${currentPage>1}" th:href="@{'/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <a th:if="${currentPage>1}"
+           th:href="@{'/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <a th:if="${currentPage>1}"
+           th:href="@{'/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
-        <a th:if="${currentPage>1}" th:href="@{'/boats/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+        <a th:if="${currentPage>1}"
+           th:href="@{'/boats/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
         <span th:unless="${currentPage>1}">prethodna</span>
         &nbsp;
 
         <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
                 <a></a>
-                <a th:if="${i != currentPage}" th:href="@{'/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
                 <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
             </span>
 
 
-
-        <a th:if="${currentPage<numberOfPages}" th:href="@{'/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
         <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
         &nbsp;
-        <a th:if="${currentPage<numberOfPages}" th:href="@{'/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
 
@@ -138,8 +167,48 @@
     </div>
 </div>
 
+<div class="modal" id="my_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal header</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
 
-<div th:insert="/index.html :: scripts">
-</div>
+            </div>
+            <div class="modal-body">
+                <div class="containerxz">
+                <form th:action="@{/reserve}" method="post">
+                    <div>
+                        <p>some content</p>
+                        <input type="text" name="boatId" value=""/>
+                        <input type="text" name="dateFrom" value=""/>
+                        <input type="text" name="dateEnd" value=""/>
+                        <button class="button" type="submit">Rezerviši</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="/index.html :: scripts"></div>
+
+    <script>
+        $('#my_modal').on('show.bs.modal', function (e) {
+            var button = $(e.relatedTarget)
+            var boatId = button.data('boat-id');
+            var dateFrom = button.data('date-from');
+            var dateEnd = button.data('date-end');
+            $(e.currentTarget).find('input[name="boatId"]').val(boatId);
+            $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+            $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+        });
+    </script>
+
+
 </body>
 </html>
