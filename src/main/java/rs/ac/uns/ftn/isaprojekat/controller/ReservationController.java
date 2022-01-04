@@ -44,6 +44,7 @@ public class ReservationController {
     @GetMapping({"/", ""})
     public String show(Model model){
 
+        System.out.println("reservations ovdeeeeeeeeeeeeeeeee");
 
         return showReservationsByPage(model, 1, 1, 1, "id", "id", "id", "asc", "asc", "asc");
     }
@@ -76,17 +77,23 @@ public class ReservationController {
         if(sortDirectionB==null){sortDirectionH="asc";}
         if(sortDirectionH==null){sortDirectionH="asc";}
 
-        Page<AdventureReservation> pageAdventure = adventureReservationService.getAllByUserAndDateFromAfter(user, LocalDateTime.now(), currentPageA, sortFieldA, sortDirectionA);
-        Page<BoatReservation> pageBoat = boatReservationService.getAllByUserAndDateFromAfter(user, LocalDateTime.now(), currentPageB, sortFieldB, sortDirectionB);
-        Page<VacationHouseReservation> pageHouse = vacationHouseReservationService.getAllByUserAndDateFromAfter(user, LocalDateTime.now(), currentPageH, sortFieldH, sortDirectionH);
-
+        Page<AdventureReservation> pageAdventure = adventureReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageA, sortFieldA, sortDirectionA);
+        Page<BoatReservation> pageBoat = boatReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageB, sortFieldB, sortDirectionB);
+        Page<VacationHouseReservation> pageHouse = vacationHouseReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageH, sortFieldH, sortDirectionH);
+        System.out.println(pageAdventure+ "ovo je page adventure");
 
         List<VacationHouseReservation> entitiesHouse = pageHouse.getContent();
+        System.out.println(entitiesHouse + " ovo su kucee");
         List<BoatReservation> entitiesBoat = pageBoat.getContent();
+        System.out.println(entitiesHouse + " ovo su brodovi");
+
         List<AdventureReservation> entitiesAdventure = pageAdventure.getContent();
+        System.out.println(entitiesHouse + " ovo su avanture");
+
 
         Long numberOfElementsHouse = pageHouse.getTotalElements();
         int numberOfPagesHouse = pageHouse.getTotalPages();
+
 
         Long numberOfElementsBoat = pageBoat.getTotalElements();
         int numberOfPagesBoat = pageBoat.getTotalPages();

@@ -67,10 +67,10 @@ public class AdventureReservationJpaService implements AdventureReservationServi
     }
 
     @Override
-    public Page<AdventureReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+    public Page<AdventureReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
         Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
 
-        return adventureReservationRepository.getAllByUserAndDateFromAfter(user, time, pageable);
+        return adventureReservationRepository.getAllByUserAndDateEndAfter(user, time, pageable);
     }
 
 

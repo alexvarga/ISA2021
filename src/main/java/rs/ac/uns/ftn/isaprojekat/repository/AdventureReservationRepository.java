@@ -15,7 +15,7 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
 
     Page<AdventureReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time, Pageable pageable);
 
-    Page<AdventureReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, Pageable pageable);
+    Page<AdventureReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
 
 }

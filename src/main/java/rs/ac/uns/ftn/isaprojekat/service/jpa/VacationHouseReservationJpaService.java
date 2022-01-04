@@ -66,11 +66,11 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
     }
 
     @Override
-    public Page<VacationHouseReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+    public Page<VacationHouseReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
         Sort sort = sortDirection.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort);
 
-        return vacationHouseReservationRepository.getAllByUserAndDateFromAfter(user, time, pageable);
+        return vacationHouseReservationRepository.getAllByUserAndDateEndAfter(user, time, pageable);
 
     }
 }

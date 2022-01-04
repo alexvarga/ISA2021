@@ -20,6 +20,6 @@ public interface BoatReservationRepository extends PagingAndSortingRepository<Bo
     Page<BoatReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time, Pageable pageable);
 
     //@Query(value="select br from BoatReservation br where br.user=?1 ")
-    Page<BoatReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, Pageable pageable);
+    Page<BoatReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
 }

@@ -15,6 +15,8 @@ public interface BoatRepository extends PagingAndSortingRepository<Boat, Long> {
 
 
 
-    @Query(value="select b from Boat b where b.id not in (select bo.id from Boat bo left join BoatReservation br on bo.id=br.boat.id where (?1 between br.dateFrom and br.dateEnd) or (?2 between br.dateFrom and br.dateEnd))")
+    @Query(value="select b from Boat b where b.id not in" +
+            " (select bo.id from Boat bo left join BoatReservation br on bo.id=br.boat.id where " +
+            "(((?1 between br.dateFrom and br.dateEnd) or (?2 between br.dateFrom and br.dateEnd)) and(br.reservationType = 'ACTIVE') ))")
     Page<Boat> findBoatsNotReserved(LocalDateTime dateFrom, LocalDateTime dateEnd, Pageable pageable);
 }

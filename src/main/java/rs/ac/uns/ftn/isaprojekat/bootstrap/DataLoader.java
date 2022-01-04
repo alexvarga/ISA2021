@@ -191,10 +191,10 @@ public class DataLoader implements CommandLineRunner {
         BoatReservation br1 = new BoatReservation();
         br1.setBoat(b1);
         br1.setUser(user);
-        br1.setReservationType(ReservationType.ACTIVE);
+        br1.setReservationType(ReservationType.CANCELLED);
         br1.setReservationTime(LocalDateTime.now());
-        br1.setDateFrom(LocalDateTime.of(2010, 1, 1, 0, 0));
-        br1.setDateEnd(LocalDateTime.of(2010, 1, 6, 0, 0));
+        br1.setDateFrom(LocalDateTime.of(2022, 1, 1, 0, 0));
+        br1.setDateEnd(LocalDateTime.of(2022, 1, 6, 0, 0));
         boatReservationService.save(1L, br1);
 
         BoatReservation br2 = new BoatReservation();
@@ -202,8 +202,8 @@ public class DataLoader implements CommandLineRunner {
         br2.setUser(user);
         br2.setReservationType(ReservationType.ACTIVE);
         br2.setReservationTime(LocalDateTime.now());
-        br2.setDateFrom(LocalDateTime.of(2010, 1, 1, 0, 0));
-        br2.setDateEnd(LocalDateTime.of(2010, 1, 6, 0, 0));
+        br2.setDateFrom(LocalDateTime.of(2023, 1, 1, 0, 0));
+        br2.setDateEnd(LocalDateTime.of(2023, 1, 6, 0, 0));
         boatReservationService.save(1L, br2);
 
 
@@ -212,8 +212,8 @@ public class DataLoader implements CommandLineRunner {
         vhr1.setUser(user);
         vhr1.setReservationType(ReservationType.ACTIVE);
         vhr1.setReservationTime(LocalDateTime.now());
-        vhr1.setDateFrom(LocalDateTime.of(2010, 1, 1, 0, 0));
-        vhr1.setDateEnd(LocalDateTime.of(2010, 1, 6, 0, 0));
+        vhr1.setDateFrom(LocalDateTime.of(2023, 1, 1, 0, 0));
+        vhr1.setDateEnd(LocalDateTime.of(2023, 1, 6, 0, 0));
         vacationHouseReservationService.save(1L, vhr1);
 
         VacationHouseReservation vhr2 = new VacationHouseReservation();
@@ -221,8 +221,8 @@ public class DataLoader implements CommandLineRunner {
         vhr2.setUser(user);
         vhr2.setReservationType(ReservationType.ACTIVE);
         vhr2.setReservationTime(LocalDateTime.now());
-        vhr2.setDateFrom(LocalDateTime.of(2010, 1, 1, 0, 0));
-        vhr2.setDateEnd(LocalDateTime.of(2010, 1, 6, 0, 0));
+        vhr2.setDateFrom(LocalDateTime.of(2023, 1, 1, 0, 0));
+        vhr2.setDateEnd(LocalDateTime.of(2023, 1, 6, 0, 0));
         vacationHouseReservationService.save(1L, vhr2);
 
         AdventureReservation ar1 = new AdventureReservation();
@@ -230,8 +230,8 @@ public class DataLoader implements CommandLineRunner {
         ar1.setUser(user);
         ar1.setReservationType(ReservationType.ACTIVE);
         ar1.setReservationTime(LocalDateTime.now());
-        ar1.setDateFrom(LocalDateTime.of(2010, 2, 1, 0, 0));
-        ar1.setDateEnd(LocalDateTime.of(2010, 3, 6, 0, 0));
+        ar1.setDateFrom(LocalDateTime.of(2023, 2, 1, 0, 0));
+        ar1.setDateEnd(LocalDateTime.of(2023, 3, 6, 0, 0));
         adventureReservationService.save(1L, ar1);
 
         AdventureReservation ar2 = new AdventureReservation();
@@ -239,8 +239,8 @@ public class DataLoader implements CommandLineRunner {
         ar2.setUser(user);
         ar2.setReservationType(ReservationType.ACTIVE);
         ar2.setReservationTime(LocalDateTime.now());
-        ar2.setDateFrom(LocalDateTime.of(2010, 1, 1, 0, 0));
-        ar2.setDateEnd(LocalDateTime.of(2010, 1, 6, 0, 0));
+        ar2.setDateFrom(LocalDateTime.of(2023, 1, 1, 0, 0));
+        ar2.setDateEnd(LocalDateTime.of(2023, 1, 6, 0, 0));
         adventureReservationService.save(1L, ar2);
 
         AdventureReservation ar3 = new AdventureReservation();
@@ -248,8 +248,8 @@ public class DataLoader implements CommandLineRunner {
         ar3.setUser(user);
         ar3.setReservationType(ReservationType.ACTIVE);
         ar3.setReservationTime(LocalDateTime.now());
-        ar3.setDateFrom(LocalDateTime.of(2010, 5, 6, 0, 0));
-        ar3.setDateEnd(LocalDateTime.of(2010, 5, 16, 0, 0));
+        ar3.setDateFrom(LocalDateTime.of(2023, 5, 6, 0, 0));
+        ar3.setDateEnd(LocalDateTime.of(2023, 5, 16, 0, 0));
         adventureReservationService.save(1L, ar3);
 
         AdventureReservation ar4 = new AdventureReservation();
@@ -257,16 +257,16 @@ public class DataLoader implements CommandLineRunner {
         ar4.setUser(user);
         ar4.setReservationType(ReservationType.ACTIVE);
         ar4.setReservationTime(LocalDateTime.now());
-        ar4.setDateFrom(LocalDateTime.of(2010, 5, 6, 0, 0));
-        ar4.setDateEnd(LocalDateTime.of(2010, 5, 16, 0, 0));
+        ar4.setDateFrom(LocalDateTime.of(2023, 5, 6, 0, 0));
+        ar4.setDateEnd(LocalDateTime.of(2023, 5, 16, 0, 0));
         adventureReservationService.save(1L, ar4);
 
         BoatReservation br3 = new BoatReservation();
         br3.setBoat(b1);
         br3.setUser(user);
-        br3.setReservationTime(LocalDateTime.of(2010,10,28,20,30));
-        br3.setDateFrom(LocalDateTime.of(2010, 11, 1, 0, 0));
-        br3.setDateEnd(LocalDateTime.of(2010, 11, 6, 0, 0));
+        br3.setReservationTime(LocalDateTime.of(2023,10,28,20,30));
+        br3.setDateFrom(LocalDateTime.of(2023, 11, 1, 0, 0));
+        br3.setDateEnd(LocalDateTime.of(2023, 11, 6, 0, 0));
         br3.setReservationType(ReservationType.ACTIVE);
         boatReservationService.save(1L, br3);
 
