@@ -178,15 +178,15 @@
             </div>
             <div class="modal-body">
                 <div class="containerxz">
-                <form th:action="@{/reserve}" method="post">
-                    <div>
-                        <p>some content</p>
-                        <input type="text" name="boatId" value=""/>
-                        <input type="text" name="dateFrom" value=""/>
-                        <input type="text" name="dateEnd" value=""/>
-                        <button class="button" type="submit">Rezerviši</button>
-                    </div>
-                </form>
+                    <form th:action="@{/reserve}" method="post">
+                        <div>
+                            <p>some content</p>
+                            <input type="text" name="boatId" value=""/>
+                            <input type="text" name="dateFrom" value=""/>
+                            <input type="text" name="dateEnd" value=""/>
+                            <button class="button" type="submit">Rezerviši</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
@@ -194,20 +194,20 @@
             </div>
         </div>
     </div>
+</div>
+<div th:insert="/index.html :: scripts"></div>
 
-    <div th:insert="/index.html :: scripts"></div>
-
-    <script>
-        $('#my_modal').on('show.bs.modal', function (e) {
-            var button = $(e.relatedTarget)
-            var boatId = button.data('boat-id');
-            var dateFrom = button.data('date-from');
-            var dateEnd = button.data('date-end');
-            $(e.currentTarget).find('input[name="boatId"]').val(boatId);
-            $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
-            $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
-        });
-    </script>
+<script>
+    $('#my_modal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget)
+        var boatId = button.data('boat-id');
+        var dateFrom = button.data('date-from');
+        var dateEnd = button.data('date-end');
+        $(e.currentTarget).find('input[name="boatId"]').val(boatId);
+        $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+        $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+    });
+</script>
 
 
 </body>

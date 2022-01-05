@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @Repository
 public interface AdventureRepository extends PagingAndSortingRepository<Adventure, Long> {
 
-    @Query(value="select distinct a from Adventure a left join AdventureReservation ar on a.id=ar.adventure.id where ?1< ar.dateFrom and ?2 < ar.dateFrom or ?1> ar.dateEnd and ?2 > ar.dateEnd or ar.dateFrom is null")
+    @Query(value="select a from Adventure a where a.id not in" +
+            " (select ad.id from Adventure ad left join AdventureReservation ar on ad.id=ar.adventure.id where " +
+            "(((?1 between ar.dateFrom and ar.dateEnd) or (?2 between ar.dateFrom and ar.dateEnd)) and(ar.reservationType = 'ACTIVE') ))")
     Page<Adventure> findAdventuresNotReserved(LocalDateTime dateFrom, LocalDateTime dateEnd, Pageable pageable);
 }
