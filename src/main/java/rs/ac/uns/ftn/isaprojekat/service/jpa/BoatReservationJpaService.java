@@ -74,7 +74,7 @@ public class BoatReservationJpaService implements BoatReservationService {
     }
 
     @Override
-    public Page<BoatReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+    public Page<BoatReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
         Sort sort;
         if (sortDirection.equals("asc")) {
             sort = Sort.by(sortField).ascending();
@@ -83,6 +83,6 @@ public class BoatReservationJpaService implements BoatReservationService {
         }
 
         Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
-        return boatReservationRepository.getAllByUserAndDateFromAfter(user, time, pageable);
+        return boatReservationRepository.getAllByUserAndDateEndAfter(user, time, pageable);
     }
 }

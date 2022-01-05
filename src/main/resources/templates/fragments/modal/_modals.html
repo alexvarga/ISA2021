@@ -26,141 +26,160 @@
         </div>
     </div>
 
-    <!-- update profile  -->
-    <div th:fragment="frag">
-        <div tabindex="-1" class="modal fade" role="dialog" id="asdf">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
+</div>
+<!-- update profile  -->
+<div th:fragment="frag">
+    <div tabindex="-1" class="modal fade" role="dialog" id="asdf">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
 
-                        <div class="container text-center">
-                            <form th:action="@{/profile/}" method="post"
-                                  th:object="${user}"
-                                  style="max-width: 600px; margin: 0 auto"
-                            >
+                    <div class="container text-center">
+                        <form th:action="@{/profile/}" method="post"
+                              th:object="${user}"
+                              style="max-width: 600px; margin: 0 auto"
+                        >
 
 
-                                <div class="form-control">
-                                    <div class="m-3">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">email</label>
-                                            <div class="col-8">
-                                                <input th:readonly="*{email}" id="email" type="email"
-                                                       class="form-control" th:field="*{email}" required minlength="6"
-                                                       maxlength="64"/>
-                                                <div id="email-error" class="alert alert-danger "
-                                                     th:if="${#fields.hasErrors('email')}" th:errors="*{email}">a
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">ime</label>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" th:field="*{firstName}"
-                                                       required/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">prezime</label>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" th:field="*{lastName}"
-                                                       required/>
-                                            </div>
-                                        </div>
-
-                                        <!--- -------------------------------------------------------->
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">adresa</label>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" th:field="*{address}" required/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">grad</label>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" th:field="*{city}" required/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">država</label>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" th:field="*{state}" required/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-4" for="">broj telefona</label>
-                                            <div class="col-8">
-                                                <input type="text" class="form-control" title="xxx-xxx-xxxx" pattern="^\d{10}$" th:field="*{phoneNumber}"
-                                                       required/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row text-center">
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">izmeni</button>
+                            <div class="form-control">
+                                <div class="m-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-4" for="">email</label>
+                                        <div class="col-8">
+                                            <input th:readonly="*{email}" id="email" type="email"
+                                                   class="form-control" th:field="*{email}" required minlength="6"
+                                                   maxlength="64"/>
+                                            <div id="email-error" class="alert alert-danger "
+                                                 th:if="${#fields.hasErrors('email')}" th:errors="*{email}">a
                                             </div>
                                         </div>
 
                                     </div>
-                                </div>
-                            </form>
-
-                            <!-- promena lozinke posebna form -->
-
-                            <form class="form-control" th:action="@{/profile/password}" th:method="post"
-                                  th:object="${user}"
-                                  style="max-width: 600px; margin: 0 auto"
-                            >
-
-                                <div class="form-group row">
-                                    <label class="col-form-label col-4" for="">lozinka</label>
-                                    <div class="col-8">
-                                        <input id="password" type="password" class="form-control"
-                                               th:field="*{password}" required/>
-                                    </div>
-                                </div>
 
                                     <div class="form-group row">
-                                        <label class="col-form-label col-4" for="">lozinka</label>
+                                        <label class="col-form-label col-4" for="">ime</label>
                                         <div class="col-8">
-                                            <input id="password" type="password" class="form-control"
-                                                   th:name="new-password" required/>
+                                            <input type="text" class="form-control" th:field="*{firstName}"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-4" for="">prezime</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" th:field="*{lastName}"
+                                                   required/>
+                                        </div>
+                                    </div>
+
+                                    <!--- -------------------------------------------------------->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-4" for="">adresa</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" th:field="*{address}" required/>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-form-label col-4" for="">potvrda lozinke</label>
+                                        <label class="col-form-label col-4" for="">grad</label>
                                         <div class="col-8">
-                                            <input id="password-confirm" type="password" th:name="password-confirm"
-                                                   class="form-control" required/>
-                                            <div id="password-error" class="alert alert-danger "
-                                                 th:if="${#fields.hasErrors('password')}" th:errors="*{password}">a
-                                            </div>
+                                            <input type="text" class="form-control" th:field="*{city}" required/>
                                         </div>
                                     </div>
 
-                                <div class="form-group row text-center">
-                                    <div class="col-12">
-                                        <button type="submit" class="btn btn-primary">izmeni</button>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-4" for="">država</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" th:field="*{state}" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-4" for="">broj telefona</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" title="xxx-xxx-xxxx"
+                                                   pattern="^\d{10}$" th:field="*{phoneNumber}"
+                                                   required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row text-center">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">izmeni</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- promena lozinke posebna form -->
+
+                        <form class="form-control" th:action="@{/profile/password}" th:method="post"
+                              th:object="${user}"
+                              style="max-width: 600px; margin: 0 auto"
+                        >
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-4" for="">lozinka</label>
+                                <div class="col-8">
+                                    <input id="password" type="password" class="form-control"
+                                           th:field="*{password}" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-4" for="">lozinka</label>
+                                <div class="col-8">
+                                    <input id="password" type="password" class="form-control"
+                                           th:name="new-password" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-4" for="">potvrda lozinke</label>
+                                <div class="col-8">
+                                    <input id="password-confirm" type="password" th:name="password-confirm"
+                                           class="form-control" required/>
+                                    <div id="password-error" class="alert alert-danger "
+                                         th:if="${#fields.hasErrors('password')}" th:errors="*{password}">a
                                     </div>
                                 </div>
+                            </div>
 
-                            </form>
+                            <div class="form-group row text-center">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">izmeni</button>
                                 </div>
+                            </div>
 
-                        </div>
-
+                        </form>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 
-
+<div th:fragment="reservationModal">
+<div class="modal" id="my_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Modal header</h4>
+            </div>
+            <div class="modal-body">
+                <p>some content</p>
+                <input type="text" name="bookId" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

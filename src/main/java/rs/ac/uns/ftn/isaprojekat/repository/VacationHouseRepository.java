@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 @Repository
 public interface VacationHouseRepository extends PagingAndSortingRepository<VacationHouse, Long> {
 
-    @Query(value="select distinct v from VacationHouse v left join VacationHouseReservation vr on v.id=vr.vacationHouse.id " +
-            "where ?1< vr.dateFrom and ?2 < vr.dateFrom " +
-            "or ?1> vr.dateEnd and ?2 > vr.dateEnd " +
-            "or vr.dateFrom is null")
+    @Query(value="select vh from VacationHouse vh where vh.id not in" +
+            " (select vha.id from VacationHouse vha left join VacationHouseReservation vhr on vha.id=vhr.vacationHouse.id where " +
+            "(((?1 between vhr.dateFrom and vhr.dateEnd) or (?2 between vhr.dateFrom and vhr.dateEnd)) and(vhr.reservationType = 'ACTIVE') ))")
     Page<VacationHouse> findVacationHousesNotReserved(LocalDateTime dateFrom, LocalDateTime dateEnd, Pageable pageable);
 }

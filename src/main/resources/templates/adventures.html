@@ -107,12 +107,11 @@
                 <td th:text="${adventure.address}">address</td>
                 <td th:text="${adventure.info}">info</td>
                 <td th:text="${adventure.avgRating}">rating</td>
-                <td><form th:if="${search==true}" th:action="@{/reserve}" method="post">
-                    <input hidden th:value="${adventure.id}" th:name="id">
-                    <input hidden th:value="${dateFrom}" th:name="dateFrom">
-                    <input hidden th:value="${dateEnd}" th:name="dateEnd">
-                    <button type="submit" class="btn btn-primary">Rez</button>
-                </form></td>
+                <td th:if="${search==true}">
+                    <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
+                       th:attr="data-adventure-id=''+${adventure.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">rez</a>
+
+                </td>
             </tr>
             </tbody>
 
@@ -180,7 +179,49 @@
     </div>
 </div>
 
+<div class="modal" id="my_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal header</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+
+            </div>
+            <div class="modal-body">
+                <div class="containerxz">
+                    <form th:action="@{/reserve/adventure}" method="post">
+                        <div>
+                            <p>some content</p>
+                            <input type="text" name="adventureId" value=""/>
+                            <input type="text" name="dateFrom" value=""/>
+                            <input type="text" name="dateEnd" value=""/>
+                            <button class="button" type="submit">Rezerviši</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div th:insert="/index.html :: scripts"></div>
+
+<script>
+    $('#my_modal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget)
+        var adventureId = button.data('adventure-id');
+        var dateFrom = button.data('date-from');
+        var dateEnd = button.data('date-end');
+        $(e.currentTarget).find('input[name="adventureId"]').val(adventureId);
+        $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+        $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+    });
+</script>
 </body>
 </html>

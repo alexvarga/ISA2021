@@ -15,6 +15,6 @@ public interface VacationHouseReservationRepository extends PagingAndSortingRepo
 
     Page<VacationHouseReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time, Pageable pageable);
 
-    Page<VacationHouseReservation> getAllByUserAndDateFromAfter(User user, LocalDateTime time, Pageable pageable);
+    Page<VacationHouseReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
 }

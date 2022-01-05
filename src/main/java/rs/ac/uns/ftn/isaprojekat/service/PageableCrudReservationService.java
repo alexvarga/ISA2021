@@ -11,5 +11,5 @@ public interface PageableCrudReservationService<T, ID> extends PageableCrudServi
 
     Page<T> getAllByUserAndDateEndBefore(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection);
 
-    Page<T> getAllByUserAndDateFromAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection);
+    Page<T> getAllByUserAndDateEndAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection);
 }
