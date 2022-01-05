@@ -70,13 +70,16 @@
             <tr th:each="reservation:${boatReservations}">
                 <td th:text="${reservation.id}"></td>
                 <td th:text="${reservation.reservationTime}">name</td>
-                <td th:text="${reservation.dateFrom}">address</td>
+                <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
                 <td th:text="${reservation.dateEnd}">info</td>
                 <td th:text="${reservation.boat.id}">rating</td>
                 <td th:text="${reservation.boat.avgRating}">rating</td>
                 <td th:text="${reservation.boat.owner.lastName}">rating</td>
                 <td th:text="${reservation.boat.owner.firstName}">rating</td>
                 <td><a th:href="@{/boats/{id}(id=${reservation.boat.id})}" th:text="${reservation.boat.id}">id broda</a>
+                </td>
+                <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
+                    cancelled
                 </td>
             </tr>
             </tbody>
@@ -92,7 +95,7 @@
             <span th:unless="${currentPage>1}">Prva</span>
             &nbsp;
             <a th:if="${currentPage>1}"
-               th:href="@{'/boatHistory/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+               th:href="@{'/boatHistory/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
             <span th:unless="${currentPage>1}">prethodna</span>
             &nbsp;
 
@@ -124,7 +127,7 @@
             <span th:unless="${currentPageB>1}">Prva</span>
             &nbsp;
             <a th:if="${currentPageB>1}"
-               th:href="@{'/reservations/page/'+${currentPageB - 1}+ '/'+${currentPageH}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prethodna </a>
+               th:href="@{'/reservations/page/'+${currentPageB-1}+ '/'+${currentPageH}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prethodna </a>
             <span th:unless="${currentPageB>1}">prethodna</span>
             &nbsp;
 
@@ -203,6 +206,9 @@
                 <td th:text="${reservation.adventure.instructor.firstName}">rating</td>
                 <td><a th:href="@{adventures/{id}(id=${reservation.adventure.id})}"
                        th:text="${reservation.adventure.id}">id</a></td>
+                <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
+                    canceled
+                </td>
             </tr>
             </tbody>
 
@@ -216,7 +222,7 @@
             <span th:unless="${currentPage>1}">Prva</span>
             &nbsp;
             <a th:if="${currentPage>1}"
-               th:href="@{'/adventureHistory/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+               th:href="@{'/adventureHistory/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
             <span th:unless="${currentPage>1}">prethodna</span>
             &nbsp;
 
@@ -247,7 +253,7 @@
             <span th:unless="${currentPageA>1}">Prva</span>
             &nbsp;
             <a th:if="${currentPageA>1}"
-               th:href="@{'/reservations/page/'+${currentPageB}+ '/'+${currentPageH}+ '/'+${currentPageA - 1} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} +'&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}  }">Prethodna </a>
+               th:href="@{'/reservations/page/'+${currentPageB}+ '/'+${currentPageH}+ '/'+${currentPageA-1} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} +'&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}  }">Prethodna </a>
             <span th:unless="${currentPageA>1}">prethodna</span>
             &nbsp;
 
@@ -340,7 +346,7 @@
             <span th:unless="${currentPage>1}">Prva</span>
             &nbsp;
             <a th:if="${currentPage>1}"
-               th:href="@{'/houseHistory/page/'+${currentPage - 1}+ '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+               th:href="@{'/houseHistory/page/'+${currentPage-1}+ '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
             <span th:unless="${currentPage>1}">prethodna</span>
             &nbsp;
 
@@ -371,7 +377,7 @@
             <span th:unless="${currentPageH>1}">Prva</span>
             &nbsp;
             <a th:if="${currentPageH>1}"
-               th:href="@{'/reservations/page/'+${currentPageB}+ '/'+${currentPageH - 1}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prethodna </a>
+               th:href="@{'/reservations/page/'+${currentPageB}+ '/'+${currentPageH-1}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prethodna </a>
             <span th:unless="${currentPageH>1}">prethodna</span>
             &nbsp;
 
