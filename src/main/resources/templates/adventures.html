@@ -18,9 +18,9 @@
             <form th:action="@{/search/adventures}" method="post">
                 <div class="input-group">
                     <label class="form-label" for="from">Od</label>
-                    <input id="from" type="date" class="form-control" th:name="dateFrom" placeholder="">
+                    <input id="from" type="date" class="form-control" th:name="dateFrom" required>
                     <label class="form-label" for="from">Do</label>
-                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022" >
+                    <input id="to" type="date" class="form-control" th:name="dateEnd" required >
 
                     <span class="input-group-btn">
                     <button class="btn btn-secondary" type="submit">Go!</button>
@@ -193,9 +193,9 @@
                     <form th:action="@{/reserve/adventure}" method="post">
                         <div>
                             <p>some content</p>
-                            <input type="text" name="adventureId" value=""/>
-                            <input type="text" name="dateFrom" value=""/>
-                            <input type="text" name="dateEnd" value=""/>
+                            <input disabled type="text" name="adventureId" value=""/>
+                            <input disabled type="text" name="dateFrom" value=""/>
+                            <input disabled type="text" name="dateEnd" value=""/>
                             <button class="button" type="submit">Rezerviši</button>
                         </div>
                     </form>

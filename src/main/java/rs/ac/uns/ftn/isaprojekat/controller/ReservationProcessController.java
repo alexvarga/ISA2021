@@ -40,12 +40,13 @@ public class ReservationProcessController {
     @PostMapping({"/", ""})
     String test(@Param(value="boatId") Long boatId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
         Boat boat = boatService.findById(boatId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";

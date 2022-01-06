@@ -85,4 +85,9 @@ public class BoatReservationJpaService implements BoatReservationService {
         Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
         return boatReservationRepository.getAllByUserAndDateEndAfter(user, time, pageable);
     }
+
+    @Override
+    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end) {
+        return boatReservationRepository.existsByUser(user, start, end);
+    }
 }

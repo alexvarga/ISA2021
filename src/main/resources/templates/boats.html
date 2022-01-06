@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Brodovi</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
 </head>
 <body>
 <header th:insert="/index.html :: header"></header>
@@ -19,12 +21,13 @@
 
     <div class="row">
         <div class="col-lg-6 col-md-6 mx-auto">
-            <form th:action="@{/search/boats}" method="post">
+            <form name="myForm" th:action="@{/search/boats}" method="post" onsubmit="return validateForm();">
                 <div class="input-group">
                     <label class="form-label" for="from">Od</label>
-                    <input id="from" type="date" class="form-control" th:name="dateFrom" placeholder="">
+                    <input id="from" type="date" class="form-control" name="dateFrom" th:name="dateFrom" required >
                     <label class="form-label" for="from">Do</label>
-                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022">
+                    <input id="to" type="date" class="form-control" name="dateEnd" th:name="dateEnd" required>
+                    <p><div id="date-error" name="date-error" class="alert alert-danger" style="display: none" >Neispravan datum.</div></p>
 
                     <span class="input-group-btn">
                     <button class="btn btn-secondary" type="submit">Go!</button>
@@ -181,9 +184,9 @@
                     <form th:action="@{/reserve}" method="post">
                         <div>
                             <p>some content</p>
-                            <input type="text" name="boatId" value=""/>
-                            <input type="text" name="dateFrom" value=""/>
-                            <input type="text" name="dateEnd" value=""/>
+                            <input disabled type="text" name="boatId" value=""/>
+                            <input disabled type="text" name="dateFrom" value=""/>
+                            <input disabled type="text" name="dateEnd" value=""/>
                             <button class="button" type="submit">Rezerviši</button>
                         </div>
                     </form>

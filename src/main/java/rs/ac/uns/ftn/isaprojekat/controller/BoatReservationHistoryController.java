@@ -71,6 +71,8 @@ public class BoatReservationHistoryController {
         model.addAttribute("reverseSortDirection", reverseSortDirection);
         model.addAttribute("boatHistory", true);
 
+        //test query
+        System.out.println(boatReservationService.existsByUser(user, LocalDateTime.of(2023, 1, 3, 0,0), LocalDateTime.of(2023, 1, 5, 0, 0))+ " test custom query");
 
         return "reservations";
     }
