@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Brodovi</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+ <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
 </head>
 <body>
 <header th:insert="/index.html :: header"></header>
@@ -18,19 +20,27 @@
     <div class="row"><p></p></div>
 
     <div class="row">
-        <div class="col-lg-6 col-md-6 mx-auto">
-            <form th:action="@{/search/boats}" method="post">
+        <div class="col-lg-6 col-md-6 mx-auto border-right">
+            <h5 class="text-center">Unesite željeni period rezervacije</h5>
+            <form name="myForm" th:action="@{/search/boats}" method="post" onsubmit="return validateForm();">
                 <div class="input-group">
                     <label class="form-label" for="from">Od</label>
-                    <input id="from" type="date" class="form-control" th:name="dateFrom" placeholder="">
+                    <input id="from" type="date" class="form-control" th:name="dateFrom" required >
                     <label class="form-label" for="from">Do</label>
-                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022">
+                    <input id="to" type="date" class="form-control"  th:name="dateEnd" required>
+                    <p><div id="date-error" name="date-error " class="alert alert-danger" style="display: none" >Neispravan datum.</div></p>
+
 
                     <span class="input-group-btn">
                     <button class="btn btn-secondary" type="submit">Go!</button>
                 </span>
                 </div>
             </form>
+        </div>
+        <div class="col-lg-6 col-md-6 mx-auto justify-content-center text-center ">
+
+            <p>Pogledajte sve akcije ovde.</p>
+
         </div>
     </div>
 
@@ -167,43 +177,16 @@
     </div>
 </div>
 
-<div class="modal" id="my_modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Modal header</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
-
-            </div>
-            <div class="modal-body">
-                <div class="containerxz">
-                    <form th:action="@{/reserve}" method="post">
-                        <div>
-                            <p>some content</p>
-                            <input type="text" name="boatId" value=""/>
-                            <input type="text" name="dateFrom" value=""/>
-                            <input type="text" name="dateEnd" value=""/>
-                            <button class="button" type="submit">Rezerviši</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:insert="/fragments/modal/_modals::reservationModal('/reserve')"></div>
 <div th:insert="/index.html :: scripts"></div>
 
 <script>
     $('#my_modal').on('show.bs.modal', function (e) {
         var button = $(e.relatedTarget)
-        var boatId = button.data('boat-id');
+        var entityId = button.data('boat-id');
         var dateFrom = button.data('date-from');
         var dateEnd = button.data('date-end');
-        $(e.currentTarget).find('input[name="boatId"]').val(boatId);
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
         $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
         $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
     });

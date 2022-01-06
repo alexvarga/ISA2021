@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -36,14 +38,16 @@ public class ReservationProcessController {
 
 
     @PostMapping({"/", ""})
-    String test(@Param(value="boatId") Long boatId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd){
+    String test(@Param(value="entityId") Long entityId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        System.out.println(entityId+ " boat id "+dateFrom+" date from");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
-        Boat boat = boatService.findById(boatId);
+        Boat boat = boatService.findById(entityId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
@@ -61,20 +65,21 @@ public class ReservationProcessController {
         System.out.println(reservation.getReservationTime());
 
         boatReservationService.save(1L, reservation);
+        userService.sendReservationConfirmationEmail(boat.getName(), "brod", dateFrom, dateEnd, boat.getAddress(), email );
 
         return "reservation_form";
     }
 
 
     @PostMapping({"/adventure", "/adventure/"})
-    String adventureReserve(@Param(value="adventureId") Long adventureId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd){
-
+    String adventureReserve(@Param(value="entityId") Long entityId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
+        System.out.println(entityId+"  adventure id"+dateFrom);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
-        Adventure adventure = adventureService.findById(adventureId);
+       Adventure adventure = adventureService.findById(entityId);
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
@@ -91,19 +96,21 @@ public class ReservationProcessController {
         System.out.println(reservation.getReservationTime());
 
         adventureReservationService.save(1L, reservation);
+        userService.sendReservationConfirmationEmail(adventure.getName(), "avanturu", dateFrom, dateEnd, adventure.getAddress(), email );
+
 
         return "reservation_form";
     }
 
     @PostMapping({"/house", "/house/"})
-    String houseReserve(@Param(value="houseId") Long houseId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd){
+    String houseReserve(@Param(value="entityId") Long entityId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
-        VacationHouse vacationHouse = vacationHouseService.findById(houseId);
+        VacationHouse vacationHouse = vacationHouseService.findById(entityId);
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
@@ -120,9 +127,11 @@ public class ReservationProcessController {
         System.out.println(reservation.getReservationTime());
 
         vacationHouseReservationService.save(1L, reservation);
+        userService.sendReservationConfirmationEmail(vacationHouse.getName(), "vikendicu", dateFrom, dateEnd, vacationHouse.getAddress(), email );
 
         return "reservation_form";
     }
+
 
 
 }

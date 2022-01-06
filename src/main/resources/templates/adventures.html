@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Avanture</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
 
 </head>
 <body>
@@ -15,12 +17,13 @@
 
     <div class="row">
         <div class="col-lg-6 col-md-6 mx-auto">
-            <form th:action="@{/search/adventures}" method="post">
+            <form name="myForm" th:action="@{/search/adventures}" method="post" onsubmit="return validateForm();">
                 <div class="input-group">
                     <label class="form-label" for="from">Od</label>
-                    <input id="from" type="date" class="form-control" th:name="dateFrom" placeholder="">
+                    <input id="from" type="date" class="form-control" th:name="dateFrom" required>
                     <label class="form-label" for="from">Do</label>
-                    <input id="to" type="date" class="form-control" th:name="dateEnd" placeholder="02/02/2022" >
+                    <input id="to" type="date" class="form-control" th:name="dateEnd" required >
+                    <p><div id="date-error" name="date-error" class="alert alert-danger" style="display: none" >Neispravan datum.</div></p>
 
                     <span class="input-group-btn">
                     <button class="btn btn-secondary" type="submit">Go!</button>
@@ -179,46 +182,19 @@
     </div>
 </div>
 
-<div class="modal" id="my_modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Modal header</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
-
-            </div>
-            <div class="modal-body">
-                <div class="containerxz">
-                    <form th:action="@{/reserve/adventure}" method="post">
-                        <div>
-                            <p>some content</p>
-                            <input type="text" name="adventureId" value=""/>
-                            <input type="text" name="dateFrom" value=""/>
-                            <input type="text" name="dateEnd" value=""/>
-                            <button class="button" type="submit">Rezerviši</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
+<div th:insert="/fragments/modal/_modals::reservationModal('/reserve/adventure')"></div>
 
 <div th:insert="/index.html :: scripts"></div>
 
 <script>
     $('#my_modal').on('show.bs.modal', function (e) {
         var button = $(e.relatedTarget)
-        var adventureId = button.data('adventure-id');
+        var entityId = button.data('adventure-id');
         var dateFrom = button.data('date-from');
         var dateEnd = button.data('date-end');
-        $(e.currentTarget).find('input[name="adventureId"]').val(adventureId);
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
         $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
         $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
     });
