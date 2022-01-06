@@ -168,44 +168,19 @@
 </div>
 
 
-<div class="modal" id="my_modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Modal header</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
 
-            </div>
-            <div class="modal-body">
-                <div class="containerxz">
-                    <form th:action="@{/reserve/house}" method="post">
-                        <div>
-                            <p>some content</p>
-                            <input disabled type="text" name="houseId" value=""/>
-                            <input disabled type="text" name="dateFrom" value=""/>
-                            <input disabled type="text" name="dateEnd" value=""/>
-                            <button class="button" type="submit">Rezerviši</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:insert="/fragments/modal/_modals::reservationModal('/reserve/house')"></div>
+
 
 <div th:replace="/index.html :: scripts"></div>
 
 <script>
     $('#my_modal').on('show.bs.modal', function (e) {
         var button = $(e.relatedTarget)
-        var houseId = button.data('house-id');
+        var entityId = button.data('house-id');
         var dateFrom = button.data('date-from');
         var dateEnd = button.data('date-end');
-        $(e.currentTarget).find('input[name="houseId"]').val(houseId);
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
         $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
         $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
     });
