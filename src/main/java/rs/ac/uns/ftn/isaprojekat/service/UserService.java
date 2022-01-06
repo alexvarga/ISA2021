@@ -18,7 +18,7 @@ public interface UserService extends CrudService<User, Long> {
 
     boolean verifyUser(String verificationCode);
 
-
+    void sendReservationConfirmationEmail(String entity, String entityType, String dateFrom, String dateEnd, String address, String userMail) throws UnsupportedEncodingException, MessagingException;
 
 
 }

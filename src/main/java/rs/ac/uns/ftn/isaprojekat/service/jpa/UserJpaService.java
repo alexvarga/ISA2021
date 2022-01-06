@@ -86,6 +86,8 @@ public class UserJpaService implements UserService {
 
     }
 
+
+
     @Override
     public boolean verifyUser(String verificationCode) {
         User user = findByVerificationCode(verificationCode);
@@ -100,5 +102,20 @@ public class UserJpaService implements UserService {
 
     }
 
+    @Override
+    public void sendReservationConfirmationEmail(String entityName, String entityType, String dateFrom, String dateEnd, String address, String userMail) throws UnsupportedEncodingException, MessagingException {
+        String subject = "Potvrda rezervacije";
+        String sender = "isa-projekat";
+        String content = "Uspešno ste rezervisali "+entityType+" "+entityName+ "u periodu od "+dateFrom+" do "+dateEnd+" sa adresom "+address+".";
 
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
+        helper.setTo(userMail);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
 }

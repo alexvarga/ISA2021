@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -36,7 +38,7 @@ public class ReservationProcessController {
 
 
     @PostMapping({"/", ""})
-    String test(@Param(value="boatId") Long boatId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd){
+    String test(@Param(value="boatId") Long boatId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -61,13 +63,14 @@ public class ReservationProcessController {
         System.out.println(reservation.getReservationTime());
 
         boatReservationService.save(1L, reservation);
+        userService.sendReservationConfirmationEmail(boat.getName(), "brod", dateFrom, dateEnd, boat.getAddress(), email );
 
         return "reservation_form";
     }
 
 
     @PostMapping({"/adventure", "/adventure/"})
-    String adventureReserve(@Param(value="adventureId") Long adventureId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd){
+    String adventureReserve(@Param(value="adventureId") Long adventureId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -91,12 +94,14 @@ public class ReservationProcessController {
         System.out.println(reservation.getReservationTime());
 
         adventureReservationService.save(1L, reservation);
+        userService.sendReservationConfirmationEmail(adventure.getName(), "avanturu", dateFrom, dateEnd, adventure.getAddress(), email );
+
 
         return "reservation_form";
     }
 
     @PostMapping({"/house", "/house/"})
-    String houseReserve(@Param(value="houseId") Long houseId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd){
+    String houseReserve(@Param(value="houseId") Long houseId, @Param(value="dateFrom") String dateFrom, @Param(value = "dateEnd") String dateEnd) throws UnsupportedEncodingException, MessagingException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -120,9 +125,11 @@ public class ReservationProcessController {
         System.out.println(reservation.getReservationTime());
 
         vacationHouseReservationService.save(1L, reservation);
+        userService.sendReservationConfirmationEmail(vacationHouse.getName(), "vikendicu", dateFrom, dateEnd, vacationHouse.getAddress(), email );
 
         return "reservation_form";
     }
+
 
 
 }
