@@ -202,8 +202,8 @@ public class DataLoader implements CommandLineRunner {
         brd.setUser(null);
         brd.setReservationType(ReservationType.DISCOUNTOFFER);
         brd.setReservationTime(LocalDateTime.now());
-        brd.setDateFrom(LocalDateTime.of(2021, 2, 1, 0, 0));
-        brd.setDateEnd(LocalDateTime.of(2021, 2, 6, 0, 0));
+        brd.setDateFrom(LocalDateTime.of(2022, 2, 1, 0, 0));
+        brd.setDateEnd(LocalDateTime.of(2022, 2, 6, 0, 0));
         boatReservationService.save(1L, brd);
 
         BoatReservation br2 = new BoatReservation();
@@ -214,6 +214,15 @@ public class DataLoader implements CommandLineRunner {
         br2.setDateFrom(LocalDateTime.of(2022, 1, 1, 0, 0));
         br2.setDateEnd(LocalDateTime.of(2022, 1, 6, 0, 0));
         boatReservationService.save(1L, br2);
+
+        BoatReservation br3 = new BoatReservation();
+        br3.setBoat(b1);
+        br3.setUser(user);
+        br3.setReservationTime(LocalDateTime.of(2022,10,28,20,30));
+        br3.setDateFrom(LocalDateTime.of(2022, 11, 1, 0, 0));
+        br3.setDateEnd(LocalDateTime.of(2022, 11, 6, 0, 0));
+        br3.setReservationType(ReservationType.ACTIVE);
+        boatReservationService.save(1L, br3);
 
 
         VacationHouseReservation vhr1 = new VacationHouseReservation();
@@ -233,6 +242,15 @@ public class DataLoader implements CommandLineRunner {
         vhr2.setDateFrom(LocalDateTime.of(2022, 1, 1, 0, 0));
         vhr2.setDateEnd(LocalDateTime.of(2022, 1, 6, 0, 0));
         vacationHouseReservationService.save(1L, vhr2);
+
+        VacationHouseReservation vhrd = new VacationHouseReservation();
+        vhrd.setVacationHouse(vh1);
+        vhrd.setUser(null);
+        vhrd.setReservationType(ReservationType.DISCOUNTOFFER);
+        vhrd.setReservationTime(LocalDateTime.now());
+        vhrd.setDateFrom(LocalDateTime.of(2022, 9, 1, 0, 0));
+        vhrd.setDateEnd(LocalDateTime.of(2022, 9, 6, 0, 0));
+        vacationHouseReservationService.save(1L, vhrd);
 
         AdventureReservation ar1 = new AdventureReservation();
         ar1.setAdventure(a1);
@@ -270,14 +288,14 @@ public class DataLoader implements CommandLineRunner {
         ar4.setDateEnd(LocalDateTime.of(2022, 5, 16, 0, 0));
         adventureReservationService.save(1L, ar4);
 
-        BoatReservation br3 = new BoatReservation();
-        br3.setBoat(b1);
-        br3.setUser(user);
-        br3.setReservationTime(LocalDateTime.of(2022,10,28,20,30));
-        br3.setDateFrom(LocalDateTime.of(2022, 11, 1, 0, 0));
-        br3.setDateEnd(LocalDateTime.of(2022, 11, 6, 0, 0));
-        br3.setReservationType(ReservationType.ACTIVE);
-        boatReservationService.save(1L, br3);
+        AdventureReservation ard = new AdventureReservation();
+        ard.setAdventure(a1);
+        ard.setUser(null);
+        ard.setReservationType(ReservationType.DISCOUNTOFFER);
+        ard.setReservationTime(LocalDateTime.now());
+        ard.setDateFrom(LocalDateTime.of(2022, 3, 6, 0, 0));
+        ard.setDateEnd(LocalDateTime.of(2022, 3, 16, 0, 0));
+        adventureReservationService.save(1L, ard);
 
 
 

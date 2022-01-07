@@ -15,6 +15,6 @@ public interface AdventureRepository extends PagingAndSortingRepository<Adventur
 
     @Query(value="select a from Adventure a where a.id not in" +
             " (select ad.id from Adventure ad left join AdventureReservation ar on ad.id=ar.adventure.id where " +
-            "(((?1 between ar.dateFrom and ar.dateEnd) or (?2 between ar.dateFrom and ar.dateEnd)) and(ar.reservationType = 'ACTIVE') ))")
+            "(((?1 between ar.dateFrom and ar.dateEnd) or (?2 between ar.dateFrom and ar.dateEnd)or (?1< ar.dateFrom and ?2>ar.dateEnd)) and(ar.reservationType = 'ACTIVE' or ar.reservationType='DISCOUNTOFFER') ))")
     Page<Adventure> findAdventuresNotReserved(LocalDateTime dateFrom, LocalDateTime dateEnd, Pageable pageable);
 }
