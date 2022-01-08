@@ -11,3 +11,21 @@ function validateForm() {
     }
 
 }
+
+function checkCancelDate() {
+
+    console.log(document.forms["cancelForm"]["dateFrom"].value);
+    let x = new Date(document.forms["cancelForm"]["dateFrom"].value);
+    let todayPlus3 = new Date();
+    todayPlus3.setDate(todayPlus3.getDate() + 3);
+    if(x>todayPlus3){
+        return true;
+    }else{
+        document.getElementById('cancel-error-div').style.display = 'inline';
+    }
+    console.log(x);
+    console.log(todayPlus3);
+
+    return false;
+
+}

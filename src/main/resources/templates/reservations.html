@@ -5,6 +5,8 @@
     <title>Rezervacije</title>
 
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
 </head>
 <body>
 
@@ -80,6 +82,11 @@
                 </td>
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                     cancelled
+                </td>
+                <td th:unless="${boatHistory==true}">
+                    <a class="btn btn-primary" href="#cancel_boat_modal" data-toggle="modal"
+                       th:attr="data-reservation-id=''+${reservation.id}+'', data-date-from=''+${reservation.dateFrom}+'', data-date-end=''+${reservation.dateEnd}+'' ">rez</a>
+
                 </td>
             </tr>
             </tbody>
@@ -403,6 +410,61 @@
 
     </div>
 </div>
+
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/boat', 'cancel_boat_modal')"></div>
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/house', 'cancel_adventure_modal')"></div>
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/adventure', 'cancel_house_modal')"></div>
     <div th:insert="/index.html :: scripts"></div>
+
+<script>
+    $('#cancel_boat_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('reservation-id');
+        let dateFrom = button.data('date-from');
+        let dateEnd = button.data('date-end');
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
+        $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+        $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+    });
+    $('#cancel_boat_modal').on('hidden.bs.modal', function () {
+        let v = document.getElementById('cancel-error-div');
+        v.style.display = "none";
+        console.log("hello");
+    })
+
+    $('#cancel_adventure_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('reservation-id');
+        let dateFrom = button.data('date-from');
+        let dateEnd = button.data('date-end');
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
+        $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+        $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+    });
+
+    $('#cancel_house_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('reservation-id');
+        let dateFrom = button.data('date-from');
+        let dateEnd = button.data('date-end');
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
+        $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+        $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+    });
+
+    // let sub = document.getRootNode();
+    // sub.addEventListener("focus", function () {
+    //     let v = document.getElementById('cancel-error');
+    //     v.style.display = "none";
+    //     console.log("helllllllo");
+    //
+    // });
+
+
+
+
+
+</script>
+
 </body>
 </html>

@@ -20,6 +20,7 @@ public interface BoatReservationRepository extends PagingAndSortingRepository<Bo
 
     Page<BoatReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
+    //todo ovde treba da se doda za aktivne još i da nisu cancelled, a za history još or cancelled
     @Query(value="select br from BoatReservation br where br.user = ?1 and br.dateEnd > ?2 and not(br.reservationType ='DISCOUNTOFFER') ")
     Page<BoatReservation> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
