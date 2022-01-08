@@ -15,7 +15,10 @@ import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -67,7 +70,7 @@ public class VacationHouseDiscountOfferController {
     }
 
     @PostMapping({"/houses/discount/reserve"})
-    public String makeAReservation(Model model, @Param(value = "offerId") Long offerId ){
+    public String makeAReservation(Model model, @Param(value = "offerId") Long offerId ) throws UnsupportedEncodingException, MessagingException {
 
         System.out.println(offerId);
         VacationHouseReservation vacationHouseReservation = vacationHouseReservationService.findById(offerId);
@@ -80,6 +83,12 @@ public class VacationHouseDiscountOfferController {
         vacationHouseReservation.setReservationType(ReservationType.ACTIVE);
         vacationHouseReservation.setReservationTime(LocalDateTime.now());
         vacationHouseReservationService.save(1L, vacationHouseReservation);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        userService.sendReservationConfirmationEmail(vacationHouseReservation.getVacationHouse().getName(),
+                "vikendicu", vacationHouseReservation.getDateFrom().format(formatter), vacationHouseReservation.getDateEnd().format(formatter),
+                vacationHouseReservation.getVacationHouse().getAddress(), email );
+
 
         //TODO mail confirmation
 

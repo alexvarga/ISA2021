@@ -15,7 +15,10 @@ import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -65,7 +68,7 @@ public class AdventureDiscountOfferController {
     }
 
     @PostMapping({"/adventures/discount/reserve"})
-    public String makeAReservation(Model model, @Param(value = "offerId") Long offerId ){
+    public String makeAReservation(Model model, @Param(value = "offerId") Long offerId ) throws UnsupportedEncodingException, MessagingException {
 
         System.out.println(offerId);
         AdventureReservation adventureReservation = adventureReservationService.findById(offerId);
@@ -79,7 +82,10 @@ public class AdventureDiscountOfferController {
         adventureReservation.setReservationTime(LocalDateTime.now());
         adventureReservationService.save(1L, adventureReservation);
 
-        //TODO mail confirmation
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        userService.sendReservationConfirmationEmail(adventureReservation.getAdventure().getName(),
+                "brod", adventureReservation.getDateFrom().format(formatter), adventureReservation.getDateEnd().format(formatter),
+                adventureReservation.getAdventure().getAddress(), email );
 
         return "index";
 
