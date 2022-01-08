@@ -193,7 +193,7 @@
     </div>
 </div>
 
-<div th:fragment="cancelReservation(action, modalId)">
+<div th:fragment="cancelReservation(action, modalId, entity)">
     <div class="modal" th:id="${modalId}">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -205,13 +205,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <form id="cancelForm" th:action="@{${action}}" method="post" onsubmit="return checkCancelDate();">
+                        <form id="cancelForm" th:action="@{${action}}" method="post" th:onsubmit="return checkCancelDate(${entity})" >
                             <div>
-                               <div id="cancel-error-div" style="display: none"> <p id="cancel-error" name="cancel-error"  class="alert alert-danger">Otazivanje moguće bar tri dana pre početka rezervacije.</p></div>
+                               <div th:id="${entity}+'cancel-error-div'" style="display: none"> <p id="cancel-error" name="cancel-error"  class="alert alert-danger">Otazivanje moguće bar tri dana pre početka rezervacije.</p></div>
                                 <p>Da li ste sigurni da želite da otkažete ovu rezervaciju? Pravljenje nove rezervacije u ovom periodu će vam biti onemogućeno.</p>
-                                <input readonly type="text" name="entityId" value=""/>
-                                <input readonly type="text" name="dateFrom" value=""/>
-                                <input readonly type="text" name="dateEnd" value=""/>
+                                <input  readonly type="text" th:name="${entity}+'entityId'" value=""/>
+                                <input readonly type="text" th:id="${entity}+'dateFrom'" th:name="${entity}+'dateFrom'" value=""/>
+                                <input readonly type="text" th:name="${entity}+'dateEnd'" value=""/>
                                 <button class="button" type="submit">Otkaži</button>
                             </div>
                         </form>

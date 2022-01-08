@@ -239,8 +239,8 @@ public class DataLoader implements CommandLineRunner {
         vhr2.setUser(user);
         vhr2.setReservationType(ReservationType.ACTIVE);
         vhr2.setReservationTime(LocalDateTime.now());
-        vhr2.setDateFrom(LocalDateTime.of(2022, 1, 1, 0, 0));
-        vhr2.setDateEnd(LocalDateTime.of(2022, 1, 6, 0, 0));
+        vhr2.setDateFrom(LocalDateTime.of(2022, 2, 1, 0, 0));
+        vhr2.setDateEnd(LocalDateTime.of(2022, 2, 6, 0, 0));
         vacationHouseReservationService.save(1L, vhr2);
 
         VacationHouseReservation vhrd = new VacationHouseReservation();
