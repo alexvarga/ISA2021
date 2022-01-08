@@ -2,9 +2,11 @@ package rs.ac.uns.ftn.isaprojekat.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import rs.ac.uns.ftn.isaprojekat.model.AdventureReservation;
+import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 
 import java.time.LocalDateTime;
@@ -17,5 +19,18 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
 
     Page<AdventureReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
+
+
+    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd > ?2 and not(ar.reservationType ='DISCOUNTOFFER') ")
+    Page<AdventureReservation> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
+
+    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd < ?2 and not(ar.reservationType ='DISCOUNTOFFER') ")
+    Page<AdventureReservation> getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
+
+    Page<AdventureReservation> getAllByReservationType(ReservationType type, Pageable pageable);
+
+
+    @Query("select case when count(ar.user.id)>0 then true else false end from AdventureReservation ar where ((?2 between ar.dateFrom and ar.dateEnd) or (?3 between ar.dateFrom and ar.dateEnd)) and ?1 = ar.user")
+    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end);
 
 }

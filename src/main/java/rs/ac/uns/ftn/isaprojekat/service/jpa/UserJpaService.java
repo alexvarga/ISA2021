@@ -106,7 +106,7 @@ public class UserJpaService implements UserService {
     public void sendReservationConfirmationEmail(String entityName, String entityType, String dateFrom, String dateEnd, String address, String userMail) throws UnsupportedEncodingException, MessagingException {
         String subject = "Potvrda rezervacije";
         String sender = "isa-projekat";
-        String content = "Uspešno ste rezervisali "+entityType+" "+entityName+ "u periodu od "+dateFrom+" do "+dateEnd+" sa adresom "+address+".";
+        String content = "Uspešno ste rezervisali "+entityType+" "+entityName+ " u periodu od "+dateFrom+" do "+dateEnd+" sa adresom "+address+".";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

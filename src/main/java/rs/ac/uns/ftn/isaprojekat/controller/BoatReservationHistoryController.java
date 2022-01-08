@@ -48,7 +48,7 @@ public class BoatReservationHistoryController {
         System.out.println(sortField);
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
-        Page<BoatReservation> page = boatReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
+        Page<BoatReservation> page = boatReservationService.getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
         List<BoatReservation> entities = page.getContent();
 
         Long numberOfElements = page.getTotalElements();

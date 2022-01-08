@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.AdventureReservation;
+import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.AdventureReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
@@ -81,4 +82,31 @@ public class AdventureReservationJpaService implements AdventureReservationServi
         return pageable;
     }
 
+
+    @Override
+    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end) {
+
+        return adventureReservationRepository.existsByUser(user, start, end);
+    }
+
+    @Override
+    public Page<AdventureReservation> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+        Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
+
+        return adventureReservationRepository.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, time, pageable);
+    }
+
+    @Override
+    public Page<AdventureReservation> getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection) {
+        Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
+
+        return adventureReservationRepository.getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(user, time, pageable);
+    }
+
+    @Override
+    public Page<AdventureReservation> getAllByReservationType(ReservationType type, int pageNumber, String sortField, String sortDirection) {
+        Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
+
+        return adventureReservationRepository.getAllByReservationType(type, pageable);
+    }
 }
