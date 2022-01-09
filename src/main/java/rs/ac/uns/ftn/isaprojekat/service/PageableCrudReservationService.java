@@ -14,7 +14,7 @@ public interface PageableCrudReservationService<T, ID> extends PageableCrudServi
 
     Page<T> getAllByUserAndDateEndAfter(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection);
 
-    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end);
+    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
     Page<T> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, int pageNumber, String sortField, String sortDirection);
 

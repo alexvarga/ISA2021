@@ -32,7 +32,7 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
     Page<AdventureReservation> getAllByReservationType(ReservationType type, Pageable pageable);
 
 
-    @Query("select case when count(ar.user.id)>0 then true else false end from AdventureReservation ar where ((?2 between ar.dateFrom and ar.dateEnd) or (?3 between ar.dateFrom and ar.dateEnd)) and ?1 = ar.user")
-    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end);
+    @Query("select case when count(ar.user.id)>0 then true else false end from AdventureReservation ar where ((?2 between ar.dateFrom and ar.dateEnd) or (?3 between ar.dateFrom and ar.dateEnd)) and ?1 = ar.user and ?4=ar.adventure.id")
+    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
 }

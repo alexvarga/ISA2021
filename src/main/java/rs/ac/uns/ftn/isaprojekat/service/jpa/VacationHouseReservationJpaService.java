@@ -76,8 +76,8 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
     }
 
     @Override
-    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end) {
-       return vacationHouseReservationRepository.existsByUser(user, start, end);
+    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id) {
+       return vacationHouseReservationRepository.existsByUser(user, start, end, id);
     }
 
     @Override

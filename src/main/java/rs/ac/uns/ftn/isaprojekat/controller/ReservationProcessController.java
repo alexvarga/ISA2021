@@ -52,22 +52,28 @@ public class ReservationProcessController {
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
         //DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory()
+        boolean hi = boatReservationService.existsByUser(user, LocalDateTime.parse(dateFrom, formatter), LocalDateTime.parse(dateEnd, formatter), entityId);
+        if (hi){
+            System.out.println("nemate praveo rezervacije u ovom terminu");
+            return "fail";
+        }else {
 
-        System.out.println(boat.getName()+" "+dateFrom + " "+ dateEnd);
+            System.out.println(boat.getName() + " " + dateFrom + " " + dateEnd);
 
-        BoatReservation reservation = new BoatReservation();
-        reservation.setUser(user);
-        reservation.setBoat(boat);
-        reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
-        reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
-        reservation.setReservationType(ReservationType.ACTIVE);
-        reservation.setReservationTime(LocalDateTime.now());
-        System.out.println(reservation.getReservationTime());
+            BoatReservation reservation = new BoatReservation();
+            reservation.setUser(user);
+            reservation.setBoat(boat);
+            reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
+            reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
+            reservation.setReservationType(ReservationType.ACTIVE);
+            reservation.setReservationTime(LocalDateTime.now());
+            System.out.println(reservation.getReservationTime());
 
-        boatReservationService.save(1L, reservation);
-        userService.sendReservationConfirmationEmail(boat.getName(), "brod", dateFrom, dateEnd, boat.getAddress(), email );
+            boatReservationService.save(1L, reservation);
+            userService.sendReservationConfirmationEmail(boat.getName(), "brod", dateFrom, dateEnd, boat.getAddress(), email);
 
-        return "reservation_form";
+            return "reservation_form";
+        }
     }
 
 
@@ -83,23 +89,29 @@ public class ReservationProcessController {
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
-
-        System.out.println(adventure.getName()+" "+dateFrom + " "+ dateEnd);
-
-        AdventureReservation reservation = new AdventureReservation();
-        reservation.setUser(user);
-        reservation.setAdventure(adventure);
-        reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
-        reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
-        reservation.setReservationType(ReservationType.ACTIVE);
-        reservation.setReservationTime(LocalDateTime.now());
-        System.out.println(reservation.getReservationTime());
-
-        adventureReservationService.save(1L, reservation);
-        userService.sendReservationConfirmationEmail(adventure.getName(), "avanturu", dateFrom, dateEnd, adventure.getAddress(), email );
+        boolean permission = adventureReservationService.existsByUser(user, LocalDateTime.parse(dateFrom, formatter), LocalDateTime.parse(dateEnd, formatter), entityId);
+        if (permission){
+            return "fail";
+        }else {
 
 
-        return "reservation_form";
+            System.out.println(adventure.getName() + " " + dateFrom + " " + dateEnd);
+
+            AdventureReservation reservation = new AdventureReservation();
+            reservation.setUser(user);
+            reservation.setAdventure(adventure);
+            reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
+            reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
+            reservation.setReservationType(ReservationType.ACTIVE);
+            reservation.setReservationTime(LocalDateTime.now());
+            System.out.println(reservation.getReservationTime());
+
+            adventureReservationService.save(1L, reservation);
+            userService.sendReservationConfirmationEmail(adventure.getName(), "avanturu", dateFrom, dateEnd, adventure.getAddress(), email);
+
+
+            return "reservation_form";
+        }
     }
 
     @PostMapping({"/house", "/house/"})
@@ -114,22 +126,27 @@ public class ReservationProcessController {
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
+        boolean permission = vacationHouseReservationService.existsByUser(user, LocalDateTime.parse(dateFrom, formatter), LocalDateTime.parse(dateEnd, formatter), entityId);
+        if (permission){
+            return "fail";
+        }else {
 
-        System.out.println(vacationHouse.getName()+" "+dateFrom + " "+ dateEnd);
+            System.out.println(vacationHouse.getName() + " " + dateFrom + " " + dateEnd);
 
-        VacationHouseReservation reservation = new VacationHouseReservation();
-        reservation.setUser(user);
-        reservation.setVacationHouse(vacationHouse);
-        reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
-        reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
-        reservation.setReservationType(ReservationType.ACTIVE);
-        reservation.setReservationTime(LocalDateTime.now());
-        System.out.println(reservation.getReservationTime());
+            VacationHouseReservation reservation = new VacationHouseReservation();
+            reservation.setUser(user);
+            reservation.setVacationHouse(vacationHouse);
+            reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
+            reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
+            reservation.setReservationType(ReservationType.ACTIVE);
+            reservation.setReservationTime(LocalDateTime.now());
+            System.out.println(reservation.getReservationTime());
 
-        vacationHouseReservationService.save(1L, reservation);
-        userService.sendReservationConfirmationEmail(vacationHouse.getName(), "vikendicu", dateFrom, dateEnd, vacationHouse.getAddress(), email );
+            vacationHouseReservationService.save(1L, reservation);
+            userService.sendReservationConfirmationEmail(vacationHouse.getName(), "vikendicu", dateFrom, dateEnd, vacationHouse.getAddress(), email);
 
-        return "reservation_form";
+            return "reservation_form";
+        }
     }
 
 
