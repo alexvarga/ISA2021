@@ -8,11 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import rs.ac.uns.ftn.isaprojekat.model.AdventureReservation;
-import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
-import rs.ac.uns.ftn.isaprojekat.model.User;
-import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
+import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
@@ -61,11 +59,6 @@ public class ReservationController {
                                          @Param(value="sortDirectionB") String sortDirectionB,
                                          @Param(value="sortDirectionH") String sortDirectionH){
 
-
-
-
-
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
@@ -77,18 +70,14 @@ public class ReservationController {
         if(sortDirectionB==null){sortDirectionH="asc";}
         if(sortDirectionH==null){sortDirectionH="asc";}
 
-        Page<AdventureReservation> pageAdventure = adventureReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageA, sortFieldA, sortDirectionA);
-        Page<BoatReservation> pageBoat = boatReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageB, sortFieldB, sortDirectionB);
-        Page<VacationHouseReservation> pageHouse = vacationHouseReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageH, sortFieldH, sortDirectionH);
-        System.out.println(pageAdventure+ "ovo je page adventure");
+        Page<AdventureReservation> pageAdventure = adventureReservationService.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPageA, sortFieldA, sortDirectionA);
+        Page<BoatReservation> pageBoat = boatReservationService.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPageB, sortFieldB, sortDirectionB);
+        Page<VacationHouseReservation> pageHouse = vacationHouseReservationService.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPageH, sortFieldH, sortDirectionH);
 
         List<VacationHouseReservation> entitiesHouse = pageHouse.getContent();
-        System.out.println(entitiesHouse + " ovo su kucee");
         List<BoatReservation> entitiesBoat = pageBoat.getContent();
-        System.out.println(entitiesHouse + " ovo su brodovi");
 
         List<AdventureReservation> entitiesAdventure = pageAdventure.getContent();
-        System.out.println(entitiesHouse + " ovo su avanture");
 
 
         Long numberOfElementsHouse = pageHouse.getTotalElements();
@@ -144,6 +133,36 @@ public class ReservationController {
         return "reservations";
     }
 
+
+   @PostMapping("/cancel/boat")
+   public String cancelBoatReservation( @Param(value="boatentityId") Long boatentityId){
+
+       BoatReservation boatReservation = boatReservationService.findById(boatentityId);
+       System.out.println(boatReservation.getReservationType());
+       boatReservation.setReservationType(ReservationType.CANCELLED);
+       boatReservationService.save(1L, boatReservation);
+       return "index"; //Todo make success.html
+    }
+
+    @PostMapping("/cancel/adventure")
+    public String cancelAdventureReservation( @Param(value="adventureentityId") Long adventureentityId){
+
+        AdventureReservation adventureReservation = adventureReservationService.findById(adventureentityId);
+        adventureReservation.setReservationType(ReservationType.CANCELLED);
+        adventureReservationService.save(1L, adventureReservation);
+        System.out.println("adventure "+adventureReservation.getReservationType());
+        return "index";
+    }
+
+    @PostMapping("/cancel/house")
+    public String cancelVacationHouseReservation( @Param(value="houseentityId") Long houseentityId){
+        VacationHouseReservation vacationHouseReservation = vacationHouseReservationService.findById(houseentityId);
+        vacationHouseReservation.setReservationType(ReservationType.CANCELLED);
+        vacationHouseReservationService.save(1L, vacationHouseReservation);
+        System.out.println("house "+vacationHouseReservation.getReservationType());
+
+        return "index";
+    }
 
 
 

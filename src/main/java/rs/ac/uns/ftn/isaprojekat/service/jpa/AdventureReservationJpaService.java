@@ -84,9 +84,9 @@ public class AdventureReservationJpaService implements AdventureReservationServi
 
 
     @Override
-    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end) {
+    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id) {
 
-        return adventureReservationRepository.existsByUser(user, start, end);
+        return adventureReservationRepository.existsByUser(user, start, end, id);
     }
 
     @Override

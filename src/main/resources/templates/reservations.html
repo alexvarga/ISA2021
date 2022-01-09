@@ -5,6 +5,8 @@
     <title>Rezervacije</title>
 
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
 </head>
 <body>
 
@@ -80,6 +82,11 @@
                 </td>
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                     cancelled
+                </td>
+                <td th:unless="${boatHistory==true}">
+                    <a class="btn btn-primary" href="#cancel_boat_modal" data-toggle="modal"
+                       th:attr="data-boat-reservation-id=''+${reservation.id}+'', data-boat-date-from=''+${reservation.dateFrom}+'', data-boat-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+
                 </td>
             </tr>
             </tbody>
@@ -209,6 +216,11 @@
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                     canceled
                 </td>
+                <td th:unless="${adventureHistory==true}">
+                    <a class="btn btn-primary" href="#cancel_adventure_modal" data-toggle="modal"
+                       th:attr="data-adventure-reservation-id=''+${reservation.id}+'', data-adventure-date-from=''+${reservation.dateFrom}+'', data-adventure-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+
+                </td>
             </tr>
             </tbody>
 
@@ -332,6 +344,14 @@
                     <td th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</td>
                     <td><a th:href="@{houses/{id}(id=${reservation.vacationHouse.id})}"
                            th:text="${reservation.vacationHouse.id}">id</a></td>
+                    <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
+                        canceled
+                    </td>
+                    <td th:unless="${vacationHouseHistory==true}">
+                        <a class="btn btn-primary" href="#cancel_house_modal" data-toggle="modal"
+                           th:attr="data-house-reservation-id=''+${reservation.id}+'', data-house-date-from=''+${reservation.dateFrom}+'', data-house-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+
+                    </td>
                 </tr>
                 </tbody>
 
@@ -403,6 +423,51 @@
 
     </div>
 </div>
+
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/boat', 'cancel_boat_modal', 'boat')"></div>
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/adventure', 'cancel_adventure_modal', 'adventure')"></div>
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/house', 'cancel_house_modal', 'house')"></div>
     <div th:insert="/index.html :: scripts"></div>
+
+<script>
+    $('#cancel_boat_modal').on('show.bs.modal', function (e) {
+        let bbutton = $(e.relatedTarget)
+        let bentityId = bbutton.data('boat-reservation-id');
+        let bdateFrom = bbutton.data('boat-date-from');
+        let bdateEnd = bbutton.data('boat-date-end');
+        $(e.currentTarget).find('input[name="boatentityId"]').val(bentityId);
+        $(e.currentTarget).find('input[name="boatdateFrom"]').val(bdateFrom);
+        $(e.currentTarget).find('input[name="boatdateEnd"]').val(bdateEnd);
+    });
+    $('#cancel_boat_modal').on('hidden.bs.modal', function () {
+        let v = document.getElementById('boatcancel-error-div');
+        v.style.display = "none";
+        console.log("hello");
+    })
+
+    $('#cancel_adventure_modal').on('show.bs.modal', function (e) {
+        let abutton = $(e.relatedTarget)
+        let aentityId = abutton.data('adventure-reservation-id');
+        let adateFrom = abutton.data('adventure-date-from');
+        let adateEnd = abutton.data('adventure-date-end');
+        $(e.currentTarget).find('input[name="adventureentityId"]').val(aentityId);
+        $(e.currentTarget).find('input[name="adventuredateFrom"]').val(adateFrom);
+        $(e.currentTarget).find('input[name="adventuredateEnd"]').val(adateEnd);
+    });
+
+    $('#cancel_house_modal').on('show.bs.modal', function (e) {
+        let hbutton = $(e.relatedTarget)
+        let hentityId = hbutton.data('house-reservation-id');
+        let hdateFrom = hbutton.data('house-date-from');
+        let hdateEnd = hbutton.data('house-date-end');
+        $(e.currentTarget).find('input[name="houseentityId"]').val(hentityId);
+        $(e.currentTarget).find('input[name="housedateFrom"]').val(hdateFrom);
+        $(e.currentTarget).find('input[name="housedateEnd"]').val(hdateEnd);
+    });
+
+
+
+</script>
+
 </body>
 </html>

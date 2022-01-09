@@ -50,7 +50,7 @@ public class VacationHouseReservationHistoryController {
 
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
-        Page<VacationHouseReservation> page = vacationHouseReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
+        Page<VacationHouseReservation> page = vacationHouseReservationService.getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
         List<VacationHouseReservation> entities = page.getContent();
 
         Long numberOfElements = page.getTotalElements();

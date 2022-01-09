@@ -90,8 +90,8 @@ public class BoatReservationJpaService implements BoatReservationService {
     }
 
     @Override
-    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end) {
-        return boatReservationRepository.existsByUser(user, start, end);
+    public boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id ) {
+        return boatReservationRepository.existsByUser(user, start, end, id);
     }
 
     @Override

@@ -21,16 +21,18 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
 
 
 
-    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd > ?2 and not(ar.reservationType ='DISCOUNTOFFER') ")
+    //sve aktuelne
+    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd > ?2 and not(ar.reservationType ='DISCOUNTOFFER' or ar.reservationType='CANCELLED') ")
     Page<AdventureReservation> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
-    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd < ?2 and not(ar.reservationType ='DISCOUNTOFFER') ")
+    //history ili otkazane
+    @Query(value="select ar from AdventureReservation ar where (ar.user = ?1 and ar.dateEnd < ?2) and (not ar.reservationType ='DISCOUNTOFFER') or ar.reservationType='CANCELLED' ")
     Page<AdventureReservation> getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
     Page<AdventureReservation> getAllByReservationType(ReservationType type, Pageable pageable);
 
 
-    @Query("select case when count(ar.user.id)>0 then true else false end from AdventureReservation ar where ((?2 between ar.dateFrom and ar.dateEnd) or (?3 between ar.dateFrom and ar.dateEnd)) and ?1 = ar.user")
-    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end);
+    @Query("select case when count(ar.user.id)>0 then true else false end from AdventureReservation ar where ((?2 between ar.dateFrom and ar.dateEnd) or (?3 between ar.dateFrom and ar.dateEnd)) and ?1 = ar.user and ?4=ar.adventure.id")
+    boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
 }
