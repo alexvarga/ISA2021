@@ -4,17 +4,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.Adventure;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@RequestMapping({"/adventures"})
+//@RequestMapping({"/adventures"})
 @Controller
 public class AdventureController {
 
@@ -24,13 +24,13 @@ public class AdventureController {
         this.adventureService = adventureService;
     }
 
-    @RequestMapping({""})
+    @RequestMapping({"/adventures"})
     public String listAdventures(Model model){
 
         return listAdventuresByPage(model, 1, "name", "asc");
     }
 
-    @GetMapping({"/page/{pageNumber}"})
+    @GetMapping({"/adventures/page/{pageNumber}"})
     public String listAdventuresByPage(Model model,
                                            @PathVariable("pageNumber") int currentPage,
                                            @Param(value="sortField") String sortField,
@@ -58,12 +58,86 @@ public class AdventureController {
         return "adventures";
     }
 
-    @RequestMapping(value = "/{id}", method = GET)
+    @RequestMapping(value = "/adventures/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
 
         model.addAttribute("adventure", adventureService.findById(id));
 
         return "adventure";
+    }
+
+    @PostMapping("/search/adventures")
+    String listAdventureResluts(Model model, @ModelAttribute(value = "dateFrom") String dateFrom,
+                                @ModelAttribute(value = "dateEnd") String dateEnd,
+                                @ModelAttribute(value = "tag1") String tag1,
+                                @ModelAttribute(value = "tag2") String tag2,
+                                @ModelAttribute(value = "tag3") String tag3,
+                                @ModelAttribute(value = "maxPrice") Float maxPrice,
+                                @ModelAttribute(value = "minRating") Float minRating,
+                                @ModelAttribute(value = "noOfPersons") Integer noOfPersons){
+
+
+        return listAdventureResultsByPage(model,1, "id", "asc", dateFrom, dateEnd, tag1, tag2, tag3, maxPrice, minRating, noOfPersons );
+    }
+
+    @GetMapping("/search/adventures/page/{pageNumber}")
+    String listAdventureResultsByPage(Model model, @PathVariable("pageNumber") int currentPage,
+                                      @Param(value="sortField") String sortField,
+                                      @Param(value="sortDirection") String sortDirection,
+                                      @Param(value="dateFrom") String dateFrom,
+                                      @Param(value="dateEnd") String dateEnd,
+                                      @Param(value = "tag1") String tag1,
+                                      @Param(value = "tag2") String tag2,
+                                      @Param(value = "tag3") String tag3,
+                                      @Param(value = "maxPrice") Float maxPrice,
+                                      @Param(value = "minRating") Float minRating,
+                                      @Param(value = "noOfPersons") Integer noOfPersons){
+
+
+        if (sortField==null){sortField="id";}
+        if(sortDirection==null){sortDirection="asc";}
+        System.out.println(tag1+" " +tag2+ " "+tag3 + " ");
+        System.out.println(noOfPersons);
+        System.out.println(maxPrice);
+        System.out.println(minRating);
+
+
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateEnd", dateEnd);
+        System.out.println(dateFrom + "+++" + dateEnd);
+
+
+        Page<Adventure> page = adventureService.findAdventureNotReserved(currentPage,
+                sortField,
+                sortDirection,
+                LocalDateTime.parse(dateFrom+" 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                LocalDateTime.parse(dateEnd+" 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                maxPrice, minRating, noOfPersons, tag1, tag2, tag3);
+        List<Adventure> listAdventures = page.getContent();
+
+        Long numberOfElements = page.getTotalElements();
+        int numberOfPages = page.getTotalPages();
+
+        model.addAttribute("search", true);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("numberOfElements", numberOfElements);
+        model.addAttribute("numberOfPages", numberOfPages);
+        model.addAttribute("adventures", listAdventures);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("minRating", minRating);
+        model.addAttribute("noOfPersons", noOfPersons);
+        model.addAttribute("tag1", tag1);
+        model.addAttribute("tag2", tag2);
+        model.addAttribute("tag3", tag3);
+
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDirection", reverseSortDirection);
+
+
+
+        return "adventures";
     }
 
 }

@@ -220,7 +220,7 @@
     </div>
 
 
-    <div th:unless="${search==true}" class="row justify-content-center">
+    <div th:unless="${search==true and numberOfPages>0}" class="row justify-content-center">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 

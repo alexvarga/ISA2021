@@ -181,8 +181,10 @@ public class DataLoader implements CommandLineRunner {
         a1.setName("Adventure 1 name");
         a1.setInfo("Adventure 1 info");
         a1.setAvgRating(2f);
+        a1.setPrice(60F);
+        a1.setNoOfPersons(4);
+        a1.setMisc("");
         a1.setAddress("adresa");
-
         a1.setInstructor(i1);
         adventureService.save(a1.getId(), a1);
 
@@ -194,8 +196,10 @@ public class DataLoader implements CommandLineRunner {
         a2.setName("Adventure 2 name");
         a2.setInfo("Adventure 2 info");
         a2.setAvgRating(5f);
+        a2.setPrice(120F);
+        a2.setNoOfPersons(4);
+        a2.setMisc("");
         a2.setAddress("adresa");
-
         a2.setInstructor(i1);
         adventureService.save(a2.getId(), a2);
 
