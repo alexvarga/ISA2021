@@ -51,12 +51,12 @@
                             <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label" for="from">Maksimalna cena</label>
-                                <input id="maxPrice" type="number" min="0"  class="form-control" th:name="maxPrice" ></div>
+                                <input id="maxPrice" type="number" min="0"  placeholder="1000"  class="form-control" th:name="maxPrice" required></div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="form-label" for="from">Minimalna ocena</label>
-                                    <input id="minRating" type="number" min="0" max="5" step="0.05" class="form-control" th:name="minRating" ></div>
+                                    <input id="minRating" type="number" min="0" max="5" step="0.05" placeholder="1" class="form-control" th:name="minRating"  required></div>
                             </div>
                         </div>
 
@@ -64,19 +64,19 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="from">Broj putnika</label>
-                                    <input id="passengers" type="number" min="1" value="1"  class="form-control" th:name="passengers" ></div>
+                                    <input id="noOfPersons" type="number" min="1" placeholder="1"  class="form-control" th:name="noOfPersons" required></div>
                             </div>
 
                             <div class="col ">
                                 <div><p>Dodatne opcije</p></div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="tag1" value="option1" />
-                                    <label class="form-check-label" for="tag1">1</label>
+                                    <input class="form-check-input" type="checkbox" name="tag1" id="tag1" th:value="kapetan" />
+                                    <label class="form-check-label" for="tag1">Kapetan</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="tag2" value="option2" />
-                                    <label class="form-check-label" for="tag2">2</label>
+                                    <input class="form-check-input" type="checkbox" name="tag2" id="tag2" th:value="bar" />
+                                    <label class="form-check-label" for="tag2">Bar</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
@@ -84,10 +84,11 @@
                                             class="form-check-input"
                                             type="checkbox"
                                             id="tag3"
-                                            value="tag3"
+                                            th:value="wifi"
+                                            name="tag3"
 
                                     />
-                                    <label class="form-check-label" for="tag3">3 (disabled)</label>
+                                    <label class="form-check-label" for="tag3">WiFi</label>
                                 </div>
                             </div>
 
@@ -124,19 +125,22 @@
             <thead>
             <tr th:if="${search==true}">
                 <td>
-                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">id </a>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3} } ">id </a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">name</a>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">name</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">addressa</a>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3} }">addressa</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">info</a>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">info</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">rating</a>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">rating</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">*price*</a>
                 </td>
             </tr>
             <tr th:unless="${search==true}">
@@ -155,6 +159,9 @@
                 <td>
                     <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">rating</a>
                 </td>
+                <td>
+                    <a th:href="@{'/boats/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">cena</a>
+                </td>
             </tr>
             </thead>
             <tbody>
@@ -164,6 +171,7 @@
                 <td th:text="${boat.address}">address</td>
                 <td th:text="${boat.info}">info</td>
                 <td th:text="${boat.avgRating}">rating</td>
+                <td th:text="${boat.price}">rating</td>
 
                 <td th:if="${search==true}">
                     <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
@@ -177,34 +185,34 @@
 
     </div>
 
-    <div th:if="${search==true}" class="row justify-content-center">
+    <div th:if="${search==true and numberOfPages>0}" class="row justify-content-center">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
         <a th:if="${currentPage>1}"
-           th:href="@{'/search/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prva</a>
+           th:href="@{'/search/boats/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prva</a>
 
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
         <a th:if="${currentPage>1}"
-           th:href="@{'/search/boats/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Prethodna </a>
+           th:href="@{'/search/boats/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prethodna </a>
         <span th:unless="${currentPage>1}">prethodna</span>
         &nbsp;
 
         <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
                 <a></a>
                 <a th:if="${i != currentPage}"
-                   th:href="@{'/search/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}"> [[${i}]] </a>
+                   th:href="@{'/search/boats/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}"> [[${i}]] </a>
                 <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
             </span>
 
 
         <a th:if="${currentPage<numberOfPages}"
-           th:href="@{'/search/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Sledeća</a>
+           th:href="@{'/search/boats/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Sledeća</a>
         <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
         &nbsp;
         <a th:if="${currentPage<numberOfPages}"
-           th:href="@{'/search/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}}">Poslednja </a>
+           th:href="@{'/search/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
 

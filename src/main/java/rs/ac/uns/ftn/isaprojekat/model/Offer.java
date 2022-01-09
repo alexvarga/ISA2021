@@ -11,6 +11,7 @@ public class Offer extends BaseEntity {
     private Float avgRating;
     private Float price;
     private String misc;
+    private Integer noOfPersons;
 
 
     public String getName() {
@@ -59,5 +60,13 @@ public class Offer extends BaseEntity {
 
     public void setMisc(String misc) {
         this.misc = misc;
+    }
+
+    public Integer getNoOfPersons() {
+        return noOfPersons;
+    }
+
+    public void setNoOfPersons(Integer noOfPersons) {
+        this.noOfPersons = noOfPersons;
     }
 }

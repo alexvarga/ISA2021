@@ -127,6 +127,9 @@ public class DataLoader implements CommandLineRunner {
         b1.setAvgRating(5f);
         b1.setAddress("adresa");
         b1.setOwner(bo1);
+        b1.setPrice(10F);
+        b1.setNoOfPersons(3);
+        b1.setMisc("kapetan-wifi");
         boatService.save(b1.getId(), b1);
 
         Boat b2 = new Boat();
@@ -136,6 +139,9 @@ public class DataLoader implements CommandLineRunner {
         b2.setAvgRating(5f);
         b2.setAddress("badresa");
         b2.setOwner(bo1);
+        b2.setPrice(30F);
+        b2.setNoOfPersons(3);
+        b2.setMisc("");
         boatService.save(b2.getId(), b2);
 
         Boat b3 = new Boat();
@@ -145,6 +151,9 @@ public class DataLoader implements CommandLineRunner {
         b3.setAvgRating(3.2f);
         b3.setAddress("adresa");
         b3.setOwner(bo1);
+        b3.setPrice(250F);
+        b3.setNoOfPersons(3);
+        b3.setMisc("");
         boatService.save(b3.getId(), b3);
 
         Boat b4 = new Boat();
@@ -154,6 +163,9 @@ public class DataLoader implements CommandLineRunner {
         b4.setAvgRating(3f);
         b4.setAddress("gadresa");
         b4.setOwner(bo1);
+        b4.setPrice(111F);
+        b4.setNoOfPersons(3);
+        b4.setMisc("");
         boatService.save(b4.getId(), b4);
 
         Instructor i1 = new Instructor();
@@ -219,8 +231,8 @@ public class DataLoader implements CommandLineRunner {
         br3.setBoat(b1);
         br3.setUser(user);
         br3.setReservationTime(LocalDateTime.of(2022,10,28,20,30));
-        br3.setDateFrom(LocalDateTime.of(2022, 11, 1, 0, 0));
-        br3.setDateEnd(LocalDateTime.of(2022, 11, 6, 0, 0));
+        br3.setDateFrom(LocalDateTime.of(2021, 11, 1, 0, 0));
+        br3.setDateEnd(LocalDateTime.of(2021, 11, 6, 0, 0));
         br3.setReservationType(ReservationType.ACTIVE);
         boatReservationService.save(1L, br3);
 
