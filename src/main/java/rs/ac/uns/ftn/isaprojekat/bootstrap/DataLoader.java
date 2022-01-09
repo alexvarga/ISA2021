@@ -87,6 +87,7 @@ public class DataLoader implements CommandLineRunner {
         vh1.setAvgRating(2.5f);
         vh1.setAddress("adresa 1");
         vh1.setVacationHouseOwner(vho1);
+        vh1.setPrice(30F);
         vacationHouseService.save(vh1.getId(), vh1);
 
 
@@ -100,7 +101,6 @@ public class DataLoader implements CommandLineRunner {
         vh2.setVacationHouseOwner(vho1);
 
         vacationHouseService.save(vh2.getId(), vh2);
-
 
 
         VacationHouse vh3 = new VacationHouse();
