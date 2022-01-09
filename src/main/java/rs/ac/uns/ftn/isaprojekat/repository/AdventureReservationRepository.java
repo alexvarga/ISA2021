@@ -21,10 +21,12 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
 
 
 
-    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd > ?2 and not(ar.reservationType ='DISCOUNTOFFER') ")
+    //sve aktuelne
+    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd > ?2 and not(ar.reservationType ='DISCOUNTOFFER' or ar.reservationType='CANCELLED') ")
     Page<AdventureReservation> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
-    @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd < ?2 and not(ar.reservationType ='DISCOUNTOFFER') ")
+    //history ili otkazane
+    @Query(value="select ar from AdventureReservation ar where (ar.user = ?1 and ar.dateEnd < ?2) and (not ar.reservationType ='DISCOUNTOFFER') or ar.reservationType='CANCELLED' ")
     Page<AdventureReservation> getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
     Page<AdventureReservation> getAllByReservationType(ReservationType type, Pageable pageable);

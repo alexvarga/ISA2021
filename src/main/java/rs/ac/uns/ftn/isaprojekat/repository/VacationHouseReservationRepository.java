@@ -19,11 +19,12 @@ public interface VacationHouseReservationRepository extends PagingAndSortingRepo
 
     Page<VacationHouseReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
-
-    @Query(value="select vhr from VacationHouseReservation vhr where vhr.user = ?1 and vhr.dateEnd > ?2 and not(vhr.reservationType ='DISCOUNTOFFER') ")
+    //current
+    @Query(value="select vhr from VacationHouseReservation vhr where vhr.user = ?1 and vhr.dateEnd > ?2 and not(vhr.reservationType ='DISCOUNTOFFER' or vhr.reservationType='CANCELLED') ")
     Page<VacationHouseReservation> getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
-    @Query(value="select vhr from VacationHouseReservation vhr where vhr.user = ?1 and vhr.dateEnd < ?2 and not(vhr.reservationType ='DISCOUNTOFFER') ")
+    //history or cancelled
+    @Query(value="select vhr from VacationHouseReservation vhr where (vhr.user = ?1 and vhr.dateEnd < ?2) and (not vhr.reservationType ='DISCOUNTOFFER') or(vhr.reservationType='CANCELLED') ")
     Page<VacationHouseReservation> getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(User user, LocalDateTime time, Pageable pageable);
 
     Page<VacationHouseReservation> getAllByReservationType(ReservationType type, Pageable pageable);

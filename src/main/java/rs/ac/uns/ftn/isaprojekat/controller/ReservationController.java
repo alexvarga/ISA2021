@@ -70,9 +70,9 @@ public class ReservationController {
         if(sortDirectionB==null){sortDirectionH="asc";}
         if(sortDirectionH==null){sortDirectionH="asc";}
 
-        Page<AdventureReservation> pageAdventure = adventureReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageA, sortFieldA, sortDirectionA);
-        Page<BoatReservation> pageBoat = boatReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageB, sortFieldB, sortDirectionB);
-        Page<VacationHouseReservation> pageHouse = vacationHouseReservationService.getAllByUserAndDateEndAfter(user, LocalDateTime.now(), currentPageH, sortFieldH, sortDirectionH);
+        Page<AdventureReservation> pageAdventure = adventureReservationService.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPageA, sortFieldA, sortDirectionA);
+        Page<BoatReservation> pageBoat = boatReservationService.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPageB, sortFieldB, sortDirectionB);
+        Page<VacationHouseReservation> pageHouse = vacationHouseReservationService.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPageH, sortFieldH, sortDirectionH);
 
         List<VacationHouseReservation> entitiesHouse = pageHouse.getContent();
         List<BoatReservation> entitiesBoat = pageBoat.getContent();

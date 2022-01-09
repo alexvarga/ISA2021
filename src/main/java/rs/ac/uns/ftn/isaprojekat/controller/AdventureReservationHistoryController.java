@@ -59,7 +59,7 @@ public class AdventureReservationHistoryController {
             sortDirection = "asc";
         }
 
-        Page<AdventureReservation> page = adventureReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
+        Page<AdventureReservation> page = adventureReservationService.getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
         List<AdventureReservation> entities = page.getContent();
 
         Long numberOfElements = page.getTotalElements();
