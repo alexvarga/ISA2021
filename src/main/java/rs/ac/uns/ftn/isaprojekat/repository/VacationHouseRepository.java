@@ -14,6 +14,9 @@ public interface VacationHouseRepository extends PagingAndSortingRepository<Vaca
 
     @Query(value="select vh from VacationHouse vh where vh.id not in" +
             " (select vha.id from VacationHouse vha left join VacationHouseReservation vhr on vha.id=vhr.vacationHouse.id where " +
-            "(((?1 between vhr.dateFrom and vhr.dateEnd) or (?2 between vhr.dateFrom and vhr.dateEnd) or (?1< vhr.dateFrom and ?2>vhr.dateEnd)) and(vhr.reservationType = 'ACTIVE') ))")
-    Page<VacationHouse> findVacationHousesNotReserved(LocalDateTime dateFrom, LocalDateTime dateEnd, Pageable pageable);
+            "(((?1 between vhr.dateFrom and vhr.dateEnd) or (?2 between vhr.dateFrom and vhr.dateEnd) " +
+            "or (?1< vhr.dateFrom and ?2>vhr.dateEnd)) and(vhr.reservationType = 'ACTIVE' or vhr.reservationType='DISCOUNTOFFER')))" +
+            " and vh.price<=?3 and vh.avgRating>=?4 and vh.noOfPersons>=?5 and vh.misc like %?6% and vh.misc like %?7% and vh.misc like %?8% ")
+    Page<VacationHouse> findVacationHousesNotReserved(LocalDateTime dateFrom, LocalDateTime dateEnd,  Float maxPrice, Float minRating,
+                                                      Integer noOfPersons, String tag1, String tag2, String tag3,  Pageable pageable);
 }

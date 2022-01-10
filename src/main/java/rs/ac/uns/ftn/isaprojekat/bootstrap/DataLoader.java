@@ -88,6 +88,8 @@ public class DataLoader implements CommandLineRunner {
         vh1.setAddress("adresa 1");
         vh1.setVacationHouseOwner(vho1);
         vh1.setPrice(30F);
+        vh1.setNoOfPersons(4);
+        vh1.setMisc("");
         vacationHouseService.save(vh1.getId(), vh1);
 
 
@@ -98,8 +100,10 @@ public class DataLoader implements CommandLineRunner {
         vh2.setInfo("info o novoj vikendici 2");
         vh2.setAvgRating(5f);
         vh2.setAddress("adresa 2");
+        vh2.setPrice(120F);
+        vh2.setNoOfPersons(4);
+        vh2.setMisc("");
         vh2.setVacationHouseOwner(vho1);
-
         vacationHouseService.save(vh2.getId(), vh2);
 
 
@@ -109,7 +113,9 @@ public class DataLoader implements CommandLineRunner {
         vh3.setInfo("info o novoj vikendici 3");
         vh3.setAvgRating(5f);
         vh3.setAddress("adresa 3");
-
+        vh3.setPrice(30F);
+        vh3.setNoOfPersons(4);
+        vh3.setMisc("");
         vacationHouseService.save(vh3.getId(), vh3);
 
 
