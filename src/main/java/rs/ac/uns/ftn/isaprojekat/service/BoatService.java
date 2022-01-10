@@ -7,5 +7,15 @@ import java.time.LocalDateTime;
 
 public interface BoatService extends PageableCrudService<Boat, Long> {
 
-    Page<Boat> findBoatsNotReserved(int pageNumber, String sortField, String sortDirection, LocalDateTime dateFrom, LocalDateTime dateEnd);
+    Page<Boat> findBoatsNotReserved(int pageNumber,
+                                    String sortField,
+                                    String sortDirection,
+                                    LocalDateTime dateFrom,
+                                    LocalDateTime dateEnd,
+                                    Float maxPrice,
+                                    Float minRating,
+                                    Integer noOfPersons,
+                                    String tag1,
+                                    String tag2,
+                                    String tag3);
 }

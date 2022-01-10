@@ -46,7 +46,17 @@ public class AdventureJpaService implements AdventureService {
     }
 
     @Override
-    public Page<Adventure> findAdventureNotReserved(int pageNumber, String sortField, String sortDirection, LocalDateTime dateFrom, LocalDateTime dateEnd) {
+    public Page<Adventure> findAdventureNotReserved(int pageNumber,
+                                                    String sortField,
+                                                    String sortDirection,
+                                                    LocalDateTime dateFrom,
+                                                    LocalDateTime dateEnd,
+                                                    Float maxPrice,
+                                                    Float minRating,
+                                                    Integer noOfPersons,
+                                                    String tag1,
+                                                    String tag2,
+                                                    String tag3) {
         Sort sort;
         if (sortDirection.equals("asc")){
             sort = Sort.by(sortField).ascending();
@@ -57,6 +67,6 @@ public class AdventureJpaService implements AdventureService {
         Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
 
 
-        return adventureRepository.findAdventuresNotReserved(dateFrom, dateEnd, pageable);
+        return adventureRepository.findAdventuresNotReserved(dateFrom, dateEnd, maxPrice, minRating, noOfPersons, tag1, tag2, tag3, pageable);
     }
 }

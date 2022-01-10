@@ -69,10 +69,18 @@ public class BoatController {
     }
 
     @PostMapping("/search/boats")
-    String listBoatResults(Model model, @ModelAttribute(value="dateFrom") String dateFrom, @ModelAttribute(value = "dateEnd") String dateEnd ){
+    String listBoatResults(Model model,
+                           @ModelAttribute(value = "dateFrom") String dateFrom,
+                           @ModelAttribute(value = "dateEnd") String dateEnd,
+                           @ModelAttribute(value = "tag1") String tag1,
+                           @ModelAttribute(value = "tag2") String tag2,
+                           @ModelAttribute(value = "tag3") String tag3,
+                           @ModelAttribute(value = "maxPrice") Float maxPrice,
+                           @ModelAttribute(value = "minRating") Float minRating,
+                           @ModelAttribute(value = "noOfPersons") Integer noOfPersons) {
 
 
-            return listBoatResultsByPage(model, 1, "id", "asc", dateFrom, dateEnd);
+        return listBoatResultsByPage(model, 1, "id", "asc", dateFrom, dateEnd, tag1, tag2, tag3, maxPrice, minRating, noOfPersons );
 
 
 
@@ -83,18 +91,38 @@ public class BoatController {
                                  @Param(value="sortField") String sortField,
                                  @Param(value="sortDirection") String sortDirection,
                                  @Param(value="dateFrom") String dateFrom,
-                                 @Param(value="dateEnd") String dateEnd){
+                                 @Param(value="dateEnd") String dateEnd,
+                                 @Param(value = "tag1") String tag1,
+                                 @Param(value = "tag2") String tag2,
+                                 @Param(value = "tag3") String tag3,
+                                 @Param(value = "maxPrice") Float maxPrice,
+                                 @Param(value = "minRating") Float minRating,
+                                 @Param(value = "noOfPersons") Integer noOfPersons){
 
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
 
+        System.out.println(tag1+" " +tag2+ " "+tag3 + " ");
+        System.out.println(noOfPersons);
+        System.out.println(maxPrice);
+        System.out.println(minRating);
+
+       // System.out.println(check.isEmpty());
 
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateEnd", dateEnd);
         System.out.println(dateFrom + "+++" + dateEnd);
 
 
-        Page<Boat> page = boatService.findBoatsNotReserved(currentPage, sortField, sortDirection, LocalDateTime.parse(dateFrom+" 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), LocalDateTime.parse(dateEnd+" 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        Page<Boat> page = boatService.findBoatsNotReserved(currentPage,
+                sortField,
+                sortDirection,
+                LocalDateTime.parse(dateFrom+" 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                LocalDateTime.parse(dateEnd+" 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                maxPrice,
+                minRating,
+                noOfPersons,
+                tag1, tag2, tag3);
         List<Boat> listBoats = page.getContent();
 
         Long numberOfElements = page.getTotalElements();
@@ -107,6 +135,13 @@ public class BoatController {
         model.addAttribute("boats", listBoats);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("minRating", minRating);
+        model.addAttribute("noOfPersons", noOfPersons);
+        model.addAttribute("tag1", tag1);
+        model.addAttribute("tag2", tag2);
+        model.addAttribute("tag3", tag3);
+
 
         String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
         model.addAttribute("reverseSortDirection", reverseSortDirection);

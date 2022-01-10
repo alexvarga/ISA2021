@@ -49,7 +49,17 @@ public class BoatJpaService implements BoatService {
     }
 
     @Override
-    public Page<Boat> findBoatsNotReserved( int pageNumber, String sortField, String sortDirection, LocalDateTime dateFrom, LocalDateTime dateEnd) {
+    public Page<Boat> findBoatsNotReserved( int pageNumber,
+                                            String sortField,
+                                            String sortDirection,
+                                            LocalDateTime dateFrom,
+                                            LocalDateTime dateEnd,
+                                            Float maxPrice,
+                                            Float minRating,
+                                            Integer noOfPersons,
+                                            String tag1,
+                                            String tag2,
+                                            String tag3) {
 
         Sort sort;
         if (sortDirection.equals("asc")){
@@ -63,7 +73,7 @@ public class BoatJpaService implements BoatService {
         Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
 
 
-       return boatRepository.findBoatsNotReserved(dateFrom, dateEnd, pageable);
+       return boatRepository.findBoatsNotReserved(dateFrom, dateEnd, maxPrice, minRating, noOfPersons, tag1, tag2, tag3, pageable);
        // return null;
     }
 
