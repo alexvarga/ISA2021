@@ -14,6 +14,7 @@ import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 @Profile("default")
@@ -142,5 +143,11 @@ public class BoatReservationJpaService implements BoatReservationService {
     @Override
     public ArrayList<BoatReservation> findAll() {
         return null;
+    }
+
+
+    @Override
+    public Set<BoatReservation> getAllByBoat_Id(Long boat_id) {
+        return boatReservationRepository.getAllByBoat_Id(boat_id);
     }
 }

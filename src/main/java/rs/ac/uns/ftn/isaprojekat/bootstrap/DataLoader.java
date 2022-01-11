@@ -267,6 +267,15 @@ public class DataLoader implements CommandLineRunner {
         br3.setReservationType(ReservationType.ACTIVE);
         boatReservationService.save(1L, br3);
 
+        BoatReservation br4 = new BoatReservation();
+        br4.setBoat(b1);
+        br4.setUser(user);
+        br4.setReservationTime(LocalDateTime.of(2022,10,28,20,30));
+        br4.setDateFrom(LocalDateTime.of(2022, 11, 1, 0, 0));
+        br4.setDateEnd(LocalDateTime.of(2022, 11, 6, 0, 0));
+        br4.setReservationType(ReservationType.ACTIVE);
+        boatReservationService.save(1L, br4);
+
 
         VacationHouseReservation vhr1 = new VacationHouseReservation();
         vhr1.setVacationHouse(vh1);

@@ -41,20 +41,36 @@
                 <td th:text="${offer.reservationTime}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
                 <td th:text="${offer.dateEnd}">info</td>
-                <td th:text="${offer.adventure.id}">rating</td>
-                <td th:text="${offer.adventure.avgRating}">rating</td>
-                <td th:text="${offer.adventure.instructor.lastName}">rating</td>
-                <td th:text="${offer.adventure.instructor.firstName}">rating</td>
-                <td><a th:href="@{/adventures/{id}(id=${offer.adventure.id})}" th:text="${offer.adventure.id}">id
-                    broda</a>
+                <td>
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.id}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
                 </td>
                 <td>
-                    <form th:action="@{/adventures/discount/reserve}" method="post">
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.avgRating}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+                </td>
+                <td>
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.instructor.lastName}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.instructor.firstName}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+                </td>
+                <td>
+                    <a th:if="${offer.adventure!=null}" th:href="@{/adventures/{id}(id=${offer.adventure.id})}" th:text="${offer.adventure.id}">id
+                    broda</a>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+                </td>
+                <td>
+                    <form th:if="${offer.adventure!=null}" th:action="@{/adventures/discount/reserve}" method="post">
                         <input hidden name="offerId" th:value="${offer.id}"/>
                         <button type="submit" class="btn btn-primary">rez</button>
 
 
                     </form>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
 
                 </td>
 
@@ -65,7 +81,7 @@
         </table>
 
         <div class="row justify-content-center">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" th:if="${numberOfPages>0}">
                 Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
                 &nbsp; - &nbsp;
 

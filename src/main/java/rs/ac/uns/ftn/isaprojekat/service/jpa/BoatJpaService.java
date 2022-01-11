@@ -86,6 +86,6 @@ public class BoatJpaService implements BoatService {
 
     @Override
     public ArrayList<Boat> findAll() {
-        return null;
+        return (ArrayList<Boat>) boatRepository.findAll();
     }
 }
