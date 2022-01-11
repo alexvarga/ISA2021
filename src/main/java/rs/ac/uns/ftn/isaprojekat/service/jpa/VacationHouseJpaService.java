@@ -11,6 +11,7 @@ import rs.ac.uns.ftn.isaprojekat.repository.VacationHouseRepository;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 @Profile("default")
@@ -67,5 +68,15 @@ public class VacationHouseJpaService implements VacationHouseService {
 
         return vacationHouseRepository.findVacationHousesNotReserved(dateFrom, dateEnd, maxPrice,
                 minRating, noOfPersons, tag1, tag2, tag3, pageable);
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+        vacationHouseRepository.deleteById(aLong);
+    }
+
+    @Override
+    public ArrayList<VacationHouse> findAll() {
+        return null;
     }
 }

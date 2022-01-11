@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.isaprojekat.repository.VacationHouseReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Profile("default")
 @Service
@@ -102,5 +103,15 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
         Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort);
 
         return vacationHouseReservationRepository.getAllByReservationType(type, pageable);
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+        vacationHouseReservationRepository.deleteById(aLong);
+    }
+
+    @Override
+    public ArrayList<VacationHouseReservation> findAll() {
+        return null;
     }
 }

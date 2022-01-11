@@ -182,6 +182,14 @@ public class DataLoader implements CommandLineRunner {
         i1.setPassword("plaintext");
         instructorService.save(i1.getId(), i1);
 
+        Instructor i2 = new Instructor();
+        //i1.setId(1L);
+        i2.setFirstName("instruktor");
+        i2.setLastName("drugi");
+        i2.setEmail("asdf@cool.com");
+        i2.setPassword("plaintext");
+        instructorService.save(i2.getId(), i2);
+
         Adventure a1 = new Adventure();
         //a1.setId(1L);
         a1.setName("Adventure 1 name");
@@ -208,6 +216,18 @@ public class DataLoader implements CommandLineRunner {
         a2.setAddress("adresa");
         a2.setInstructor(i1);
         adventureService.save(a2.getId(), a2);
+
+        Adventure a3 = new Adventure();
+        //a2.setId(2l);
+        a3.setName("Adventure 3 name");
+        a3.setInfo("Adventure 3 info");
+        a3.setAvgRating(5f);
+        a3.setPrice(120F);
+        a3.setNoOfPersons(4);
+        a3.setMisc("");
+        a3.setAddress("adresa");
+        a3.setInstructor(i2);
+        adventureService.save(a3.getId(), a3);
 
 
         BoatReservation br1 = new BoatReservation();
@@ -304,13 +324,22 @@ public class DataLoader implements CommandLineRunner {
         adventureReservationService.save(1L, ar3);
 
         AdventureReservation ar4 = new AdventureReservation();
-        ar4.setAdventure(a1);
+        ar4.setAdventure(a3);
         ar4.setUser(user);
         ar4.setReservationType(ReservationType.ACTIVE);
         ar4.setReservationTime(LocalDateTime.now());
         ar4.setDateFrom(LocalDateTime.of(2022, 5, 6, 0, 0));
         ar4.setDateEnd(LocalDateTime.of(2022, 5, 16, 0, 0));
         adventureReservationService.save(1L, ar4);
+
+        AdventureReservation ar5 = new AdventureReservation();
+        ar5.setAdventure(a1);
+        ar5.setUser(user);
+        ar5.setReservationType(ReservationType.ACTIVE);
+        ar5.setReservationTime(LocalDateTime.now());
+        ar5.setDateFrom(LocalDateTime.of(2022, 5, 6, 0, 0));
+        ar5.setDateEnd(LocalDateTime.of(2022, 5, 16, 0, 0));
+        adventureReservationService.save(1L, ar5);
 
         AdventureReservation ard = new AdventureReservation();
         ard.setAdventure(a1);

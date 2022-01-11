@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Repository
 public interface AdventureReservationRepository extends PagingAndSortingRepository<AdventureReservation, Long> {
@@ -20,6 +21,7 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
     Page<AdventureReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
 
 
+    Set<AdventureReservation> getAllByAdventure_Id(Long adventure_id);
 
     //sve aktuelne
     @Query(value="select ar from AdventureReservation ar where ar.user = ?1 and ar.dateEnd > ?2 and not(ar.reservationType ='DISCOUNTOFFER' or ar.reservationType='CANCELLED') ")

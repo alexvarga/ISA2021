@@ -11,6 +11,7 @@ import rs.ac.uns.ftn.isaprojekat.repository.AdventureRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Profile("default")
 @Service
@@ -69,4 +70,16 @@ public class AdventureJpaService implements AdventureService {
 
         return adventureRepository.findAdventuresNotReserved(dateFrom, dateEnd, maxPrice, minRating, noOfPersons, tag1, tag2, tag3, pageable);
     }
+
+    @Override
+    public void deleteById(Long aLong) {
+        adventureRepository.deleteById(aLong);
+    }
+
+    @Override
+    public ArrayList<Adventure> findAll() {
+        return (ArrayList<Adventure>) adventureRepository.findAll();
+    }
+
+
 }

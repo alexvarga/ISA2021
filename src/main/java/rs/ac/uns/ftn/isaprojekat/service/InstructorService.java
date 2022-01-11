@@ -4,5 +4,5 @@ import rs.ac.uns.ftn.isaprojekat.model.Instructor;
 
 
 
-public interface InstructorService extends CrudService<Instructor, Long> {
+public interface InstructorService extends PageableCrudService<Instructor, Long> {
 }

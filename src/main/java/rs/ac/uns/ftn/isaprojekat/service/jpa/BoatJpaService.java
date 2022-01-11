@@ -11,12 +11,14 @@ import rs.ac.uns.ftn.isaprojekat.repository.BoatRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Profile("default")
 @Service
 public class BoatJpaService implements BoatService {
 
     private final BoatRepository boatRepository;
+    public int pageSize = 2;
 
     public BoatJpaService(BoatRepository boatRepository) {
         this.boatRepository = boatRepository;
@@ -32,7 +34,7 @@ public class BoatJpaService implements BoatService {
         }
         //sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
 
-        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber-1, pageSize, sort); //zero based index
 
 
         return boatRepository.findAll(pageable);
@@ -70,11 +72,20 @@ public class BoatJpaService implements BoatService {
 
         //sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
 
-        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber-1, pageSize, sort); //zero based index
 
 
        return boatRepository.findBoatsNotReserved(dateFrom, dateEnd, maxPrice, minRating, noOfPersons, tag1, tag2, tag3, pageable);
        // return null;
     }
 
+    @Override
+    public void deleteById(Long aLong) {
+        boatRepository.deleteById(aLong);
+    }
+
+    @Override
+    public ArrayList<Boat> findAll() {
+        return null;
+    }
 }

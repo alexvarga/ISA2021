@@ -234,18 +234,34 @@
                 <td th:text="${reservation.reservationTime}">name</td>
                 <td th:text="${reservation.dateFrom}">address</td>
                 <td th:text="${reservation.dateEnd}">info</td>
-                <td th:text="${reservation.adventure.avgRating}">rating</td>
-                <td th:text="${reservation.adventure.instructor.lastName}">rating</td>
-                <td th:text="${reservation.adventure.instructor.firstName}">rating</td>
+                <td>
+                    <p th:if="${reservation.adventure != null}" th:text="${reservation.adventure.avgRating}">rating</p>
+                    <p th:if="${reservation.adventure == null}" th:text="Obrisana">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${reservation.adventure != null}"  th:text="${reservation.adventure.instructor.lastName}">rating</p>
+                    <p th:if="${reservation.adventure == null}"  th:text="Obrisan">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${reservation.adventure != null}"  th:text="${reservation.adventure.instructor.firstName}">rating</p>
+                    <p th:if="${reservation.adventure == null}"  th:text="Obrisan">rating</p>
+
+                </td>
                 <td th:text="${reservation.price}">rating</td>
-                <td><a th:href="@{adventures/{id}(id=${reservation.adventure.id})}"
-                       th:text="${reservation.adventure.id}">id</a></td>
+                <td><a th:if="${reservation.adventure != null}" th:href="@{adventures/{id}(id=${reservation.adventure.id})}"
+                       th:text="${reservation.adventure.id}">id</a>
+                    <p th:if="${reservation.adventure == null}">Obrisana</p>
+                </td>
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                     canceled
                 </td>
                 <td th:unless="${adventureHistory==true}">
-                    <a class="btn btn-primary" href="#cancel_adventure_modal" data-toggle="modal"
+
+                    <a th:if="${reservation.adventure != null}" class="btn btn-primary" href="#cancel_adventure_modal" data-toggle="modal"
                        th:attr="data-adventure-reservation-id=''+${reservation.id}+'', data-adventure-date-from=''+${reservation.dateFrom}+'', data-adventure-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+                    <p th:if="${reservation.adventure==null}"> </p>
 
                 </td>
             </tr>

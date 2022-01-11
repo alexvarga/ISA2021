@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.isaprojekat.repository.BoatReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReservationService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 @Profile("default")
@@ -131,5 +132,15 @@ public class BoatReservationJpaService implements BoatReservationService {
 
         Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
         return boatReservationRepository.getAllByReservationType(type, pageable);
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+        boatReservationRepository.deleteById(aLong);
+    }
+
+    @Override
+    public ArrayList<BoatReservation> findAll() {
+        return null;
     }
 }
