@@ -224,6 +224,7 @@ public class DataLoader implements CommandLineRunner {
         brd.setUser(null);
         brd.setReservationType(ReservationType.DISCOUNTOFFER);
         brd.setReservationTime(LocalDateTime.now());
+        brd.setPrice(2F);
         brd.setDateFrom(LocalDateTime.of(2022, 2, 1, 0, 0));
         brd.setDateEnd(LocalDateTime.of(2022, 2, 6, 0, 0));
         boatReservationService.save(1L, brd);
@@ -270,6 +271,7 @@ public class DataLoader implements CommandLineRunner {
         vhrd.setUser(null);
         vhrd.setReservationType(ReservationType.DISCOUNTOFFER);
         vhrd.setReservationTime(LocalDateTime.now());
+        vhrd.setPrice(10F);
         vhrd.setDateFrom(LocalDateTime.of(2022, 9, 1, 0, 0));
         vhrd.setDateEnd(LocalDateTime.of(2022, 9, 6, 0, 0));
         vacationHouseReservationService.save(1L, vhrd);
@@ -314,6 +316,7 @@ public class DataLoader implements CommandLineRunner {
         ard.setAdventure(a1);
         ard.setUser(null);
         ard.setReservationType(ReservationType.DISCOUNTOFFER);
+        ard.setPrice(1F);
         ard.setReservationTime(LocalDateTime.now());
         ard.setDateFrom(LocalDateTime.of(2022, 3, 6, 0, 0));
         ard.setDateEnd(LocalDateTime.of(2022, 3, 16, 0, 0));

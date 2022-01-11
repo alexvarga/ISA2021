@@ -11,6 +11,7 @@ import rs.ac.uns.ftn.isaprojekat.service.*;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -51,12 +52,17 @@ public class ReservationProcessController {
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
+        LocalDateTime dFrom = LocalDateTime.parse(dateFrom, formatter);
+        LocalDateTime dEnd = LocalDateTime.parse(dateEnd, formatter);
         //DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory()
-        boolean hi = boatReservationService.existsByUser(user, LocalDateTime.parse(dateFrom, formatter), LocalDateTime.parse(dateEnd, formatter), entityId);
+        boolean hi = boatReservationService.existsByUser(user, dFrom, dEnd, entityId);
         if (hi){
             System.out.println("nemate praveo rezervacije u ovom terminu");
             return "fail";
         }else {
+
+            Duration diff = Duration.between(dFrom, dEnd);
+            Long days = diff.toDays();
 
             System.out.println(boat.getName() + " " + dateFrom + " " + dateEnd);
 
@@ -65,6 +71,7 @@ public class ReservationProcessController {
             reservation.setBoat(boat);
             reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
             reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
+            reservation.setPrice(boat.getPrice()*days);
             reservation.setReservationType(ReservationType.ACTIVE);
             reservation.setReservationTime(LocalDateTime.now());
             System.out.println(reservation.getReservationTime());
@@ -89,19 +96,25 @@ public class ReservationProcessController {
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
-        boolean permission = adventureReservationService.existsByUser(user, LocalDateTime.parse(dateFrom, formatter), LocalDateTime.parse(dateEnd, formatter), entityId);
+
+        LocalDateTime dFrom = LocalDateTime.parse(dateFrom, formatter);
+        LocalDateTime dEnd = LocalDateTime.parse(dateEnd, formatter);
+        boolean permission = adventureReservationService.existsByUser(user, dFrom, dEnd, entityId);
         if (permission){
             return "fail";
         }else {
 
+            Duration diff = Duration.between(dFrom, dEnd);
+            Long days = diff.toDays();
 
             System.out.println(adventure.getName() + " " + dateFrom + " " + dateEnd);
 
             AdventureReservation reservation = new AdventureReservation();
             reservation.setUser(user);
             reservation.setAdventure(adventure);
-            reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
-            reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
+            reservation.setDateFrom(dFrom);
+            reservation.setDateEnd(dEnd);
+            reservation.setPrice(adventure.getPrice()*days);
             reservation.setReservationType(ReservationType.ACTIVE);
             reservation.setReservationTime(LocalDateTime.now());
             System.out.println(reservation.getReservationTime());
@@ -126,18 +139,26 @@ public class ReservationProcessController {
 
         dateFrom+=" 00:00";
         dateEnd+=" 00:00";
-        boolean permission = vacationHouseReservationService.existsByUser(user, LocalDateTime.parse(dateFrom, formatter), LocalDateTime.parse(dateEnd, formatter), entityId);
+
+        LocalDateTime dFrom = LocalDateTime.parse(dateFrom, formatter);
+        LocalDateTime dEnd = LocalDateTime.parse(dateEnd, formatter);
+        boolean permission = vacationHouseReservationService.existsByUser(user, dFrom, dEnd, entityId);
         if (permission){
             return "fail";
         }else {
+
+            Duration diff = Duration.between(dFrom, dEnd);
+            Long days = diff.toDays();
+            System.out.println(days+ " days");
 
             System.out.println(vacationHouse.getName() + " " + dateFrom + " " + dateEnd);
 
             VacationHouseReservation reservation = new VacationHouseReservation();
             reservation.setUser(user);
             reservation.setVacationHouse(vacationHouse);
-            reservation.setDateFrom(LocalDateTime.parse(dateFrom, formatter));
-            reservation.setDateEnd(LocalDateTime.parse(dateEnd, formatter));
+            reservation.setDateFrom(dFrom);
+            reservation.setDateEnd(dEnd);
+            reservation.setPrice(vacationHouse.getPrice()*days); //calculating price for no of days
             reservation.setReservationType(ReservationType.ACTIVE);
             reservation.setReservationTime(LocalDateTime.now());
             System.out.println(reservation.getReservationTime());

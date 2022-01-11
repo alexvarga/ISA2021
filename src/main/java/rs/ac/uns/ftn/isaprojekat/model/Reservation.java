@@ -14,6 +14,8 @@ public class Reservation extends BaseEntity {
     private LocalDateTime dateEnd;
     private LocalDateTime reservationTime;
 
+    private Float price;
+
     @Enumerated(EnumType.STRING)
     private ReservationType reservationType;
 
@@ -56,6 +58,14 @@ public class Reservation extends BaseEntity {
 
     public void setReservationType(ReservationType reservationType) {
         this.reservationType = reservationType;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }
 

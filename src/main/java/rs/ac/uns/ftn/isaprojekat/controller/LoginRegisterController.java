@@ -34,29 +34,7 @@ public class LoginRegisterController {
         return "register/register";
     }
 
-/*    @PostMapping("/proccess_registration")
-    public String processRegistration(User user, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPass = user.getPassword();
-        user.setPassword(encoder.encode(rawPass));
 
-        String randomCode = RandomString.make(64);
-        user.setVerificationCode(randomCode);
-
-        user.setUserRole(UserRole.USER);
-        user.setEnabled(false);
-        user.setLocked(false);
-
-
-        userService.save(1L, user); //id here does nothing todo
-
-
-        String siteUrl = MyAppUrl.getSiteUrl(request);
-        userService.sendVerificationEmail(user, siteUrl);
-
-        return "register/register_verify_sent";
-
-    }*/
 
 
     @PostMapping("/")

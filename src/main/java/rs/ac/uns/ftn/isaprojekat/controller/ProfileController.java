@@ -89,10 +89,11 @@ public class ProfileController {
         }
 
         if(bindingResult.hasErrors()){
+            System.out.println("imam greske ovde ");
             return "profile";
         }else{
             dbUser.setPassword(encoder.encode(passwordNew));
-            userService.save(1L, user);
+            userService.save(1L, dbUser);
         }
 
 
