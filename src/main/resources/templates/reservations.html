@@ -412,12 +412,32 @@
                     <td th:text="${reservation.dateFrom}">address</td>
                     <td th:text="${reservation.dateEnd}">info</td>
 
-                    <td th:text="${reservation.vacationHouse.avgRating}">rating</td>
-                    <td th:text="${reservation.vacationHouse.vacationHouseOwner.lastName}">rating</td>
-                    <td th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.avgRating}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.vacationHouseOwner.lastName}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+
+
+
+
                     <td th:text="${reservation.price}">cena</td>
-                    <td><a th:href="@{/houses/{id}(id=${reservation.vacationHouse.id})}"
-                           th:text="${reservation.vacationHouse.id}">id</a></td>
+
+                    <td><a th:if="${reservation.vacationHouse != null}" th:href="@{/houses/{id}(id=${reservation.vacationHouse.id})}"
+                           th:text="${reservation.vacationHouse.id}">id</a>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+                    </td>
+
                     <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                         canceled
                     </td>

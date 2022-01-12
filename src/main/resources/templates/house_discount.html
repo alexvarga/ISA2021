@@ -30,9 +30,10 @@
                 <td>
                     <a th:href="@{'/houses/discount/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do </a>
                 </td>
-                <td>datend</td>
-                <td>- id</td>
-                <td>- rating</td>
+                <td>Ocena vikendice</td>
+                <td>Vlasnik</td>
+                <td>Vlasnik</td>
+                <td>Vikendica</td>
             </tr>
             </thead>
             <tbody>
@@ -41,15 +42,34 @@
                 <td th:text="${offer.reservationTime}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
                 <td th:text="${offer.dateEnd}">info</td>
-                <td th:text="${offer.vacationHouse.id}">rating</td>
-                <td th:text="${offer.vacationHouse.avgRating}">rating</td>
-                <td th:text="${offer.vacationHouse.vacationHouseOwner.lastName}">rating</td>
-                <td th:text="${offer.vacationHouse.vacationHouseOwner.firstName}">rating</td>
-                <td><a th:href="@{/boats/{id}(id=${offer.vacationHouse.id})}" th:text="${offer.vacationHouse.id}">id broda</a>
+
+                <td>
+                    <p th:if="${offer.vacationHouse != null}" th:text="${offer.vacationHouse.avgRating}">rating</p>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                </td>
+
+                <td>
+                    <p th:if="${offer.vacationHouse != null}"
+                       th:text="${offer.vacationHouse.vacationHouseOwner.lastName}">last name</p>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">last name</p>
+
                 </td>
                 <td>
+                    <p th:if="${offer.vacationHouse != null}"
+                       th:text="${offer.vacationHouse.vacationHouseOwner.firstName}">first name</p>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">first name</p>
+
+                </td>
+
+                <td>
+                    <a th:if="${offer.vacationHouse != null}" th:href="@{/houses/{id}(id=${offer.vacationHouse.id})}"
+                       th:text="${offer.vacationHouse.id}">id broda</a>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">rating</p>
+                </td>
+                <td th:if="${offer.vacationHouse != null}">
                     <form th:action="@{/houses/discount/reserve}" method="post">
-                        <input hidden name="offerId" th:value="${offer.id}" />
+                        <input hidden name="offerId" th:value="${offer.id}"/>
                         <button type="submit" class="btn btn-primary">rez</button>
 
 
@@ -58,49 +78,49 @@
                 </td>
 
 
-
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
 
-        <div class="row justify-content-center">
-            Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
-            &nbsp; - &nbsp;
+    <div class="row justify-content-center border-top">
+        Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+        &nbsp; - &nbsp;
 
-            <a th:if="${currentPage>1}"
-               th:href="@{'/houses/discount/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
-            <span th:unless="${currentPage>1}">Prva</span>
-            &nbsp;
-            <a th:if="${currentPage>1}"
-               th:href="@{'/houses/discount/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
-            <span th:unless="${currentPage>1}">prethodna</span>
-            &nbsp;
+        <a th:if="${currentPage>1}"
+           th:href="@{'/houses/discount/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <span th:unless="${currentPage>1}">Prva</span>
+        &nbsp;
+        <a th:if="${currentPage>1}"
+           th:href="@{'/houses/discount/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+        <span th:unless="${currentPage>1}">prethodna</span>
+        &nbsp;
 
-            <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+        <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
                 <a th:if="${i != currentPage}"
                    th:href="@{'/houses/discount/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
                 <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
             </span>
 
 
-            <a th:if="${currentPage<numberOfPages}"
-               th:href="@{'/houses/discount/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
-            <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
-            &nbsp;
-            <a th:if="${currentPage<numberOfPages}"
-               th:href="@{'/houses/discount/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
-            <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
-            &nbsp;
-
-
-        </div>
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/houses/discount/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+        <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+        &nbsp;
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/houses/discount/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+        <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+        &nbsp;
 
 
     </div>
 
 
-    <div th:insert="/index.html :: scripts"></div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
 
 </body>
 </html>

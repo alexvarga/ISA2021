@@ -24,23 +24,30 @@ public class AdminController {
     private final BoatService boatService;
     private final BoatReservationService boatReservationService;
 
-    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService) {
+    private final VacationHouseOwnerService vacationHouseOwnerService;
+    private final VacationHouseService vacationHouseService;
+    private final VacationHouseReservationService vacationHouseReservationService;
+
+    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService) {
         this.instructorService = instructorService;
         this.adventureService = adventureService;
         this.adventureReservationService = adventureReservationService;
         this.boatOwnerService = boatOwnerService;
         this.boatService = boatService;
         this.boatReservationService = boatReservationService;
+        this.vacationHouseOwnerService = vacationHouseOwnerService;
+        this.vacationHouseService = vacationHouseService;
+        this.vacationHouseReservationService = vacationHouseReservationService;
     }
 
     @GetMapping("/adminPage")
-    public String adminPage(){
+    public String adminPage() {
 
         return "adminPage";
     }
 
     @GetMapping("/admin/instructors")
-    public String listInstructors(Model model){
+    public String listInstructors(Model model) {
 
 
         return listInstructorsByPage(model, 1, "id", "asc");
@@ -49,11 +56,15 @@ public class AdminController {
     @GetMapping("/admin/instructors/page/{pageNumber}")
     public String listInstructorsByPage(Model model,
                                         @PathVariable("pageNumber") int currentPage,
-                                        @Param(value="sortField") String sortField,
-                                        @Param(value="sortDirection") String sortDirection){
+                                        @Param(value = "sortField") String sortField,
+                                        @Param(value = "sortDirection") String sortDirection) {
 
-        if (sortField==null){sortField="id";}
-        if(sortDirection==null){sortDirection="asc";}
+        if (sortField == null) {
+            sortField = "id";
+        }
+        if (sortDirection == null) {
+            sortDirection = "asc";
+        }
         Page<Instructor> page = instructorService.findAll(currentPage, sortField, sortDirection);
         List<Instructor> listInstructors = page.getContent();
 
@@ -75,15 +86,15 @@ public class AdminController {
     }
 
     @DeleteMapping("/admin/instructors/delete")
-    String deleteInstructor(Model model, @Param("id") Long id){
+    String deleteInstructor(Model model, @Param("id") Long id) {
         System.out.println(id);
-       // not a very scalable solution :(
+        // not a very scalable solution :(
         Instructor instructor = instructorService.findById(id);
         Set<Adventure> adventures = instructor.getAdventures();
-        for (Adventure adventure : adventures){
+        for (Adventure adventure : adventures) {
             Set<AdventureReservation> reservations = adventureReservationService.getAllByAdventure_Id(adventure.getId());
 
-            for (AdventureReservation reservation:reservations){
+            for (AdventureReservation reservation : reservations) {
                 reservation.setAdventure(null);
                 adventureReservationService.save(1L, reservation);
             }
@@ -91,12 +102,12 @@ public class AdminController {
         }
         instructorService.deleteById(id);
 
-        return listInstructors(model);
+        return listBoatOwners(model);
     }
 
 
     @GetMapping("/admin/boatOwners")
-    public String listBoatOwners(Model model){
+    public String listBoatOwners(Model model) {
 
 
         return listBoatOwnersByPage(model, 1, "id", "asc");
@@ -104,12 +115,16 @@ public class AdminController {
 
     @GetMapping("/admin/boatOwners/page/{pageNumber}")
     public String listBoatOwnersByPage(Model model,
-                                        @PathVariable("pageNumber") int currentPage,
-                                        @Param(value="sortField") String sortField,
-                                        @Param(value="sortDirection") String sortDirection){
+                                       @PathVariable("pageNumber") int currentPage,
+                                       @Param(value = "sortField") String sortField,
+                                       @Param(value = "sortDirection") String sortDirection) {
 
-        if (sortField==null){sortField="id";}
-        if(sortDirection==null){sortDirection="asc";}
+        if (sortField == null) {
+            sortField = "id";
+        }
+        if (sortDirection == null) {
+            sortDirection = "asc";
+        }
         Page<BoatOwner> page = boatOwnerService.findAll(currentPage, sortField, sortDirection);
         List<BoatOwner> listBoatOwners = page.getContent();
 
@@ -131,26 +146,89 @@ public class AdminController {
     }
 
     @DeleteMapping("/admin/boatOwners/delete")
-    String deleteBoatOwners(Model model, @Param("id") Long id){
+    String deleteBoatOwners(Model model, @Param("id") Long id) {
         System.out.println(id);
 
         BoatOwner owner = boatOwnerService.findById(id);
         Set<Boat> boats = owner.getBoats();
-        for (Boat boat : boats){
+        for (Boat boat : boats) {
             Set<BoatReservation> reservations = boatReservationService.getAllByBoat_Id(boat.getId());
             System.out.println(boat.getId());
 
-            for (BoatReservation reservation:reservations){
+            for (BoatReservation reservation : reservations) {
                 reservation.setBoat(null);
                 System.out.println(reservation);
                 boatReservationService.save(1L, reservation);
             }
-           boatService.deleteById(boat.getId());
+            boatService.deleteById(boat.getId());
         }
-       boatOwnerService.deleteById(id);
+        boatOwnerService.deleteById(id);
 
         return listBoatOwners(model);
     }
 
 
+    @GetMapping("/admin/houseOwners")
+    public String listVacationHouseOwners(Model model) {
+
+
+        return listVacationHouseOwnersByPage(model, 1, "id", "asc");
+    }
+
+    @GetMapping("/admin/houseOwners/page/{pageNumber}")
+    public String listVacationHouseOwnersByPage(Model model,
+                                                @PathVariable("pageNumber") int currentPage,
+                                                @Param(value = "sortField") String sortField,
+                                                @Param(value = "sortDirection") String sortDirection) {
+
+        if (sortField == null) {
+            sortField = "id";
+        }
+        if (sortDirection == null) {
+            sortDirection = "asc";
+        }
+        Page<VacationHouseOwner> page = vacationHouseOwnerService.findAll(currentPage, sortField, sortDirection);
+        List<VacationHouseOwner> listVacationHouseOwners = page.getContent();
+
+        Long numberOfElements = page.getTotalElements();
+        int numberOfPages = page.getTotalPages();
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("numberOfElements", numberOfElements);
+        model.addAttribute("numberOfPages", numberOfPages);
+        model.addAttribute("houseOwners", listVacationHouseOwners);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDirection", reverseSortDirection);
+
+        return "vacation_house_owners";
+
+    }
+
+    @DeleteMapping("/admin/houseOwners/delete")
+    String deleteVacationHouseOwner(Model model, @Param("id") Long id) {
+        System.out.println(id);
+
+        VacationHouseOwner owner = vacationHouseOwnerService.findById(id);
+        Set<VacationHouse> houses = owner.getVacationHouses();
+        for (VacationHouse house : houses) {
+            Set<VacationHouseReservation> reservations =
+                    vacationHouseReservationService.getAllByVacationHouse_Id(house.getId());
+            System.out.println(house.getId());
+
+            for (VacationHouseReservation reservation : reservations) {
+                reservation.setVacationHouse(null);
+                System.out.println(reservation);
+                vacationHouseReservationService.save(1L, reservation);
+            }
+            vacationHouseService.deleteById(house.getId());
+        }
+        vacationHouseOwnerService.deleteById(id);
+
+        return listVacationHouseOwners(model);
+
+
+    }
 }

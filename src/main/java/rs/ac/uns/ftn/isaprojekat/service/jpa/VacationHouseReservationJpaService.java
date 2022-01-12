@@ -14,6 +14,7 @@ import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Profile("default")
 @Service
@@ -112,6 +113,11 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
 
     @Override
     public ArrayList<VacationHouseReservation> findAll() {
-        return null;
+        return (ArrayList<VacationHouseReservation>) vacationHouseReservationRepository.findAll();
+    }
+
+    @Override
+    public Set<VacationHouseReservation> getAllByVacationHouse_Id(Long vacationHouse_id) {
+        return vacationHouseReservationRepository.getAllByVacationHouse_Id(vacationHouse_id);
     }
 }

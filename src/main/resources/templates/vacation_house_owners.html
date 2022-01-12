@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Vlasnici brodova</title>
+    <title>Vlasnici vikendica</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 </head>
@@ -43,8 +43,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="owner:${boatOwners}">
-                <!--                <td><a th:href="@{/instructor/{id}(id=${boat.id})}" th:text="${boat.id}">id</a></td>-->
+            <tr th:each="owner:${houseOwners}">
 
                 <td th:text="${owner.id}">id</td>
                 <td th:text="${owner.email}">email</td>
@@ -57,9 +56,7 @@
 
 
                 <td>
-                    <!--                    <a class="btn btn-primary" href="#my_modal" data-toggle="modal"-->
-                    <!--                       th:attr="data-boat-id=''+${boat.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">rez</a>-->
-                    <form th:method="delete" th:action="@{/admin/boatOwners/delete}">
+                    <form th:method="delete" th:action="@{/admin/houseOwners/delete}">
                         <input hidden type="number" name="id" th:value="${owner.id}">
                         <button type="submit" class="btn btn-danger">Obriši</button>
                     </form>
@@ -76,29 +73,29 @@
         &nbsp; - &nbsp;
 
         <a th:if="${currentPage>1}"
-           th:href="@{'/admin/boatOwners/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prva</a>
+           th:href="@{'/admin/houseOwners/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prva</a>
 
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;
         <a th:if="${currentPage>1}"
-           th:href="@{'/admin/boatOwners/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prethodna </a>
+           th:href="@{'/admin/houseOwners/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prethodna </a>
         <span th:unless="${currentPage>1}">prethodna</span>
         &nbsp;
 
         <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
                 <a></a>
                 <a th:if="${i != currentPage}"
-                   th:href="@{'/admin/boatOwners/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}"> [[${i}]] </a>
+                   th:href="@{'/admin/houseOwners/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}"> [[${i}]] </a>
                 <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
             </span>
 
 
         <a th:if="${currentPage<numberOfPages}"
-           th:href="@{'/admin/boatOwners/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Sledeća</a>
+           th:href="@{'/admin/houseOwners/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Sledeća</a>
         <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
         &nbsp;
         <a th:if="${currentPage<numberOfPages}"
-           th:href="@{'/admin/boatOwners/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Poslednja </a>
+           th:href="@{'/admin/houseOwners/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
 
