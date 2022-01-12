@@ -270,4 +270,45 @@ public class AdminController {
         return "admin_adventures";
 
     }
+
+
+    @GetMapping("/admin/houses")
+    String listHouses(Model model){
+        return listHousesByPage(model, 1, "id", "asc");
+    }
+
+    @GetMapping("/admin/houses/page/{pageNumber}")
+    String listHousesByPage(Model model,
+                                @PathVariable("pageNumber") int currentPage,
+                                @Param(value = "sortField") String sortField,
+                                @Param(value = "sortDirection") String sortDirection) {
+
+        if (sortField == null) {
+            sortField = "id";
+        }
+        if (sortDirection == null) {
+            sortDirection = "asc";
+        }
+
+        Page<VacationHouse> page = vacationHouseService.findAll(currentPage, sortField, sortDirection);
+        List<VacationHouse> listHouses = page.getContent();
+
+        Long numberOfElements = page.getTotalElements();
+        int numberOfPages = page.getTotalPages();
+        System.out.println(numberOfPages);
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("numberOfElements", numberOfElements);
+        model.addAttribute("numberOfPages", numberOfPages);
+        model.addAttribute("houses", listHouses);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDirection", reverseSortDirection);
+
+
+        return "admin_houses";
+
+    }
 }

@@ -116,6 +116,7 @@ public class DataLoader implements CommandLineRunner {
         vh3.setPrice(30F);
         vh3.setNoOfPersons(4);
         vh3.setMisc("");
+        vh3.setVacationHouseOwner(vho1);
         vacationHouseService.save(vh3.getId(), vh3);
 
 
