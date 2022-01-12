@@ -271,6 +271,29 @@ public class AdminController {
 
     }
 
+    @DeleteMapping("/admin/adventures/delete")
+    String deleteAdventure(Model model, @Param("id") Long id) {
+        System.out.println(id);
+
+        Adventure adventure = adventureService.findById(id);
+            Set<AdventureReservation> reservations =
+                    adventureReservationService.getAllByAdventure_Id(adventure.getId());
+
+            for (AdventureReservation reservation : reservations) {
+                reservation.setAdventure(null);
+                System.out.println(reservation);
+                adventureReservationService.save(1L, reservation);
+            }
+            adventureService.deleteById(adventure.getId());
+
+
+        return listAdventures(model);
+
+
+    }
+
+
+
 
     @GetMapping("/admin/houses")
     String listHouses(Model model){
@@ -309,6 +332,88 @@ public class AdminController {
 
 
         return "admin_houses";
+
+    }
+
+    @DeleteMapping("/admin/houses/delete")
+    String deleteVacationHouse(Model model, @Param("id") Long id) {
+
+
+        VacationHouse vacationHouse = vacationHouseService.findById(id);
+        Set<VacationHouseReservation> reservations =
+                vacationHouseReservationService.getAllByVacationHouse_Id(vacationHouse.getId());
+
+        for (VacationHouseReservation reservation : reservations) {
+            reservation.setVacationHouse(null);
+            System.out.println(reservation);
+            vacationHouseReservationService.save(1L, reservation);
+        }
+        vacationHouseService.deleteById(vacationHouse.getId());
+
+
+        return listHouses(model);
+
+
+    }
+
+
+    @GetMapping("/admin/boats")
+    String listBoats(Model model){
+        return listBoatsByPage(model, 1, "id", "asc");
+    }
+
+    @GetMapping("/admin/boats/page/{pageNumber}")
+    String listBoatsByPage(Model model,
+                                @PathVariable("pageNumber") int currentPage,
+                                @Param(value = "sortField") String sortField,
+                                @Param(value = "sortDirection") String sortDirection) {
+
+        if (sortField == null) {
+            sortField = "id";
+        }
+        if (sortDirection == null) {
+            sortDirection = "asc";
+        }
+
+        Page<Boat> page = boatService.findAll(currentPage, sortField, sortDirection);
+        List<Boat> listBoats = page.getContent();
+
+        Long numberOfElements = page.getTotalElements();
+        int numberOfPages = page.getTotalPages();
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("numberOfElements", numberOfElements);
+        model.addAttribute("numberOfPages", numberOfPages);
+        model.addAttribute("boats", listBoats);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDirection", reverseSortDirection);
+
+
+        return "admin_boats";
+
+    }
+
+    @DeleteMapping("/admin/boats/delete")
+    String deleteBoat(Model model, @Param("id") Long id) {
+
+
+        Boat boat = boatService.findById(id);
+        Set<BoatReservation> reservations =
+                boatReservationService.getAllByBoat_Id(boat.getId());
+
+        for (BoatReservation reservation : reservations) {
+            reservation.setBoat(null);
+            System.out.println(reservation);
+            boatReservationService.save(1L, reservation);
+        }
+        boatService.deleteById(boat.getId());
+
+
+        return listBoats(model);
+
 
     }
 }
