@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/", "/login").anonymous()
                 .antMatchers("/register/", "/register").anonymous()
                 .antMatchers("/adminPage", "/adminPage/").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/userHomePage", "/userHomePage/").hasAuthority("ROLE_USER")
                 .antMatchers("/reservations", "/reservations/**").hasAuthority("ROLE_USER")
                 .antMatchers("/adventures/discount/**").hasAuthority("ROLE_USER")
@@ -67,6 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin()
                 .usernameParameter("email").successHandler(loginSuccessHandler)
                 .permitAll()
-                .and().logout().logoutSuccessUrl("/").permitAll();
+                .and().logout().invalidateHttpSession(true).logoutSuccessUrl("/").permitAll();
     }
 }

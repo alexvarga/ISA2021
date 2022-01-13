@@ -34,12 +34,16 @@ public class LoggedInUserDetails implements UserDetails {
         }else if (user.getUserRole()==UserRole.USER){
             System.out.println("user je user - iz UserDetailsIMPL");
             return "user";
-        }else {
-            System.out.println("ovo ne bi trebalo da vidiš");
-            return "aaaaaaaaa";
+        }else if (user.getUserRole()==UserRole.ADMIN_NEW) {
+            System.out.println("admin new");
+            return "admin_new";
+        } else {
+            return "";
         }
 
     }
+
+
 
     @Override
     public String getPassword() {

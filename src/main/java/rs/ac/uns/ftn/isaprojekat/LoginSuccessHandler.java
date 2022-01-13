@@ -26,9 +26,10 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             redirectURL="adminPage";
         }else if( userDetails.getRole().equals("user")){
             redirectURL="userHomePage";
+        }else if(userDetails.getRole().equals("admin_new")){
+            redirectURL = "change_pass";
         }
 
-        //super.onAuthenticationSuccess(request, response, authentication);
 
         response.sendRedirect(redirectURL);
     }

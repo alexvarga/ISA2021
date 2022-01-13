@@ -54,15 +54,6 @@ public class DataLoader implements CommandLineRunner {
         user.setUserRole(UserRole.USER);
         userService.save(user.getId(), user);
 
-        User user2 = new User();
-        user2.setEmail("admin");
-        //password: test
-        user2.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
-        user2.setEnabled(true);
-        user2.setLocked(false);
-        user2.setUserRole(UserRole.ADMIN);
-        userService.save(user2.getId(), user2);
-
         User user3 = new User();
         user3.setEmail("disabledUser");
         //password: test
@@ -71,6 +62,24 @@ public class DataLoader implements CommandLineRunner {
         user3.setLocked(false);
         user3.setUserRole(UserRole.ADMIN);
         userService.save(user3.getId(), user3);
+
+        User admin = new User();
+        admin.setEmail("admin");
+        admin.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
+        admin.setEnabled(true);
+        admin.setLocked(false);
+        admin.setUserRole(UserRole.ADMIN);
+        userService.save(admin.getId(), admin);
+
+        User admin2 = new User();
+        admin2.setEmail("admin2");
+        admin2.setPassword("$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum");
+        admin2.setEnabled(true);
+        admin2.setLocked(false);
+        admin2.setUserRole(UserRole.ADMIN_NEW);
+        userService.save(admin2.getId(), admin2);
+
+
 
         VacationHouseOwner vho1 = new VacationHouseOwner();
         //vho1.setId(1L);

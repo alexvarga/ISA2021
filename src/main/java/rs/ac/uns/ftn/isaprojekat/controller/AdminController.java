@@ -2,14 +2,21 @@ package rs.ac.uns.ftn.isaprojekat.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +35,9 @@ public class AdminController {
     private final VacationHouseService vacationHouseService;
     private final VacationHouseReservationService vacationHouseReservationService;
 
-    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService) {
+    private final UserService userService;
+
+    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService) {
         this.instructorService = instructorService;
         this.adventureService = adventureService;
         this.adventureReservationService = adventureReservationService;
@@ -38,6 +47,7 @@ public class AdminController {
         this.vacationHouseOwnerService = vacationHouseOwnerService;
         this.vacationHouseService = vacationHouseService;
         this.vacationHouseReservationService = vacationHouseReservationService;
+        this.userService = userService;
     }
 
     @GetMapping("/adminPage")
@@ -414,6 +424,47 @@ public class AdminController {
 
         return listBoats(model);
 
+
+    }
+    @GetMapping("/change_pass")
+    String showAdminChangePass(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        model.addAttribute("user", user);
+
+        return "admin_change_pass";
+    }
+    @PostMapping("/change_pass")
+    String adminChangePass(User user, BindingResult bindingResult, Model model,
+                           @RequestParam(value="password-confirm", required = false) String passwordConfirm,
+                           @RequestParam(value="new-password", required = false) String passwordNew,
+                           Principal principal, HttpSession session, HttpServletResponse response) throws IOException {
+
+        User dbUser = userService.findByEmail(principal.getName());
+        System.out.println(dbUser);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        if(!passwordNew.equals(passwordConfirm)){
+            bindingResult.addError(new FieldError("user", "password", "Lozinke se ne poklapaju."));
+        }
+
+        if(bindingResult.hasErrors()){
+            System.out.println("imam greske ovde ");
+            return "admin_change_pass";
+        }else{
+            dbUser.setPassword(encoder.encode(passwordNew));
+            dbUser.setUserRole(UserRole.ADMIN);
+
+            userService.save(1L, dbUser);
+        }
+
+        session.invalidate();
+
+        response.sendRedirect("/login");
+
+
+        return "adminPage";
 
     }
 }

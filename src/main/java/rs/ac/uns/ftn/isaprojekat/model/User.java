@@ -16,6 +16,7 @@ public class User extends Person  {
     private UserRole userRole;
     private Boolean enabled;
     private Boolean locked;
+    //private Boolean visitedStatus;
     private String verificationCode;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -36,9 +37,11 @@ public class User extends Person  {
         this.enabled = enabled;
         this.locked = locked;
         this.verificationCode = verificationCode;
+        //this.visitedStatus = visitedStatus;
         super.setEmail(email);
         super.setPassword(password);
         super.setFirstName(firstName);
+        super.setLastName(lastName);
         super.setLastName(lastName);
         super.setUsername(username);
     }
@@ -89,5 +92,23 @@ public class User extends Person  {
 
     public void setVacationHouseReservations(Set<VacationHouseReservation> vacationHouseReservations) {
         this.vacationHouseReservations = vacationHouseReservations;
+    }
+
+
+
+    public Set<BoatReservation> getBoatReservations() {
+        return boatReservations;
+    }
+
+    public void setBoatReservations(Set<BoatReservation> boatReservations) {
+        this.boatReservations = boatReservations;
+    }
+
+    public Set<AdventureReservation> getAdventureReservations() {
+        return adventureReservations;
+    }
+
+    public void setAdventureReservations(Set<AdventureReservation> adventureReservations) {
+        this.adventureReservations = adventureReservations;
     }
 }
