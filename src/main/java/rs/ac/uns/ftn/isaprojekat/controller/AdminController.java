@@ -19,8 +19,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -417,6 +418,7 @@ public class AdminController {
                 boatReservationService.getAllByBoat_Id(boat.getId());
 
         for (BoatReservation reservation : reservations) {
+            System.out.println(reservation.getDateEnd());
             reservation.setBoat(null);
             System.out.println(reservation);
             boatReservationService.save(1L, reservation);
@@ -511,6 +513,82 @@ public class AdminController {
             return "adminPage";
         }
 
+    }
+
+    @GetMapping("/admin/reports")
+    public String showReports(){
+
+        return "admin_report";
+    }
+
+
+    @GetMapping("/admin/reports/year")
+    public String showReportYear(Model model){
+
+        Map<String, Float> boats = new LinkedHashMap<String, Float>();
+        Map<String, Float> adventures = new LinkedHashMap<String, Float>();
+        Map<String, Float> houses = new LinkedHashMap<String, Float>();
+
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime firstDayOfThisMonth = now.minusDays(now.getDayOfMonth());
+        System.out.println(firstDayOfThisMonth + " 1 1 22");
+
+        YearMonth ym = YearMonth.now().minusMonths(12);
+
+        for(int i =0; i<12; i++){
+            boats.put(ym.plusMonths(i).toString(), 0F);
+            adventures.put(ym.plusMonths(i).toString(), 0F);
+            houses.put(ym.plusMonths(i).toString(), 0F);
+        }
+        System.out.println(ym);
+
+
+
+        ArrayList<BoatReservation> boatRes =  boatReservationService.findAll();
+        for(BoatReservation br:boatRes){
+            if(br.getDateFrom().isBefore(firstDayOfThisMonth) && br.getDateFrom().isAfter(firstDayOfThisMonth.minusMonths(12)) && br.getReservationType().equals(ReservationType.ACTIVE)){
+
+                    Float temp = boats.get(YearMonth.from(br.getDateFrom()).toString());
+                    boats.put(YearMonth.from(br.getDateFrom()).toString(), temp+br.getPrice());
+
+            }
+        }
+
+        ArrayList<AdventureReservation> adventureRes =  adventureReservationService.findAll();
+        for(AdventureReservation ar:adventureRes){
+            if(ar.getDateFrom().isBefore(firstDayOfThisMonth) && ar.getDateFrom().isAfter(firstDayOfThisMonth.minusMonths(12)) && ar.getReservationType().equals(ReservationType.ACTIVE)){
+
+                System.out.println(ar.getId());
+                Float temp = adventures.get(YearMonth.from(ar.getDateFrom()).toString());
+                System.out.println(adventures.get(YearMonth.from(ar.getDateFrom()).toString()));
+                adventures.put(YearMonth.from(ar.getDateFrom()).toString(), temp+ar.getPrice());
+
+            }
+        }
+
+        ArrayList<VacationHouseReservation> houseRes =  vacationHouseReservationService.findAll();
+        for(VacationHouseReservation vhr:houseRes){
+            if(vhr.getDateFrom().isBefore(firstDayOfThisMonth) && vhr.getDateFrom().isAfter(firstDayOfThisMonth.minusMonths(12)) && vhr.getReservationType().equals(ReservationType.ACTIVE)){
+
+                System.out.println(vhr.getId());
+                Float temp = houses.get(YearMonth.from(vhr.getDateFrom()).toString());
+                System.out.println(houses.get(YearMonth.from(vhr.getDateFrom()).toString()));
+                houses.put(YearMonth.from(vhr.getDateFrom()).toString(), temp+vhr.getPrice());
+
+            }
+        }
+
+
+
+        model.addAttribute("boatKeySet", boats.keySet());
+        model.addAttribute("boatValues", boats.values());
+        model.addAttribute("adventureValues", adventures.values());
+        model.addAttribute("houseValues", houses.values());
+
+
+
+        return "reports/report_year";
     }
 
 

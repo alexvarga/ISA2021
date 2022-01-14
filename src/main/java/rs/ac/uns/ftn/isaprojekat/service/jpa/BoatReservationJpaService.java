@@ -142,7 +142,7 @@ public class BoatReservationJpaService implements BoatReservationService {
 
     @Override
     public ArrayList<BoatReservation> findAll() {
-        return null;
+        return (ArrayList<BoatReservation>) boatReservationRepository.findAll();
     }
 
 
