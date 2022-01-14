@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -467,4 +469,49 @@ public class AdminController {
         return "adminPage";
 
     }
+
+
+    @GetMapping({"/admin/new_admin"})
+    public String register(Model model){
+        model.addAttribute("user", new User());
+        return "new_admin";
+    }
+
+
+    @PostMapping("/admin/new_admin")
+    public String process(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request,
+                          @RequestParam(value = "password-confirm", required = false) String passwordConfirm)  {
+
+        if(!user.getPassword().equals(passwordConfirm)){
+            bindingResult.addError(new FieldError("user", "password", "Lozinke se ne poklapaju."));
+        }
+
+        if(bindingResult.hasErrors()){
+
+
+
+            return ("new_admin");
+        }else {
+
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String rawPass = user.getPassword();
+            user.setPassword(encoder.encode(rawPass));
+
+
+
+            user.setUserRole(UserRole.ADMIN_NEW);
+            user.setEnabled(true);
+            user.setLocked(false);
+
+
+            userService.save(1L, user); //id here does nothing todo
+
+
+
+            return "adminPage";
+        }
+
+    }
+
+
 }
