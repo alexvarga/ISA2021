@@ -608,7 +608,9 @@ public class AdminController {
         list.addAll(adventures.values());
         list.addAll(houses.values());
 
-        model.addAttribute("max", Collections.max(list));
+        if(!list.isEmpty()){
+            model.addAttribute("max", Collections.max(list));
+        }
 
         model.addAttribute("boatKeySet", boats.keySet());
         model.addAttribute("boatValues", boats.values());
