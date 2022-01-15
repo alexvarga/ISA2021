@@ -30,9 +30,9 @@
                 <td>
                     <a th:href="@{'/boats/discount/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do </a>
                 </td>
-                <td>datend</td>
-                <td>boat id</td>
-                <td>boat rating</td>
+                <td>Ocena broda</td>
+                <td>Vlasnik</td>
+                <td>Vlasnik</td>
             </tr>
             </thead>
             <tbody>
@@ -41,13 +41,26 @@
                 <td th:text="${offer.reservationTime}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
                 <td th:text="${offer.dateEnd}">info</td>
-                <td th:text="${offer.boat.id}">rating</td>
-                <td th:text="${offer.boat.avgRating}">rating</td>
-                <td th:text="${offer.boat.owner.lastName}">rating</td>
-                <td th:text="${offer.boat.owner.firstName}">rating</td>
-                <td><a th:href="@{/boats/{id}(id=${offer.boat.id})}" th:text="${offer.boat.id}">id broda</a>
+
+
+
+                <td>
+                    <p th:if="${offer.boat!=null}" th:text="${offer.boat.avgRating}">id</p>
+                    <p th:if="${offer.boat==null}" th:text="Obrisan">rating</p>
+                </td>
+
+                <td>
+                    <p th:if="${offer.boat!=null}" th:text="${offer.boat.owner.lastName}">id</p>
+                    <p th:if="${offer.boat==null}" th:text="Obrisan">vlasnik</p>
                 </td>
                 <td>
+                    <p th:if="${offer.boat!=null}" th:text="${offer.boat.owner.lastName}">id</p>
+                    <p th:if="${offer.boat==null}" th:text="Obrisan">vlasnik</p>
+                </td>
+                <td><a th:if="${offer.boat!=null}"  th:href="@{/boats/{id}(id=${offer.boat.id})}" th:text="${offer.boat.id}">id broda</a>
+
+                </td>
+                <td th:if="${offer.boat!=null}">
                     <form th:action="@{/boats/discount/reserve}" method="post">
                         <input hidden name="offerId" th:value="${offer.id}" />
                         <button type="submit" class="btn btn-primary">rez</button>

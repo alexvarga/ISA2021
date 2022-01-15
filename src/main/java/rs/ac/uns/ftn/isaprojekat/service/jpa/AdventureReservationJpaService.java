@@ -13,6 +13,8 @@ import rs.ac.uns.ftn.isaprojekat.repository.AdventureReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReservationService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Set;
 
 @Profile("default")
 @Service
@@ -108,5 +110,21 @@ public class AdventureReservationJpaService implements AdventureReservationServi
         Pageable pageable = sortAndPage(pageNumber, sortField, sortDirection);
 
         return adventureReservationRepository.getAllByReservationType(type, pageable);
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+        adventureReservationRepository.deleteById(aLong);
+    }
+
+    @Override
+    public ArrayList<AdventureReservation> findAll() {
+        return (ArrayList<AdventureReservation>) adventureReservationRepository.findAll();
+    }
+
+
+    @Override
+    public Set<AdventureReservation> getAllByAdventure_Id(Long adventure_id) {
+        return adventureReservationRepository.getAllByAdventure_Id(adventure_id);
     }
 }

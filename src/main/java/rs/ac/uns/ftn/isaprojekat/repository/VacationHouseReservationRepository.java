@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Repository
 public interface VacationHouseReservationRepository extends PagingAndSortingRepository<VacationHouseReservation, Long> {
@@ -18,6 +19,8 @@ public interface VacationHouseReservationRepository extends PagingAndSortingRepo
     Page<VacationHouseReservation> getAllByUserAndDateEndBefore(User user, LocalDateTime time, Pageable pageable);
 
     Page<VacationHouseReservation> getAllByUserAndDateEndAfter(User user, LocalDateTime time, Pageable pageable);
+
+    Set<VacationHouseReservation> getAllByVacationHouse_Id(Long vacationHouse_id);
 
     //current
     @Query(value="select vhr from VacationHouseReservation vhr where vhr.user = ?1 and vhr.dateEnd > ?2 and not(vhr.reservationType ='DISCOUNTOFFER' or vhr.reservationType='CANCELLED') ")

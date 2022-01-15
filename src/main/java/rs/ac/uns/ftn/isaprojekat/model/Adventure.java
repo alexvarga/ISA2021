@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name="adventures")
 public class Adventure extends Offer {
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="instructor_id")
     private Instructor instructor;
 

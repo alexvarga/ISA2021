@@ -83,21 +83,36 @@
             </thead>
             <tbody>
             <tr th:each="reservation:${boatReservations}">
-                <td th:text="${reservation.id}"></td>
+                <td>
+                   <p  th:text="${reservation.id}"> </p>
+                </td>
                 <td th:text="${reservation.reservationTime}">name</td>
                 <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">date from</td>
                 <td th:text="${reservation.dateEnd}">info</td>
-                <td th:text="${reservation.boat.avgRating}">rating</td>
-                <td th:text="${reservation.boat.owner.lastName}">rating</td>
-                <td th:text="${reservation.boat.owner.firstName}">rating</td>
-                <td th:text="${reservation.price}">cena</td>
+                <td> <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.avgRating}">rating </p>
+                    <p th:if="${reservation.boat==null}" >Obrisan</p>
+                </td>
+                <td> <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.owner.lastName}">rating </p>
+                    <p th:if="${reservation.boat==null}" th:text="Obrisan">
+                        Obrisan</p>
+                </td>
+                <td>
+                    <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.owner.firstName}">rating </p>
+                    <p th:if="${reservation.boat==null}" >Obrisan</p>
+                </td>
+                <td>
+                    <p   th:text="${reservation.price}">cena</p>
 
-                <td><a th:href="@{/boats/{id}(id=${reservation.boat.id})}" th:text="${reservation.boat.id}">id broda</a>
+                </td>
+
+                <td><a
+                    th:if="${reservation.boat!=null}" th:href="@{/boats/{id}(id=${reservation.boat.id})}" th:text="${reservation.boat.id}">id broda</a>
+                    <p th:if="${reservation.boat==null}" >Obrisan</p>
                 </td>
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                     cancelled
                 </td>
-                <td th:unless="${boatHistory==true}">
+                <td th:unless="${boatHistory==true or reservation.boat==null}">
                     <a class="btn btn-primary" href="#cancel_boat_modal" data-toggle="modal"
                        th:attr="data-boat-reservation-id=''+${reservation.id}+'', data-boat-date-from=''+${reservation.dateFrom}+'', data-boat-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
 
@@ -234,18 +249,34 @@
                 <td th:text="${reservation.reservationTime}">name</td>
                 <td th:text="${reservation.dateFrom}">address</td>
                 <td th:text="${reservation.dateEnd}">info</td>
-                <td th:text="${reservation.adventure.avgRating}">rating</td>
-                <td th:text="${reservation.adventure.instructor.lastName}">rating</td>
-                <td th:text="${reservation.adventure.instructor.firstName}">rating</td>
+                <td>
+                    <p th:if="${reservation.adventure != null}" th:text="${reservation.adventure.avgRating}">rating</p>
+                    <p th:if="${reservation.adventure == null}" th:text="Obrisana">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${reservation.adventure != null}"  th:text="${reservation.adventure.instructor.lastName}">rating</p>
+                    <p th:if="${reservation.adventure == null}" th:text="Obrisan">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${reservation.adventure != null}"  th:text="${reservation.adventure.instructor.firstName}">rating</p>
+                    <p th:if="${reservation.adventure == null}"  th:text="Obrisan">rating</p>
+
+                </td>
                 <td th:text="${reservation.price}">rating</td>
-                <td><a th:href="@{adventures/{id}(id=${reservation.adventure.id})}"
-                       th:text="${reservation.adventure.id}">id</a></td>
+                <td><a th:if="${reservation.adventure != null}" th:href="@{adventures/{id}(id=${reservation.adventure.id})}"
+                       th:text="${reservation.adventure.id}">id</a>
+                    <p th:if="${reservation.adventure == null}">Obrisana</p>
+                </td>
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                     canceled
                 </td>
                 <td th:unless="${adventureHistory==true}">
-                    <a class="btn btn-primary" href="#cancel_adventure_modal" data-toggle="modal"
+
+                    <a th:if="${reservation.adventure != null}" class="btn btn-primary" href="#cancel_adventure_modal" data-toggle="modal"
                        th:attr="data-adventure-reservation-id=''+${reservation.id}+'', data-adventure-date-from=''+${reservation.dateFrom}+'', data-adventure-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+                    <p th:if="${reservation.adventure==null}"> </p>
 
                 </td>
             </tr>
@@ -381,12 +412,32 @@
                     <td th:text="${reservation.dateFrom}">address</td>
                     <td th:text="${reservation.dateEnd}">info</td>
 
-                    <td th:text="${reservation.vacationHouse.avgRating}">rating</td>
-                    <td th:text="${reservation.vacationHouse.vacationHouseOwner.lastName}">rating</td>
-                    <td th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.avgRating}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.vacationHouseOwner.lastName}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+
+
+
+
                     <td th:text="${reservation.price}">cena</td>
-                    <td><a th:href="@{/houses/{id}(id=${reservation.vacationHouse.id})}"
-                           th:text="${reservation.vacationHouse.id}">id</a></td>
+
+                    <td><a th:if="${reservation.vacationHouse != null}" th:href="@{/houses/{id}(id=${reservation.vacationHouse.id})}"
+                           th:text="${reservation.vacationHouse.id}">id</a>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+                    </td>
+
                     <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                         canceled
                     </td>

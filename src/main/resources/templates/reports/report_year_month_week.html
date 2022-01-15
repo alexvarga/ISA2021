@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+
+<header th:insert="/index.html :: header"> </header>
+<div class="container">
+    <h2 align="center">Pregled prihoda</h2>
+<div class="row">
+    <div class="col" id="container"
+         style="width: 550px; height: 400px; margin: 0 auto"></div>
+    <div class="col" id="superKul"
+         style="width: 550px; height: 400px; margin: 0 auto"></div>
+
+</div>
+
+    <div class="row align-items-center " >
+        <div class="col" id="week"
+             style="width: 550px; height: 400px; margin: 0 auto"></div>
+        <div class="col" id=""
+             style="width: 550px; height: 400px; margin: 0 auto">
+
+            <div class="row">
+                <p> <br>  </p>
+            </div>
+            <div class="row align-items-center text-center">
+                <div class="col">
+                   <div class="row"> <h4 class="col">Generišite izveštaj za vremenski period</h4></div>
+                    <form th:action="@{/admin/reports/custom}" method="post">
+                        <div class="row">
+                            <div class="col-4"><label for="start">Od</label> <input type="date" id="start" name="start" required></div>
+                            <div class="col-4"><label for="end">Do</label> <input id="end" type="date" name="end" required></div>
+                            <div class="col-4"><button class="btn btn-block" type="submit" >Generiši</button></div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+<div th:insert="/index.html :: scripts"></div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script th:inline="javascript">
+    $(function(){
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Protekla godina'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [[${boatKeySet}]],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max:[[${yearMax}]],
+                title: {
+                    text: 'Iznos'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} €</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Brodovi',
+                data: [[${boatValues}]]
+            },{
+                name: 'Vikendice',
+                data: [[${houseValues}]]
+            },{
+                name: 'Avanture',
+                data: [[${adventureValues}]]
+            }]
+        });
+    });
+</script>
+
+<script th:inline="javascript">
+    $(function(){
+        Highcharts.chart('superKul', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Prethodni mesec'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [[${boatMonthKeySet}]],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max:[[${monthMax}]],
+                title: {
+                    text: 'Iznos'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} €</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Brodovi',
+                data: [[${boatsMonth}]]
+            },{
+                name: 'Vikendice',
+                data: [[${housesMonth}]]
+            },{
+                name: 'Avanture',
+                data: [[${adventuresMonth}]]
+            }]
+        });
+    }); </script>
+
+
+<script th:inline="javascript">
+    $(function(){
+        Highcharts.chart('week', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Protekla nedelja'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [[${boatWeekKeySet}]],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max:[[${weekMax}]],
+                title: {
+                    text: 'Iznos'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} €</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Brodovi',
+                data: [[${boatsWeek}]]
+            },{
+                name: 'Vikendice',
+                data: [[${adventuresWeek}]]
+            },{
+                name: 'Avanture',
+                data: [[${housesWeek}]]
+            }]
+        });
+    }); </script>
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+</head>
+<body>
+<header th:insert="/index.html :: header"> </header>
+
+
+<a th:href="@{/admin/reports/year}" >Godišjni</a>
+<a th:href="@{/admin/reports/month}" >Mesečni</a>
+<a th:href="@{/admin/reports/week}" >Nedeljni</a>
+
+
+
+
+
+<div th:insert="/index.html :: scripts"></div>
+
+</body>
+</html>
