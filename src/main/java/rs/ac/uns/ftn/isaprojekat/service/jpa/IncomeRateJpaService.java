@@ -19,7 +19,7 @@ public class IncomeRateJpaService implements IncomeRateService {
     }
 
     @Override
-    public Float findByEntityName(String name) {
+    public IncomeRate findByEntityName(String name) {
         return incomeRateRepository.findByEntityName(name);
     }
 

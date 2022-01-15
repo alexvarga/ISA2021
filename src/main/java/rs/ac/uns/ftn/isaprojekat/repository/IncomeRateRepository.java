@@ -7,6 +7,6 @@ import rs.ac.uns.ftn.isaprojekat.model.IncomeRate;
 @Repository
 public interface IncomeRateRepository extends CrudRepository<IncomeRate, Long> {
 
-    Float findByEntityName(String name);
+    IncomeRate findByEntityName(String name);
 
 }
