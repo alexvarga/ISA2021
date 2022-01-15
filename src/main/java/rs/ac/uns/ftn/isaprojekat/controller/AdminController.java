@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -529,12 +530,33 @@ public class AdminController {
         Map<String, Float> adventures = new LinkedHashMap<String, Float>();
         Map<String, Float> houses = new LinkedHashMap<String, Float>();
 
+        Map<String, Float> boatsMonth = new LinkedHashMap<String, Float>();
+        Map<String, Float> adventuresMonth = new LinkedHashMap<String, Float>();
+        Map<String, Float> housesMonth = new LinkedHashMap<String, Float>();
+
+        Map<String, Float> boatsWeek = new LinkedHashMap<String, Float>();
+        Map<String, Float> adventuresWeek = new LinkedHashMap<String, Float>();
+        Map<String, Float> housesWeek = new LinkedHashMap<String, Float>();
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime firstDayOfThisMonth = now.minusDays(now.getDayOfMonth());
-        System.out.println(firstDayOfThisMonth + " 1 1 22");
+        LocalDateTime lastDayOfLastMonth = now.minusDays(now.getDayOfMonth());
+        LocalDateTime firstDayOfLastMonth = lastDayOfLastMonth.minusMonths(1); //this is actually last day of the month before
+       // System.out.println(firstDayOfLastMonth+"first of last month");
+        LocalDateTime fistDayLastWeek = now.minusDays(7);
+        System.out.println(fistDayLastWeek + "first day last week");
+
+
+        //System.out.println(firstDayOfLastMonth.getDayOfYear()+"day of year");
 
         YearMonth ym = YearMonth.now().minusMonths(12);
+
+
+
+        System.out.println();
+
 
         for(int i =0; i<12; i++){
             boats.put(ym.plusMonths(i).toString(), 0F);
@@ -543,48 +565,232 @@ public class AdminController {
         }
         System.out.println(ym);
 
+        for(int i =1; i<6; i++){
+            boatsMonth.put((i+". nedelja"),0F );
+            adventuresMonth.put((i+". nedelja"),0F );
+            housesMonth.put((i+". nedelja"),0F );
+        }
+
+
+
+        for(int i =7; i>0; i--){
+
+            boatsWeek.put((now.minusDays(i).toLocalDate().toString()),0F );
+            adventuresWeek.put((now.minusDays(i).toLocalDate().toString()),0F );
+            housesWeek.put((now.minusDays(i).toLocalDate().toString()),0F );
+        }
+
+        System.out.println(boatsWeek.keySet());
+
 
 
         ArrayList<BoatReservation> boatRes =  boatReservationService.findAll();
         for(BoatReservation br:boatRes){
-            if(br.getDateFrom().isBefore(firstDayOfThisMonth) && br.getDateFrom().isAfter(firstDayOfThisMonth.minusMonths(12)) && br.getReservationType().equals(ReservationType.ACTIVE)){
+
+            if(br.getDateFrom().isAfter(fistDayLastWeek) && br.getDateFrom().isBefore(now.toLocalDate().atStartOfDay())){
+                boatsWeek.put(br.getDateFrom().toLocalDate().toString(), br.getPrice());
+            }
+
+            if(br.getDateFrom().isBefore(lastDayOfLastMonth) && br.getDateFrom().isAfter(lastDayOfLastMonth.minusMonths(12)) && br.getReservationType().equals(ReservationType.ACTIVE)){
 
                     Float temp = boats.get(YearMonth.from(br.getDateFrom()).toString());
                     boats.put(YearMonth.from(br.getDateFrom()).toString(), temp+br.getPrice());
+
+
+
+                    if(br.getDateFrom().isAfter(firstDayOfLastMonth) && br.getDateFrom().isBefore(lastDayOfLastMonth)){
+                        if(br.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(1))){
+
+                            Float t = boatsMonth.get("1 nedelja");
+
+                            if(t!=null) {
+                                boatsMonth.put("1. nedelja", t+br.getPrice());
+                            }else{
+                                boatsMonth.put("1. nedelja", br.getPrice());
+                            }
+                        }else if(br.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(1)) && br.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(2))){
+                            Float t = boatsMonth.get("2. nedelja");
+                            if(t!=null) {
+                                boatsMonth.put("2. nedelja", t+br.getPrice());
+                            }else{
+                                boatsMonth.put("2. nedelja", br.getPrice());
+                            }
+
+                        }else if(br.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(2)) && br.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(3))){
+                            Float t = boatsMonth.get("3. nedelja");
+                            if(t!=null) {
+                                boatsMonth.put("3. nedelja", t+br.getPrice());
+                            }else{
+                                boatsMonth.put("3. nedelja", br.getPrice());
+                            }
+
+                        }else if(br.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(3)) && br.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(4))){
+                            Float t = boatsMonth.get("4. nedelja");
+                            if(t!=null) {
+                                boatsMonth.put("4. nedelja", t+br.getPrice());
+                            }else{
+                                boatsMonth.put("4. nedelja", br.getPrice());
+                            }
+
+                        }
+                        else if(br.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(4)) && br.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(5))){
+                            Float t = boatsMonth.get("5. nedelja");
+                            if(t!=null) {
+                                boatsMonth.put("5. nedelja", t+br.getPrice());
+                            }else{
+                                boatsMonth.put("5. nedelja", br.getPrice());
+                            }
+
+                        }
+                    }
 
             }
         }
 
         ArrayList<AdventureReservation> adventureRes =  adventureReservationService.findAll();
         for(AdventureReservation ar:adventureRes){
-            if(ar.getDateFrom().isBefore(firstDayOfThisMonth) && ar.getDateFrom().isAfter(firstDayOfThisMonth.minusMonths(12)) && ar.getReservationType().equals(ReservationType.ACTIVE)){
+
+            if(ar.getDateFrom().isAfter(fistDayLastWeek) && ar.getDateFrom().isBefore(now.toLocalDate().atStartOfDay())){
+                adventuresWeek.put(ar.getDateFrom().toLocalDate().toString(), ar.getPrice());
+            }
+
+            if(ar.getDateFrom().isBefore(lastDayOfLastMonth) && ar.getDateFrom().isAfter(lastDayOfLastMonth.minusMonths(12)) && ar.getReservationType().equals(ReservationType.ACTIVE)){
 
                 System.out.println(ar.getId());
                 Float temp = adventures.get(YearMonth.from(ar.getDateFrom()).toString());
                 System.out.println(adventures.get(YearMonth.from(ar.getDateFrom()).toString()));
                 adventures.put(YearMonth.from(ar.getDateFrom()).toString(), temp+ar.getPrice());
 
+                if(ar.getDateFrom().isAfter(firstDayOfLastMonth) && ar.getDateFrom().isBefore(lastDayOfLastMonth)){
+                    if(ar.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(1))){
+
+                        Float t = adventuresMonth.get("1 nedelja");
+
+                        if(t!=null) {
+                            adventuresMonth.put("1. nedelja", t+ar.getPrice());
+                        }else{
+                            adventuresMonth.put("1. nedelja", ar.getPrice());
+                        }
+                    }else if(ar.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(1)) && ar.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(2))){
+                        Float t = adventuresMonth.get("2. nedelja");
+                        if(t!=null) {
+                            adventuresMonth.put("2. nedelja", t+ar.getPrice());
+                        }else{
+                            adventuresMonth.put("2. nedelja", ar.getPrice());
+                        }
+
+                    }else if(ar.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(2)) && ar.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(3))){
+                        Float t = adventuresMonth.get("3. nedelja");
+                        if(t!=null) {
+                            adventuresMonth.put("3. nedelja", t+ar.getPrice());
+                        }else{
+                            adventuresMonth.put("3. nedelja", ar.getPrice());
+                        }
+
+                    }else if(ar.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(3)) && ar.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(4))){
+                        Float t = adventuresMonth.get("4. nedelja");
+                        if(t!=null) {
+                            adventuresMonth.put("4. nedelja", t+ar.getPrice());
+                        }else{
+                            adventuresMonth.put("4. nedelja", ar.getPrice());
+                        }
+
+                    }
+                    else if(ar.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(4)) && ar.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(5))){
+                        Float t = adventuresMonth.get("5. nedelja");
+                        if(t!=null) {
+                            adventuresMonth.put("5. nedelja", t+ar.getPrice());
+                        }else{
+                            adventuresMonth.put("5. nedelja", ar.getPrice());
+                        }
+
+                    }
+                }
+
             }
         }
 
         ArrayList<VacationHouseReservation> houseRes =  vacationHouseReservationService.findAll();
         for(VacationHouseReservation vhr:houseRes){
-            if(vhr.getDateFrom().isBefore(firstDayOfThisMonth) && vhr.getDateFrom().isAfter(firstDayOfThisMonth.minusMonths(12)) && vhr.getReservationType().equals(ReservationType.ACTIVE)){
+
+            if(vhr.getDateFrom().isAfter(fistDayLastWeek) && vhr.getDateFrom().isBefore(now.toLocalDate().atStartOfDay())){
+                housesWeek.put(vhr.getDateFrom().toLocalDate().toString(), vhr.getPrice());
+            }
+
+            if(vhr.getDateFrom().isBefore(lastDayOfLastMonth) && vhr.getDateFrom().isAfter(lastDayOfLastMonth.minusMonths(12)) && vhr.getReservationType().equals(ReservationType.ACTIVE)){
 
                 System.out.println(vhr.getId());
                 Float temp = houses.get(YearMonth.from(vhr.getDateFrom()).toString());
                 System.out.println(houses.get(YearMonth.from(vhr.getDateFrom()).toString()));
                 houses.put(YearMonth.from(vhr.getDateFrom()).toString(), temp+vhr.getPrice());
 
+                if(vhr.getDateFrom().isAfter(firstDayOfLastMonth) && vhr.getDateFrom().isBefore(lastDayOfLastMonth)){
+                    if(vhr.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(1))){
+
+                        Float t = housesMonth.get("1 nedelja");
+
+                        if(t!=null) {
+                            housesMonth.put("1. nedelja", t+vhr.getPrice());
+                        }else{
+                            housesMonth.put("1. nedelja", vhr.getPrice());
+                        }
+                    }else if(vhr.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(1)) && vhr.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(2))){
+                        Float t = housesMonth.get("2. nedelja");
+                        if(t!=null) {
+                            housesMonth.put("2. nedelja", t+vhr.getPrice());
+                        }else{
+                            housesMonth.put("2. nedelja", vhr.getPrice());
+                        }
+
+                    }else if(vhr.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(2)) && vhr.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(3))){
+                        Float t = housesMonth.get("3. nedelja");
+                        if(t!=null) {
+                            housesMonth.put("3. nedelja", t+vhr.getPrice());
+                        }else{
+                            housesMonth.put("3. nedelja", vhr.getPrice());
+                        }
+
+                    }else if(vhr.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(3)) && vhr.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(4))){
+                        Float t = housesMonth.get("4. nedelja");
+                        if(t!=null) {
+                            housesMonth.put("4. nedelja", t+vhr.getPrice());
+                        }else{
+                            housesMonth.put("4. nedelja", vhr.getPrice());
+                        }
+
+                    }
+                    else if(vhr.getDateFrom().isAfter(firstDayOfLastMonth.plusWeeks(4)) && vhr.getDateFrom().isBefore(firstDayOfLastMonth.plusWeeks(5))){
+                        Float t = housesMonth.get("5. nedelja");
+                        if(t!=null) {
+                            housesMonth.put("5. nedelja", t+vhr.getPrice());
+                        }else{
+                            housesMonth.put("5. nedelja", vhr.getPrice());
+                        }
+
+                    }
+                }
+
             }
         }
 
+
+        System.out.println(boatsWeek.keySet()+" boatsweek keyset");
 
 
         model.addAttribute("boatKeySet", boats.keySet());
         model.addAttribute("boatValues", boats.values());
         model.addAttribute("adventureValues", adventures.values());
         model.addAttribute("houseValues", houses.values());
+
+        model.addAttribute("boatMonthKeySet", boatsMonth.keySet());
+        model.addAttribute("boatsMonth", boatsMonth.values());
+        model.addAttribute("adventuresMonth", adventuresMonth.values());
+        model.addAttribute("housesMonth", housesMonth.values());
+
+        model.addAttribute("boatWeekKeySet", boatsWeek.keySet());
+        model.addAttribute("boatsWeek", boatsWeek.values());
+        model.addAttribute("adventuresWeek", adventuresWeek.values());
+        model.addAttribute("housesWeek", housesWeek.values());
 
 
 
