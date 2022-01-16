@@ -167,6 +167,7 @@ public class DataLoader implements CommandLineRunner {
         b1.setOwner(bo1);
         b1.setPrice(10F);
         b1.setNoOfPersons(3);
+        b1.setNoOfRatings(1);
         b1.setMisc("kapetan-wifi");
         boatService.save(b1.getId(), b1);
 
@@ -179,6 +180,7 @@ public class DataLoader implements CommandLineRunner {
         b2.setOwner(bo1);
         b2.setPrice(30F);
         b2.setNoOfPersons(3);
+        b2.setNoOfRatings(1);
         b2.setMisc("");
         boatService.save(b2.getId(), b2);
 
@@ -191,6 +193,7 @@ public class DataLoader implements CommandLineRunner {
         b3.setOwner(bo1);
         b3.setPrice(250F);
         b3.setNoOfPersons(3);
+        b3.setNoOfRatings(2);
         b3.setMisc("");
         boatService.save(b3.getId(), b3);
 
@@ -203,6 +206,7 @@ public class DataLoader implements CommandLineRunner {
         b4.setOwner(bo1);
         b4.setPrice(111F);
         b4.setNoOfPersons(3);
+        b4.setNoOfRatings(2);
         b4.setMisc("");
         boatService.save(b4.getId(), b4);
 
