@@ -22,11 +22,13 @@ public class DataLoader implements CommandLineRunner {
     private final VacationHouseReservationService vacationHouseReservationService;
     private final AdventureReservationService adventureReservationService;
 
+    private final BoatReviewService boatReviewService;
+
     private final IncomeRateService incomeRateService;
 
 
     @Autowired
-    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, IncomeRateService incomeRateService) {
+    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, IncomeRateService incomeRateService) {
         this.vacationHouseService = vacationHouseService;
         this.boatService = boatService;
         this.adventureService = adventureService;
@@ -37,6 +39,7 @@ public class DataLoader implements CommandLineRunner {
         this.boatReservationService = boatReservationService;
         this.vacationHouseReservationService = vacationHouseReservationService;
         this.adventureReservationService = adventureReservationService;
+        this.boatReviewService = boatReviewService;
         this.incomeRateService = incomeRateService;
     }
 
@@ -410,6 +413,34 @@ public class DataLoader implements CommandLineRunner {
         ard.setDateEnd(LocalDateTime.of(2022, 3, 16, 0, 0));
         adventureReservationService.save(1L, ard);
 
+
+        BoatReview boatReview = new BoatReview();
+        boatReview.setBoat(b1);
+        boatReview.setContent("odlično");
+        boatReview.setRating(5F);
+        boatReview.setUser(user);
+        boatReview.setReviewStatus(ReviewStatus.PENDING);
+        boatReview.setReviewTime(LocalDateTime.of(2022, 1, 14, 14, 20));
+        boatReviewService.save(1L, boatReview);
+
+        BoatReview boatReview2 = new BoatReview();
+        boatReview2.setBoat(b1);
+        boatReview2.setContent("Nije baš najbolje");
+        boatReview2.setRating(3F);
+        boatReview2.setUser(user);
+        boatReview2.setReviewStatus(ReviewStatus.ALLOWED);
+        boatReview2.setReviewTime(LocalDateTime.of(2022, 1, 14, 14, 20));
+
+        boatReviewService.save(1L, boatReview2);
+
+        BoatReview boatReview3 = new BoatReview();
+        boatReview3.setBoat(b1);
+        boatReview3.setContent("Veritatis ipsa nesciunt alias rerum voluptas. Voluptatibus non et in et. Doloremque quisquam molestias quia pariatur reprehenderit tempora facilis. Vel dignissimos ipsa aliquid. Qui non ut iusto ullam dicta ut repellendus. Cupiditate quam iste quaerat");
+        boatReview3.setRating(3F);
+        boatReview3.setUser(user);
+        boatReview3.setReviewStatus(ReviewStatus.PENDING);
+        boatReview3.setReviewTime(LocalDateTime.of(2022, 1, 14, 14, 20));
+        boatReviewService.save(1L, boatReview3);
 
 
 

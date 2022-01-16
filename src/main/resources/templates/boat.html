@@ -11,6 +11,34 @@
 <p th:text="${boat.name}"></p>
 
 
+<div class="container">
+    <div class="row">
+        <h3> reviews</h3>
+
+    </div>
+    <div class="row">
+
+        <table th:each="br:${boatReviews}" class="table table-active">
+            <tbody>
+            <tr>
+            <td  th:text="${br.user.email}">
+                username
+            </td>
+                <td th:text="${br.rating}">
+                    rating
+                </td>
+            </tr>
+            <tr>
+               <td colspan="2" th:text="${br.content}"> content </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
 <div th:insert="/index.html :: scripts"></div>
 </body>
 </html>
