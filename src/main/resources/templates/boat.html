@@ -11,6 +11,33 @@
 <p th:text="${boat.name}"></p>
 
 
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${boat.imageLink}}" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1" th:text="${'Vlasnik: '+ boat.owner}" >SKU: BST-498</div>
+                <div class="small mb-1" th:text="${ 'Ocena: '+ boat.avgRating}" >SKU: BST-498</div>
+                <h1 class="display-5 fw-bolder" th:text="${boat.name}" >Shop item template</h1>
+                <div class="fs-5 mb-5">
+
+                    <span th:text="${boat.price +' €' }">$40.00</span>
+                </div>
+                <p class="lead" th:text="${boat.info}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                <div class="d-flex">
+                    <form>
+                    <button class="btn btn-outline-dark flex-shrink-0" type=submit>
+                        <i class="bi-cart-fill me-1"></i>
+                        Pretplati se na akcije
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="container">
     <div class="row">
         <h3> reviews</h3>
@@ -21,15 +48,15 @@
         <table th:each="br:${boatReviews}" class="table table-active">
             <tbody>
             <tr>
-            <td  th:text="${br.user.email}">
-                username
-            </td>
+                <td  th:text="${br.user.email}">
+                    username
+                </td>
                 <td th:text="${br.rating}">
                     rating
                 </td>
             </tr>
             <tr>
-               <td colspan="2" th:text="${br.content}"> content </td>
+                <td colspan="2" th:text="${br.content}"> content </td>
             </tr>
             </tbody>
         </table>

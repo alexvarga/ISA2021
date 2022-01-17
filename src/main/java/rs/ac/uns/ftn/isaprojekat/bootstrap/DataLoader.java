@@ -175,6 +175,7 @@ public class DataLoader implements CommandLineRunner {
         b1.setPrice(10F);
         b1.setNoOfPersons(3);
         b1.setNoOfRatings(1);
+        b1.setImageLink("/img/b1.jpg");
         b1.setMisc("kapetan-wifi");
         boatService.save(b1.getId(), b1);
 
