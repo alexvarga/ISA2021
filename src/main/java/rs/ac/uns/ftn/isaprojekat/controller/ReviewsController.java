@@ -32,6 +32,12 @@ public class ReviewsController {
         this.adventureService = adventureService;
     }
 
+    @GetMapping("/admin/reviews")
+    String reviewsHub(){
+
+        return "admin_reviews_hub";
+    }
+
     @GetMapping("/admin/reviews/boats")
     String showBoatReviews(Model model){
         Set<BoatReview> reviews = boatReviewService.getAllByReviewStatus(ReviewStatus.PENDING);
