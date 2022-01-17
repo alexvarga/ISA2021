@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>brod</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-comment"></span>
+                <h3 class="panel-title">
+                    Ocene</h3>
+
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+
+
+                    <li th:each="br:${reviews}" class="list-group-item container-fluid ">
+                        <div class="row ">
+                            <div class="col-xs-2 col-md-1">
+                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" width="80" class="img-circle img-responsive" alt="" /></div>
+                            <div class="col-xs-10 col-md-11">
+                                <div>
+                                    <p th:text="'ocena '+${br.rating}"></p>
+                                    <div class="mic-info">
+                                        By: <a th:text="${br.user.email+' '+br.user.firstName+' '+br.user.lastName} " href="#"></a>
+                                        <p th:text="${br.reviewTime +' for '+br.boat.name}"> </p>
+                                    </div>
+                                </div>
+                                <div class="comment-text">
+                                    <p th:text="${br.content}"></p>
+                                </div>
+                                <div class="action">
+                                    <span>
+                                    <form class="col-auto justify-content-end d-inline " th:action="@{/admin/reviews/boats}" th:method="post">
+                                        <input type="number" th:value="${br.id}" name="reviewId" hidden>
+                                        <button type="submit" class="btn btn-success">Prihvati</button>
+                                    </form>
+                                    </span>
+                                    </button>
+                                    <span>
+                                    <form class="col-auto justify-content-end d-inline " th:action="@{/admin/reviews/boats}" th:method="put">
+                                        <input type="number" th:value="${br.id}" name="reviewId" hidden>
+                                        <button type="submit" class="btn btn-danger">Odbij</button>
+                                    </form>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

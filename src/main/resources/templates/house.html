@@ -9,9 +9,36 @@
 <body>
 <header th:insert="/index.html :: header"></header>
 <p th:text="${house.name}"></p>
-<p th:text="${loggedin}"></p>
 
-<a th:href="@{/index}">[[${#request.userPrincipal.principal.getUsername}]]</a>
+
+
+
+<div class="container">
+    <div class="row">
+        <h3> reviews</h3>
+
+    </div>
+    <div class="row">
+
+        <table  th:each="hr:${houseReviews}" class="table table-active">
+            <tbody >
+            <tr>
+                <td  th:text="${hr.user.email}">
+                    username
+                </td>
+                <td th:text="${hr.rating}">
+                    rating
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" th:text="${hr.content}"> content </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
 
 <div th:insert="/index.html :: scripts"></div>
 </body>

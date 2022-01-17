@@ -6,11 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.Boat;
+import rs.ac.uns.ftn.isaprojekat.model.BoatReview;
+import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.service.BoatReviewService;
 import rs.ac.uns.ftn.isaprojekat.service.BoatService;
+import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -19,9 +26,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class BoatController {
 
     private final BoatService boatService;
+    private final BoatReviewService boatReviewService;
+    private final UserService userService;
 
-    public BoatController(BoatService boatService) {
+    public BoatController(BoatService boatService, BoatReviewService boatReviewService, UserService userService) {
         this.boatService = boatService;
+        this.boatReviewService = boatReviewService;
+        this.userService = userService;
     }
 
     @GetMapping({"/boats", "/boats/"})
@@ -62,8 +73,11 @@ public class BoatController {
 
     @RequestMapping(value = "/boats/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
+        Boat boat = boatService.findById(id);
+        Set<BoatReview> boatReviews = boatReviewService.getAllByBoatAndReviewStatus(boat, ReviewStatus.ALLOWED);
 
-        model.addAttribute("boat", boatService.findById(id));
+        model.addAttribute("boatReviews", boatReviews);
+        model.addAttribute("boat", boat);
 
         return "boat";
     }
@@ -151,5 +165,21 @@ public class BoatController {
         return "boats";
     }
 
+    @PostMapping("/boat/rate")
+    String rateBoat(Model model, @Param(value = "boatIdRate") Long boatIdRate,
+                    @Param(value = "content") String content, @Param(value="boatratingValue") Float boatratingValue,  Principal principal){
+
+        BoatReview review = new BoatReview();
+        User dbUser = userService.findByEmail(principal.getName());
+
+        review.setBoat(boatService.findById(boatIdRate));
+        review.setUser(dbUser);
+        review.setContent(content);
+        review.setRating(boatratingValue);
+        review.setReviewTime(LocalDateTime.now());
+        review.setReviewStatus(ReviewStatus.PENDING);
+        boatReviewService.save(1L, review);
+        return "/userHomePage";
+    }
 
 }

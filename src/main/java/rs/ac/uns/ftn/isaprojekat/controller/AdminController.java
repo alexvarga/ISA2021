@@ -57,7 +57,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/adminPage")
+    @GetMapping("/admin/home")
     public String adminPage() {
 
         return "adminPage";
@@ -516,15 +516,9 @@ public class AdminController {
 
     }
 
-    @GetMapping("/admin/reports")
-    public String showReports() {
 
 
-        return "admin_report";
-    }
-
-
-    @PostMapping("/admin/reports/custom")
+    @PostMapping("/admin/reports")
     public String customReport(Model model, @Param(value = "start") String start, @Param(value = "end") String end) {
 
         Float boatPercent = (incomeRateService.findByEntityName("boat").getEntityPercent())/100;
@@ -620,7 +614,7 @@ public class AdminController {
         return "reports/report_custom";
     }
 
-    @GetMapping("/admin/reports/year")
+    @GetMapping({"/admin/reports", "/admin/reports/"})
     public String showReportYear(Model model) {
 
         Float boatPercent = (incomeRateService.findByEntityName("boat").getEntityPercent())/100;

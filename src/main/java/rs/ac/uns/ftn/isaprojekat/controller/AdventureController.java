@@ -6,11 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.Adventure;
+import rs.ac.uns.ftn.isaprojekat.model.AdventureReview;
+import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.service.AdventureReviewService;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
+import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -19,9 +26,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class AdventureController {
 
     private final AdventureService adventureService;
+    private final UserService userService;
+    private final AdventureReviewService adventureReviewService;
 
-    public AdventureController(AdventureService adventureService) {
+    public AdventureController(AdventureService adventureService, UserService userService, AdventureReviewService adventureReviewService) {
         this.adventureService = adventureService;
+        this.userService = userService;
+        this.adventureReviewService = adventureReviewService;
     }
 
     @RequestMapping({"/adventures"})
@@ -60,7 +71,10 @@ public class AdventureController {
 
     @RequestMapping(value = "/adventures/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
+        Adventure adventure = adventureService.findById(id);
+        Set<AdventureReview> adventureReviews = adventureReviewService.getAllByAdventureAndReviewStatus(adventure, ReviewStatus.ALLOWED);
 
+        model.addAttribute("adventureReviews", adventureReviews);
         model.addAttribute("adventure", adventureService.findById(id));
 
         return "adventure";
@@ -138,6 +152,24 @@ public class AdventureController {
 
 
         return "adventures";
+    }
+
+    @PostMapping("/adventure/rate")
+    String rateBoat(Model model, @Param(value = "adventureIdRate") Long adventureIdRate,
+                    @Param(value = "content") String content, @Param(value="adventureratingValue") Float adventureratingValue,
+                    Principal principal){
+
+        AdventureReview review = new AdventureReview();
+        User dbUser = userService.findByEmail(principal.getName());
+
+        review.setAdventure(adventureService.findById(adventureIdRate));
+        review.setUser(dbUser);
+        review.setContent(content);
+        review.setRating(adventureratingValue);
+        review.setReviewTime(LocalDateTime.now());
+        review.setReviewStatus(ReviewStatus.PENDING);
+        adventureReviewService.save(1L, review);
+        return "/userHomePage";
     }
 
 }

@@ -118,4 +118,24 @@ public class UserJpaService implements UserService {
 
         mailSender.send(message);
     }
+
+    @Override
+    public void sendReviewInfoEmail(String entityName, String entityType, String reviewContent, Float rating,
+                                    String firstName, String lastName, String ownerMail)
+            throws UnsupportedEncodingException, MessagingException {
+        String subject = "Nova ocena";
+        String sender = "isa-projekat";
+        String content = "<p>Vaš"+entityType+" "+entityName+ " ima novu reviziju od  korisnika "+firstName+ " "+lastName+".</p>";
+        content+="<p>Tekst revizije: <i>"+reviewContent+"</i></p>";
+        content+="<p>Ocena: "+rating+"</p>";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
+        helper.setTo(ownerMail);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
 }
