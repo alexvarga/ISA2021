@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
 @Controller
 public class ReviewsController {
+
+    private final UserService userService;
 
     private final BoatReviewService boatReviewService;
     private final BoatService boatService;
@@ -23,7 +27,8 @@ public class ReviewsController {
     private final AdventureReviewService adventureReviewService;
     private final AdventureService adventureService;
 
-    public ReviewsController(BoatReviewService boatReviewService, BoatService boatService, VacationHouseReviewService vacationHouseReviewService, VacationHouseService vacationHouseService, AdventureReviewService adventureReviewService, AdventureService adventureService) {
+    public ReviewsController(UserService userService, BoatReviewService boatReviewService, BoatService boatService, VacationHouseReviewService vacationHouseReviewService, VacationHouseService vacationHouseService, AdventureReviewService adventureReviewService, AdventureService adventureService) {
+        this.userService = userService;
         this.boatReviewService = boatReviewService;
         this.boatService = boatService;
         this.vacationHouseReviewService = vacationHouseReviewService;
@@ -49,7 +54,7 @@ public class ReviewsController {
     }
 
     @PostMapping("/admin/reviews/boats")
-    String allowBoatReview(Model model, @Param(value = "reviewId") Long reviewId){
+    String allowBoatReview(Model model, @Param(value = "reviewId") Long reviewId) throws UnsupportedEncodingException, MessagingException {
         // (overall rating * total ratings + new rating )/(total ratings+1)
 
         BoatReview review = boatReviewService.findById(reviewId);
@@ -61,6 +66,17 @@ public class ReviewsController {
         boat.setAvgRating(newRating);
         boat.setNoOfRatings(numberOfRatings+1);
         review.setReviewStatus(ReviewStatus.ALLOWED);
+
+        String ownerMail = boat.getOwner().getEmail();
+        String userFirst = review.getUser().getFirstName();
+        String userLast = review.getUser().getLastName();
+        String reviewContent = review.getContent();
+        Float reviewRating = review.getRating();
+
+        userService.sendReviewInfoEmail(boat.getName(),
+                " brod", reviewContent, reviewRating, userFirst, userLast, ownerMail);
+
+
         boatService.save(1L, boat);
         boatReviewService.save(1L, review);
 
@@ -90,8 +106,9 @@ public class ReviewsController {
         return "reviews/houses_reviews";
     }
 
+
     @PostMapping("/admin/reviews/houses")
-    String allowHouseReview(Model model, @Param(value = "reviewId") Long reviewId){
+    String allowHouseReview(Model model, @Param(value = "reviewId") Long reviewId) throws UnsupportedEncodingException, MessagingException {
         // (overall rating * total ratings + new rating )/(total ratings+1)
 
         VacationHouseReview review = vacationHouseReviewService.findById(reviewId);
@@ -103,6 +120,18 @@ public class ReviewsController {
         house.setAvgRating(newRating);
         house.setNoOfRatings(numberOfRatings+1);
         review.setReviewStatus(ReviewStatus.ALLOWED);
+
+
+        String ownerMail = house.getVacationHouseOwner().getEmail();
+        System.out.println("owner mail "+ownerMail);
+        String userFirst = review.getUser().getFirstName();
+        String userLast = review.getUser().getLastName();
+        String reviewContent = review.getContent();
+        Float reviewRating = review.getRating();
+
+        userService.sendReviewInfoEmail(house.getName(),
+                "a vikendica", reviewContent, reviewRating, userFirst, userLast, ownerMail);
+
         vacationHouseService.save(1L, house);
         vacationHouseReviewService.save(1L, review);
 
@@ -133,7 +162,8 @@ public class ReviewsController {
     }
 
     @PostMapping("/admin/reviews/adventures")
-    String allowAdventureReview(Model model, @Param(value = "reviewId") Long reviewId){
+    String allowAdventureReview(Model model, @Param(value = "reviewId") Long reviewId)
+            throws UnsupportedEncodingException, MessagingException {
         // (overall rating * total ratings + new rating )/(total ratings+1)
 
         AdventureReview review = adventureReviewService.findById(reviewId);
@@ -145,8 +175,22 @@ public class ReviewsController {
         adventure.setAvgRating(newRating);
         adventure.setNoOfRatings(numberOfRatings+1);
         review.setReviewStatus(ReviewStatus.ALLOWED);
+
+        String ownerMail = adventure.getInstructor().getEmail();
+        String userFirst = review.getUser().getFirstName();
+        String userLast = review.getUser().getLastName();
+        String reviewContent = review.getContent();
+        Float reviewRating = review.getRating();
+
+        userService.sendReviewInfoEmail(adventure.getName(),
+                "a avantura", reviewContent, reviewRating, userFirst, userLast, ownerMail);
+
         adventureService.save(1L, adventure);
         adventureReviewService.save(1L, review);
+
+
+
+
 
         return showAdventureReviews(model);
     }
