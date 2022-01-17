@@ -28,6 +28,8 @@ public class DataLoader implements CommandLineRunner {
 
     private final IncomeRateService incomeRateService;
 
+    //test email here
+
 
     @Autowired
     public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, IncomeRateService incomeRateService) {
@@ -109,9 +111,10 @@ public class DataLoader implements CommandLineRunner {
 
         VacationHouseOwner vho1 = new VacationHouseOwner();
         //vho1.setId(1L);
+        vho1.setEmail("");
         vho1.setFirstName("milan");
         vho1.setLastName("milanović");
-        vho1.setEmail("aasdf");
+
         vacationHouseOwnerService.save(vho1.getId(), vho1);
 
 
@@ -160,6 +163,7 @@ public class DataLoader implements CommandLineRunner {
 
         BoatOwner bo1 = new BoatOwner();
         //bo1.setId(1L);
+        bo1.setEmail("");
         bo1.setFirstName("boat");
         bo1.setLastName("owner");
         boatOwnerService.save(bo1.getId(), bo1);
@@ -219,10 +223,11 @@ public class DataLoader implements CommandLineRunner {
         boatService.save(b4.getId(), b4);
 
         Instructor i1 = new Instructor();
+
         //i1.setId(1L);
         i1.setFirstName("ivan");
         i1.setLastName("ivanovic");
-        i1.setEmail("super@cool.com");
+        i1.setEmail("");
         i1.setPassword("plaintext");
         instructorService.save(i1.getId(), i1);
 
@@ -230,7 +235,7 @@ public class DataLoader implements CommandLineRunner {
         //i1.setId(1L);
         i2.setFirstName("instruktor");
         i2.setLastName("drugi");
-        i2.setEmail("asdf@cool.com");
+        i2.setEmail("");
         i2.setPassword("plaintext");
         instructorService.save(i2.getId(), i2);
 
