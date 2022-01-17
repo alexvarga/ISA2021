@@ -8,6 +8,7 @@ import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
 import java.util.Set;
 
 public interface BoatReviewService extends PageableCrudService<BoatReview, Long> {
+
     Page<BoatReview> getAllByBoat(Boat boat, int pageNumber, String sortField, String sortDirection);
 
     Set<BoatReview> getAllByBoat_id(Long boat_id);

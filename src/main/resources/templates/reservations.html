@@ -16,16 +16,7 @@
 
     <div class="row"><p></p></div>
 
-    <div class="row">
-        <div class="col-lg-6 col-md-6 mx-auto">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
-            </div>
-        </div>
-    </div>
+
 
     <div th:if="${boatReservations}" class="row justify-content-center">
         <div ><p></p>
@@ -36,6 +27,7 @@
         <table class="table table-striped">
             <thead>
             <div th:if="${boatHistory}"> <!-- ako je history objekat -->
+                <h4>Istorija rezervacija brodova</h4>
                 <tr>
                     <td>
                         <a th:href="@{'/boatHistory/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id</a>
@@ -59,6 +51,7 @@
                 </tr>
             </div>
             <tr th:unless="${boatHistory==true}">
+                <h4>Rezervacije brodova</h4>
                 <td>
                     <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=id&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">id</a>
                 </td>
@@ -199,6 +192,7 @@
         <table class="table table-striped">
             <thead>
             <div th:if="${adventureHistory==true}"> <!-- ako je history objekat -->
+                <h4>Istorija rezervacija avantura</h4>
                 <tr>
                     <td>
                         <a th:href="@{'/adventureHistory/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id</a>
@@ -223,6 +217,7 @@
                 </tr>
             </div>
             <tr th:unless="${adventureHistory==true}">
+                <h4>Rezervacije avantura</h4>
                 <td>
                     <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldA=id&sortFieldB='+${sortFieldB}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${reverseSortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">id</a>
                 </td>
@@ -268,12 +263,15 @@
 
                 </td>
                 <td th:text="${reservation.price}">rating</td>
-                <td><a th:if="${reservation.adventure != null}" th:href="@{adventures/{id}(id=${reservation.adventure.id})}"
+                <td><a th:if="${reservation.adventure != null}" th:href="@{/adventures/{id}(id=${reservation.adventure.id})}"
                        th:text="${reservation.adventure.id}">id</a>
                     <p th:if="${reservation.adventure == null}">Obrisana</p>
                 </td>
                 <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
-                    canceled
+                    cancelled
+                </td>
+                <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and adventureHistory==true}">
+                    <a th:attr="data-adventure-id=''+${reservation.adventure.id}+''" href="#rate_adventure_modal" data-toggle="modal">Oceni</a>
                 </td>
                 <td th:unless="${adventureHistory==true}">
 
@@ -357,7 +355,8 @@
 
             <table class="table table-striped">
                 <thead>
-                <div th:if="${vacationHouseHistory==true}"> <!-- shouldn't be div -->
+                <div th:if="${vacationHouseHistory==true}">
+                    <h4>Istorija rezervacija vikendica</h4>
                     <tr>
                         <td>
                             <a th:href="@{'/houseHistory/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
@@ -382,6 +381,7 @@
                     </tr>
                 </div>
                 <tr th:unless="${vacationHouseHistory==true}">
+                    <h4>Rezervacije vikendica</h4>
                     <td>
                         <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldH=id&sortFieldB='+${sortFieldB}+'&sortFieldA='+${sortFieldA} + '&sortDirectionH='+ ${reverseSortDirectionH} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionA='+ ${sortDirectionA}}">id</a>
                     </td>
@@ -443,6 +443,9 @@
 
                     <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
                         canceled
+                    </td>
+                    <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and vacationHouseHistory==true}">
+                        <a th:attr="data-house-id=''+${reservation.vacationHouse.id}+''" href="#rate_house_modal" data-toggle="modal">Oceni</a>
                     </td>
                     <td th:unless="${vacationHouseHistory==true}">
                         <a class="btn btn-primary" href="#cancel_house_modal" data-toggle="modal"
@@ -525,7 +528,9 @@
 <div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/adventure', 'cancel_adventure_modal', 'adventure')"></div>
 <div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/house', 'cancel_house_modal', 'house')"></div>
 
-<div th:insert="/fragments/modal/_modals::ratingModal('/boat/rate', 'rate_boat_modal')"></div>
+<div th:insert="/fragments/modal/_modals::ratingModal('/boat/rate', 'rate_boat_modal','boat')"></div>
+<div th:insert="/fragments/modal/_modals::ratingModal('/house/rate', 'rate_house_modal','house')"></div>
+<div th:insert="/fragments/modal/_modals::ratingModal('/adventure/rate', 'rate_adventure_modal','adventure')"></div>
 
     <div th:insert="/index.html :: scripts"></div>
 
@@ -569,8 +574,23 @@
     $('#rate_boat_modal').on('show.bs.modal', function (e) {
         let button = $(e.relatedTarget)
         let entityId = button.data('boat-id');
-
         $(e.currentTarget).find('input[name="boatIdRate"]').val(entityId);
+
+    });
+
+    $('#rate_house_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('house-id');
+
+        $(e.currentTarget).find('input[name="houseIdRate"]').val(entityId);
+
+    });
+
+    $('#rate_adventure_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('adventure-id');
+
+        $(e.currentTarget).find('input[name="adventureIdRate"]').val(entityId);
 
     });
 

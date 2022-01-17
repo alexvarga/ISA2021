@@ -23,12 +23,14 @@ public class DataLoader implements CommandLineRunner {
     private final AdventureReservationService adventureReservationService;
 
     private final BoatReviewService boatReviewService;
+    private final VacationHouseReviewService vacationHouseReviewService;
+    private final AdventureReviewService adventureReviewService;
 
     private final IncomeRateService incomeRateService;
 
 
     @Autowired
-    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, IncomeRateService incomeRateService) {
+    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, IncomeRateService incomeRateService) {
         this.vacationHouseService = vacationHouseService;
         this.boatService = boatService;
         this.adventureService = adventureService;
@@ -40,6 +42,8 @@ public class DataLoader implements CommandLineRunner {
         this.vacationHouseReservationService = vacationHouseReservationService;
         this.adventureReservationService = adventureReservationService;
         this.boatReviewService = boatReviewService;
+        this.vacationHouseReviewService = vacationHouseReviewService;
+        this.adventureReviewService = adventureReviewService;
         this.incomeRateService = incomeRateService;
     }
 
@@ -116,6 +120,7 @@ public class DataLoader implements CommandLineRunner {
         vh1.setName("Nova vikendinca test test test");
         vh1.setInfo("info o novoj vikendici 1");
         vh1.setAvgRating(2.5f);
+        vh1.setNoOfRatings(2);
         vh1.setAddress("adresa 1");
         vh1.setVacationHouseOwner(vho1);
         vh1.setPrice(30F);
@@ -130,6 +135,7 @@ public class DataLoader implements CommandLineRunner {
         vh2.setName("Nova vikendinca 2");
         vh2.setInfo("info o novoj vikendici 2");
         vh2.setAvgRating(5f);
+        vh2.setNoOfRatings(2);
         vh2.setAddress("adresa 2");
         vh2.setPrice(120F);
         vh2.setNoOfPersons(4);
@@ -143,6 +149,7 @@ public class DataLoader implements CommandLineRunner {
         vh3.setName("Nova vikendinca 3");
         vh3.setInfo("info o novoj vikendici 3");
         vh3.setAvgRating(5f);
+        vh3.setNoOfRatings(2);
         vh3.setAddress("adresa 3");
         vh3.setPrice(30F);
         vh3.setNoOfPersons(4);
@@ -230,7 +237,8 @@ public class DataLoader implements CommandLineRunner {
         //a1.setId(1L);
         a1.setName("Adventure 1 name");
         a1.setInfo("Adventure 1 info");
-        a1.setAvgRating(2f);
+        a1.setAvgRating(2F);
+        a1.setNoOfRatings(1);
         a1.setPrice(60F);
         a1.setNoOfPersons(4);
         a1.setMisc("");
@@ -245,7 +253,8 @@ public class DataLoader implements CommandLineRunner {
         //a2.setId(2l);
         a2.setName("Adventure 2 name");
         a2.setInfo("Adventure 2 info");
-        a2.setAvgRating(5f);
+        a2.setAvgRating(5F);
+        a2.setNoOfRatings(1);
         a2.setPrice(120F);
         a2.setNoOfPersons(4);
         a2.setMisc("");
@@ -257,7 +266,8 @@ public class DataLoader implements CommandLineRunner {
         //a2.setId(2l);
         a3.setName("Adventure 3 name");
         a3.setInfo("Adventure 3 info");
-        a3.setAvgRating(5f);
+        a3.setAvgRating(5F);
+        a3.setNoOfRatings(1);
         a3.setPrice(120F);
         a3.setNoOfPersons(4);
         a3.setMisc("");
@@ -446,7 +456,23 @@ public class DataLoader implements CommandLineRunner {
         boatReview3.setReviewTime(LocalDateTime.of(2022, 1, 14, 14, 20));
         boatReviewService.save(1L, boatReview3);
 
+        VacationHouseReview houseReview = new VacationHouseReview();
+        houseReview.setVacationHouse(vh1);
+        houseReview.setContent("testing testing testing testing mnogo testing.............. Veritatis ipsa nesciunt alias rerum voluptas. Voluptatibus non et in et. Doloremque quisquam molestias quia pariatur reprehenderit");
+        houseReview.setRating(4.5F);
+        houseReview.setUser(user);
+        houseReview.setReviewStatus(ReviewStatus.PENDING);
+        houseReview.setReviewTime(LocalDateTime.of(2022, 1, 14, 14, 20));
+        vacationHouseReviewService.save(1L, houseReview);
 
+        AdventureReview adventureReview = new AdventureReview();
+        adventureReview.setAdventure(a1);
+        adventureReview.setContent("testing testing testing testing mnogo testing.............. Veritatis ipsa nesciunt alias rerum voluptas. Voluptatibus non et in et. Doloremque quisquam molestias quia pariatur reprehenderit");
+        adventureReview.setRating(4.5F);
+        adventureReview.setUser(user);
+        adventureReview.setReviewStatus(ReviewStatus.PENDING);
+        adventureReview.setReviewTime(LocalDateTime.of(2022, 1, 14, 14, 20));
+        adventureReviewService.save(1L, adventureReview);
 
     }
 }

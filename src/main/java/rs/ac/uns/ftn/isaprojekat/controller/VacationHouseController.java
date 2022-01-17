@@ -2,18 +2,22 @@ package rs.ac.uns.ftn.isaprojekat.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
+import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReview;
+import rs.ac.uns.ftn.isaprojekat.service.UserService;
+import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReviewService;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -22,10 +26,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class VacationHouseController {
 
     private final VacationHouseService vacationHouseService;
+    private final VacationHouseReviewService vacationHouseReviewService;
+
+    private final UserService userService;
 
 
-    public VacationHouseController(VacationHouseService vacationHouseService) {
+    public VacationHouseController(VacationHouseService vacationHouseService, VacationHouseReviewService vacationHouseReviewService, UserService userService) {
         this.vacationHouseService = vacationHouseService;
+        this.vacationHouseReviewService = vacationHouseReviewService;
+        this.userService = userService;
     }
 
     @RequestMapping({"/houses", "/houses/"})
@@ -64,17 +73,24 @@ public class VacationHouseController {
     @RequestMapping(value = "/houses/{id}", method = GET)
     public String printId(Model model, @PathVariable("id") long id) {
 
-        if(vacationHouseService.findById(id)!=null) {
-            model.addAttribute("house", vacationHouseService.findById(id));
-        }else {
-            return "houses";
-        }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentUserName = authentication.getName();
-            System.out.println(currentUserName); ;
-            model.addAttribute("loggedin", currentUserName);
-        }
+//        if(vacationHouseService.findById(id)!=null) {
+//            model.addAttribute("house", vacationHouseService.findById(id));
+//        }else {
+//            return "houses";
+//        }
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+//            String currentUserName = authentication.getName();
+//            System.out.println(currentUserName); ;
+//            model.addAttribute("loggedin", currentUserName);
+//        }
+
+        VacationHouse vacationHouse = vacationHouseService.findById(id);
+        Set<VacationHouseReview> vacationHouseReviews =
+        vacationHouseReviewService.getAllByVacationHouseAndReviewStatus(vacationHouse, ReviewStatus.ALLOWED);
+
+        model.addAttribute("houseReviews", vacationHouseReviews);
+        model.addAttribute("house", vacationHouse);
 
 
 
@@ -152,5 +168,23 @@ public class VacationHouseController {
 
         return "houses";
     }
+
+    @PostMapping("/house/rate")
+    String rateBoat(Model model, @Param(value = "houseIdRate") Long houseIdRate,
+                    @Param(value = "content") String content, @Param(value="houseratingValue") Float houseratingValue,  Principal principal){
+
+        VacationHouseReview review = new VacationHouseReview();
+        User dbUser = userService.findByEmail(principal.getName());
+
+        review.setVacationHouse(vacationHouseService.findById(houseIdRate));
+        review.setUser(dbUser);
+        review.setContent(content);
+        review.setRating(houseratingValue);
+        review.setReviewTime(LocalDateTime.now());
+        review.setReviewStatus(ReviewStatus.PENDING);
+        vacationHouseReviewService.save(1L, review);
+        return "/userHomePage";
+    }
+
 
 }

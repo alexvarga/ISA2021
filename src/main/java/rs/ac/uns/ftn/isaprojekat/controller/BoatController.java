@@ -75,7 +75,6 @@ public class BoatController {
     public String printId(Model model, @PathVariable("id") long id) {
         Boat boat = boatService.findById(id);
         Set<BoatReview> boatReviews = boatReviewService.getAllByBoatAndReviewStatus(boat, ReviewStatus.ALLOWED);
-        System.out.println(boatReviews.iterator().next().getContent());
 
         model.addAttribute("boatReviews", boatReviews);
         model.addAttribute("boat", boat);
@@ -168,7 +167,7 @@ public class BoatController {
 
     @PostMapping("/boat/rate")
     String rateBoat(Model model, @Param(value = "boatIdRate") Long boatIdRate,
-                    @Param(value = "content") String content, @Param(value="ratingValue") Float ratingValue,  Principal principal){
+                    @Param(value = "content") String content, @Param(value="boatratingValue") Float boatratingValue,  Principal principal){
 
         BoatReview review = new BoatReview();
         User dbUser = userService.findByEmail(principal.getName());
@@ -176,7 +175,7 @@ public class BoatController {
         review.setBoat(boatService.findById(boatIdRate));
         review.setUser(dbUser);
         review.setContent(content);
-        review.setRating(ratingValue);
+        review.setRating(boatratingValue);
         review.setReviewTime(LocalDateTime.now());
         review.setReviewStatus(ReviewStatus.PENDING);
         boatReviewService.save(1L, review);
