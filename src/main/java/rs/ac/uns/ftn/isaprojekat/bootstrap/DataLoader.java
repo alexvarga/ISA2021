@@ -111,7 +111,7 @@ public class DataLoader implements CommandLineRunner {
 
         VacationHouseOwner vho1 = new VacationHouseOwner();
         //vho1.setId(1L);
-        vho1.setEmail("");
+        vho1.setEmail("vacationhouseowneremal");
         vho1.setFirstName("milan");
         vho1.setLastName("milanović");
 
@@ -163,7 +163,7 @@ public class DataLoader implements CommandLineRunner {
 
         BoatOwner bo1 = new BoatOwner();
         //bo1.setId(1L);
-        bo1.setEmail("");
+        bo1.setEmail("boatowneremail");
         bo1.setFirstName("boat");
         bo1.setLastName("owner");
         boatOwnerService.save(bo1.getId(), bo1);
@@ -227,7 +227,7 @@ public class DataLoader implements CommandLineRunner {
         //i1.setId(1L);
         i1.setFirstName("ivan");
         i1.setLastName("ivanovic");
-        i1.setEmail("");
+        i1.setEmail("instructoremail");
         i1.setPassword("plaintext");
         instructorService.save(i1.getId(), i1);
 
@@ -235,7 +235,7 @@ public class DataLoader implements CommandLineRunner {
         //i1.setId(1L);
         i2.setFirstName("instruktor");
         i2.setLastName("drugi");
-        i2.setEmail("");
+        i2.setEmail("instruktor2email");
         i2.setPassword("plaintext");
         instructorService.save(i2.getId(), i2);
 

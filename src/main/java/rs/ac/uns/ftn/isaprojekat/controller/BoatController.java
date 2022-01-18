@@ -2,18 +2,19 @@ package rs.ac.uns.ftn.isaprojekat.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.isaprojekat.model.Boat;
-import rs.ac.uns.ftn.isaprojekat.model.BoatReview;
-import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
-import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReviewService;
 import rs.ac.uns.ftn.isaprojekat.service.BoatService;
+import rs.ac.uns.ftn.isaprojekat.service.BoatSubscriptionService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,11 +29,13 @@ public class BoatController {
     private final BoatService boatService;
     private final BoatReviewService boatReviewService;
     private final UserService userService;
+    private final BoatSubscriptionService boatSubscriptionService;
 
-    public BoatController(BoatService boatService, BoatReviewService boatReviewService, UserService userService) {
+    public BoatController(BoatService boatService, BoatReviewService boatReviewService, UserService userService, BoatSubscriptionService boatSubscriptionService) {
         this.boatService = boatService;
         this.boatReviewService = boatReviewService;
         this.userService = userService;
+        this.boatSubscriptionService = boatSubscriptionService;
     }
 
     @GetMapping({"/boats", "/boats/"})
@@ -72,12 +75,20 @@ public class BoatController {
 
 
     @RequestMapping(value = "/boats/{id}", method = GET)
-    public String printId(Model model, @PathVariable("id") long id) {
+    public String showBoat(Model model, @PathVariable("id") long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+
         Boat boat = boatService.findById(id);
         Set<BoatReview> boatReviews = boatReviewService.getAllByBoatAndReviewStatus(boat, ReviewStatus.ALLOWED);
 
+        Boolean subscribed = boatSubscriptionService.existsByUserAndBoat(user, boat);
+
+
         model.addAttribute("boatReviews", boatReviews);
         model.addAttribute("boat", boat);
+        model.addAttribute("subscribed", subscribed);
 
         return "boat";
     }
@@ -180,6 +191,38 @@ public class BoatController {
         review.setReviewStatus(ReviewStatus.PENDING);
         boatReviewService.save(1L, review);
         return "/userHomePage";
+    }
+
+
+
+    @PostMapping("/boats/{boatId}")
+    String subscribe(Model model, @PathVariable @RequestParam("boatId") Long boatId){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        Boat boat = boatService.findById(boatId);
+
+        BoatSubscription subscription = new BoatSubscription();
+        subscription.setBoat(boat);
+        subscription.setUser(user);
+        subscription.setDateOfSubscribing(LocalDate.now());
+        boatSubscriptionService.save(1L, subscription);
+
+        return showBoat(model, boatId);
+    }
+
+    @PutMapping("/boats/{boatId}")
+    String unsubscribe(Model model, @PathVariable @RequestParam("boatId") Long boatId){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        Boat boat = boatService.findById(boatId);
+
+        boatSubscriptionService.deleteById(boatSubscriptionService.findBoatSubscriptionByBoatAndUser(boat, user).getId());
+
+        return showBoat(model, boatId);
     }
 
 }
