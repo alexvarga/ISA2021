@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Vikendica</title>
@@ -8,7 +9,38 @@
 </head>
 <body>
 <header th:insert="/index.html :: header"></header>
-<p th:text="${house.name}"></p>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${house.imageLink}}" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1" th:text="${'Vlasnik: '+ house.vacationHouseOwner}" >SKU: BST-498</div>
+                <div class="small mb-1" th:text="${ 'Ocena: '+ house.avgRating}" >SKU: BST-498</div>
+                <h1 class="display-5 fw-bolder" th:text="${house.name}" >Shop item template</h1>
+                <div class="fs-5 mb-5">
+
+                    <span th:text="${house.price +' €' }">$40.00</span>
+                </div>
+                <p class="lead" th:text="${house.info}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                <div class="d-flex">
+                    <form sec:authorize="hasRole('ROLE_USER')" th:if="${subscribed==true}" th:action="@{'/houses/'+${house.id}}"  th:method="put">
+                        <input type="number"  th:name="houseId" th:value="${house.id}" hidden="">
+                        <button class="btn btn-outline-dark flex-shrink-0" type=submit>
+                            Odjavi se sa akcija
+                        </button>
+                    </form>
+                    <form sec:authorize="hasRole('ROLE_USER')" th:unless="${subscribed==true}" th:action="@{'/houses/'+${house.id}}"  th:method="post">
+                        <input type="number"  th:name="houseId" th:value="${house.id}" hidden="">
+                        <button class="btn btn-outline-dark flex-shrink-0" type=submit>
+                            Pretplati se na akcije
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 

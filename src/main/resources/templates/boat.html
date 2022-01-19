@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>brod</title>
@@ -8,9 +9,6 @@
 </head>
 <body>
 <header th:insert="/index.html :: header"></header>
-<p th:text="${boat.name}"></p>
-
-
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
@@ -26,11 +24,17 @@
                 </div>
                 <p class="lead" th:text="${boat.info}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
                 <div class="d-flex">
-                    <form>
+                    <form sec:authorize="hasRole('ROLE_USER')" th:if="${subscribed==true}" th:action="@{'/boats/'+${boat.id}}"  th:method="put">
+                        <input type="number"  th:name="boatId" th:value="${boat.id}" hidden="">
                     <button class="btn btn-outline-dark flex-shrink-0" type=submit>
-                        <i class="bi-cart-fill me-1"></i>
-                        Pretplati se na akcije
+                                                Odjavi se sa akcija
                     </button>
+                    </form>
+                    <form sec:authorize="hasRole('ROLE_USER')" th:unless="${subscribed==true}" th:action="@{'/boats/'+${boat.id}}"  th:method="post">
+                        <input type="number"  th:name="boatId" th:value="${boat.id}" hidden="">
+                        <button class="btn btn-outline-dark flex-shrink-0" type=submit>
+                            Pretplati se na akcije
+                        </button>
                     </form>
                 </div>
             </div>

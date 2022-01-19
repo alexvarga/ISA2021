@@ -2,18 +2,19 @@ package rs.ac.uns.ftn.isaprojekat.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.isaprojekat.model.Adventure;
-import rs.ac.uns.ftn.isaprojekat.model.AdventureReview;
-import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
-import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReviewService;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
+import rs.ac.uns.ftn.isaprojekat.service.InstructorSubscriptionService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,11 +29,14 @@ public class AdventureController {
     private final AdventureService adventureService;
     private final UserService userService;
     private final AdventureReviewService adventureReviewService;
+    private final InstructorSubscriptionService instructorSubscriptionService;
 
-    public AdventureController(AdventureService adventureService, UserService userService, AdventureReviewService adventureReviewService) {
+
+    public AdventureController(AdventureService adventureService, UserService userService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService) {
         this.adventureService = adventureService;
         this.userService = userService;
         this.adventureReviewService = adventureReviewService;
+        this.instructorSubscriptionService = instructorSubscriptionService;
     }
 
     @RequestMapping({"/adventures"})
@@ -70,12 +74,18 @@ public class AdventureController {
     }
 
     @RequestMapping(value = "/adventures/{id}", method = GET)
-    public String printId(Model model, @PathVariable("id") long id) {
+    public String showAdventure(Model model, @PathVariable("id") long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
         Adventure adventure = adventureService.findById(id);
         Set<AdventureReview> adventureReviews = adventureReviewService.getAllByAdventureAndReviewStatus(adventure, ReviewStatus.ALLOWED);
 
+        Boolean subscribed = instructorSubscriptionService.existsByUserAndInstructor(user, adventure.getInstructor());
+
         model.addAttribute("adventureReviews", adventureReviews);
         model.addAttribute("adventure", adventureService.findById(id));
+        model.addAttribute("subscribed", subscribed);
 
         return "adventure";
     }
@@ -170,6 +180,38 @@ public class AdventureController {
         review.setReviewStatus(ReviewStatus.PENDING);
         adventureReviewService.save(1L, review);
         return "/userHomePage";
+    }
+
+    @PostMapping("/adventures/{adventureId}")
+    String subscribe(Model model, @PathVariable @RequestParam("adventureId") Long adventureId){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        Adventure adventure = adventureService.findById(adventureId);
+
+        InstructorSubscription subscription = new InstructorSubscription();
+        subscription.setInstructor(adventure.getInstructor());
+        subscription.setUser(user);
+        subscription.setDateOfSubscribing(LocalDate.now());
+        instructorSubscriptionService.save(1L, subscription);
+
+        return showAdventure(model, adventureId);
+    }
+
+    @PutMapping("/adventures/{adventureId}")
+    String unsubscribe(Model model, @PathVariable @RequestParam("adventureId") Long adventureId){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        Adventure adventure = adventureService.findById(adventureId);
+
+        instructorSubscriptionService.deleteById(
+                instructorSubscriptionService.findInstructorSubscriptionByInstructorAndUser
+                        (adventure.getInstructor(), user).getId());
+
+        return showAdventure(model, adventureId);
     }
 
 }

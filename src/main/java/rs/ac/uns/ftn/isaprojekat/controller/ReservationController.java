@@ -135,33 +135,33 @@ public class ReservationController {
 
 
    @PostMapping("/cancel/boat")
-   public String cancelBoatReservation( @Param(value="boatentityId") Long boatentityId){
+   public String cancelBoatReservation(Model model, @Param(value="boatentityId") Long boatentityId){
 
        BoatReservation boatReservation = boatReservationService.findById(boatentityId);
        System.out.println(boatReservation.getReservationType());
        boatReservation.setReservationType(ReservationType.CANCELLED);
        boatReservationService.save(1L, boatReservation);
-       return "index"; //Todo make success.html
+       return show(model);
     }
 
     @PostMapping("/cancel/adventure")
-    public String cancelAdventureReservation( @Param(value="adventureentityId") Long adventureentityId){
+    public String cancelAdventureReservation(Model model, @Param(value="adventureentityId") Long adventureentityId){
 
         AdventureReservation adventureReservation = adventureReservationService.findById(adventureentityId);
         adventureReservation.setReservationType(ReservationType.CANCELLED);
         adventureReservationService.save(1L, adventureReservation);
         System.out.println("adventure "+adventureReservation.getReservationType());
-        return "index";
+        return show(model);
     }
 
     @PostMapping("/cancel/house")
-    public String cancelVacationHouseReservation( @Param(value="houseentityId") Long houseentityId){
+    public String cancelVacationHouseReservation(Model model,  @Param(value="houseentityId") Long houseentityId){
         VacationHouseReservation vacationHouseReservation = vacationHouseReservationService.findById(houseentityId);
         vacationHouseReservation.setReservationType(ReservationType.CANCELLED);
         vacationHouseReservationService.save(1L, vacationHouseReservation);
         System.out.println("house "+vacationHouseReservation.getReservationType());
 
-        return "index";
+        return show(model);
     }
 
 

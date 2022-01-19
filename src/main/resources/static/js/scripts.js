@@ -14,8 +14,9 @@ function validateForm() {
 
 function checkCancelDate(a) {
 
-    console.log(document.forms["cancelForm"][a].value);
-    let x = new Date(document.forms["cancelForm"][a].value);
+    console.log("hi just hi"+a)
+    console.log(document.forms[a+'cancelForm'][a+'dateFrom'].value);
+    let x = new Date(document.forms[a+'cancelForm'][a+'dateFrom'].value);
     let todayPlus3 = new Date();
     todayPlus3.setDate(todayPlus3.getDate() + 3);
     if(x>todayPlus3){
