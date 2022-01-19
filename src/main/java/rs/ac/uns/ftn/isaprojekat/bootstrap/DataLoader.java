@@ -29,6 +29,8 @@ public class DataLoader implements CommandLineRunner {
     private final IncomeRateService incomeRateService;
 
     //test email here
+    String testEmail1 = "test1";
+    String testEmail2 = "test2";
 
 
     @Autowired
@@ -128,6 +130,7 @@ public class DataLoader implements CommandLineRunner {
         vh1.setVacationHouseOwner(vho1);
         vh1.setPrice(30F);
         vh1.setNoOfPersons(4);
+        vh1.setImageLink("/img/vh1.jpg");
         vh1.setMisc("");
         vacationHouseService.save(vh1.getId(), vh1);
 
@@ -143,6 +146,7 @@ public class DataLoader implements CommandLineRunner {
         vh2.setPrice(120F);
         vh2.setNoOfPersons(4);
         vh2.setMisc("");
+        vh2.setImageLink("/img/vh2.jpg");
         vh2.setVacationHouseOwner(vho1);
         vacationHouseService.save(vh2.getId(), vh2);
 
@@ -157,13 +161,14 @@ public class DataLoader implements CommandLineRunner {
         vh3.setPrice(30F);
         vh3.setNoOfPersons(4);
         vh3.setMisc("");
+        vh3.setImageLink("/img/vh3.jpg");
         vh3.setVacationHouseOwner(vho1);
         vacationHouseService.save(vh3.getId(), vh3);
 
 
         BoatOwner bo1 = new BoatOwner();
         //bo1.setId(1L);
-        bo1.setEmail("boatowneremail");
+        bo1.setEmail(testEmail1);
         bo1.setFirstName("boat");
         bo1.setLastName("owner");
         boatOwnerService.save(bo1.getId(), bo1);
@@ -193,6 +198,7 @@ public class DataLoader implements CommandLineRunner {
         b2.setPrice(30F);
         b2.setNoOfPersons(3);
         b2.setNoOfRatings(1);
+        b2.setImageLink("/img/b2.jpg");
         b2.setMisc("");
         boatService.save(b2.getId(), b2);
 
@@ -206,13 +212,14 @@ public class DataLoader implements CommandLineRunner {
         b3.setPrice(250F);
         b3.setNoOfPersons(3);
         b3.setNoOfRatings(2);
+        b3.setImageLink("/img/b3.jpg");
         b3.setMisc("");
         boatService.save(b3.getId(), b3);
 
         Boat b4 = new Boat();
         //b1.setId(1l);
-        b4.setName("zzzzzzz");
-        b4.setInfo("boat 3 info");
+        b4.setName("Slice Of Life");
+        b4.setInfo("info");
         b4.setAvgRating(3f);
         b4.setAddress("gadresa");
         b4.setOwner(bo1);
@@ -220,6 +227,7 @@ public class DataLoader implements CommandLineRunner {
         b4.setNoOfPersons(3);
         b4.setNoOfRatings(2);
         b4.setMisc("");
+        b4.setImageLink("/img/b4.jpg");
         boatService.save(b4.getId(), b4);
 
         Instructor i1 = new Instructor();
@@ -248,6 +256,7 @@ public class DataLoader implements CommandLineRunner {
         a1.setPrice(60F);
         a1.setNoOfPersons(4);
         a1.setMisc("");
+        a1.setImageLink("/img/a1.jpg");
         a1.setAddress("adresa");
         a1.setInstructor(i1);
         adventureService.save(a1.getId(), a1);
@@ -265,6 +274,7 @@ public class DataLoader implements CommandLineRunner {
         a2.setNoOfPersons(4);
         a2.setMisc("");
         a2.setAddress("adresa");
+        a2.setImageLink("/img/a2.jpg");
         a2.setInstructor(i1);
         adventureService.save(a2.getId(), a2);
 
@@ -279,6 +289,7 @@ public class DataLoader implements CommandLineRunner {
         a3.setMisc("");
         a3.setAddress("adresa");
         a3.setInstructor(i2);
+        a3.setImageLink("/img/a3.jpg");
         adventureService.save(a3.getId(), a3);
 
 
@@ -333,7 +344,7 @@ public class DataLoader implements CommandLineRunner {
         boatReservationService.save(1L, br4);
 
         BoatReservation br5 = new BoatReservation();
-        br5.setBoat(b1);
+        br5.setBoat(b4);
         br5.setPrice(123F);
         br5.setUser(user);
         br5.setReservationTime(LocalDateTime.of(2021,11,28,20,30));
