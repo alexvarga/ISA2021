@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import rs.ac.uns.ftn.isaprojekat.model.BoatComplaint;
+import rs.ac.uns.ftn.isaprojekat.model.VacationHouseComplaint;
 import rs.ac.uns.ftn.isaprojekat.service.BoatComplaintService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
+import rs.ac.uns.ftn.isaprojekat.service.VacationHouseComplaintService;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -17,10 +19,12 @@ import java.util.Set;
 public class ComplaintsController {
 
     private final BoatComplaintService boatComplaintService;
+    private final VacationHouseComplaintService vacationHouseComplaintService;
     private final UserService userService;
 
-    public ComplaintsController(BoatComplaintService boatComplaintService, UserService userService) {
+    public ComplaintsController(BoatComplaintService boatComplaintService, VacationHouseComplaintService vacationHouseComplaintService, UserService userService) {
         this.boatComplaintService = boatComplaintService;
+        this.vacationHouseComplaintService = vacationHouseComplaintService;
         this.userService = userService;
     }
 
@@ -41,7 +45,7 @@ public class ComplaintsController {
     }
 
     @PostMapping("/admin/complaints/boats")
-    String answerToComplaint(Model model, @RequestParam(value = "complaintId") Long complaintId,
+    String answerToBoatComplaint(Model model, @RequestParam(value = "complaintId") Long complaintId,
                              @RequestParam(value = "responseContent") String responseContent)
             throws UnsupportedEncodingException, MessagingException {
 
@@ -53,6 +57,34 @@ public class ComplaintsController {
 
 
         boatComplaintService.deleteById(complaintId);
+
+        return showBoatComplaints(model);
+
+
+    }
+
+    @GetMapping("/admin/complaints/houses")
+    String showHouseComplaints(Model model){
+        Set<VacationHouseComplaint> complaints = vacationHouseComplaintService.findAll();
+
+        model.addAttribute("complaints", complaints);
+
+        return "complaints/houses_complaints";
+    }
+
+    @PostMapping("/admin/complaints/houses")
+    String answerToHouseComplaint(Model model, @RequestParam(value = "complaintId") Long complaintId,
+                             @RequestParam(value = "responseContent") String responseContent)
+            throws UnsupportedEncodingException, MessagingException {
+
+
+        VacationHouseComplaint complaint = vacationHouseComplaintService.findById(complaintId);
+        userService.sendComplaintResponseMail(responseContent, complaint.getContent(),
+                complaint.getVacationHouse().getVacationHouseOwner().getEmail(),
+                complaint.getUser().getEmail(), "a vikendica", complaint.getVacationHouse().getName() );
+
+
+        vacationHouseComplaintService.deleteById(complaintId);
 
         return showBoatComplaints(model);
 

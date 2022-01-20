@@ -7,6 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
 
 import java.time.LocalDateTime;
@@ -38,5 +39,7 @@ public interface VacationHouseReservationRepository extends PagingAndSortingRepo
     boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
     Set<VacationHouseReservation> getAllByUser(User user);
+
+    Boolean existsByUserAndVacationHouse(User user, VacationHouse house);
 
 }

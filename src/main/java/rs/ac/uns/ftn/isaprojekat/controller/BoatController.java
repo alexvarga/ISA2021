@@ -243,6 +243,7 @@ public class BoatController {
         complaint.setComplaintDate(LocalDate.now());
         complaint.setContent(complaintContent);
         boatComplaintService.save(1L, complaint);
+
         return "index";
     }
 

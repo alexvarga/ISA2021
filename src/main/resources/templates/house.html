@@ -74,8 +74,22 @@
 
     </div>
 
+    <div class="row" sec:authorize="hasRole('ROLE_USER')">
+        <div class="col">
+            <a th:if="${allowComplaint==true}" class="btn btn-primary" href="#house_complaint_modal" data-toggle="modal"
+               th:attr="data-house-id=''+${house.id}+''">Žalba</a>
+            <p th:unless="${allowComplaint==true}" class="alert-warning">Nemate pravo žalbe za vikendicu za koji nemate rezervaciju.</p>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+
 </div>
 
 <div th:insert="/index.html :: scripts"></div>
+
+<div th:insert="/fragments/modal/_modals::complaintModal('/houses/'+${house.id}+'/complaint', 'house_complaint_modal','house',${house.id})"></div>
+
 </body>
 </html>

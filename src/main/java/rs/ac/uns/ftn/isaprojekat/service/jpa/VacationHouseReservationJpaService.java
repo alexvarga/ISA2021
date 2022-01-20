@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReservation;
 import rs.ac.uns.ftn.isaprojekat.repository.VacationHouseReservationRepository;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReservationService;
@@ -124,5 +125,10 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
     @Override
     public Set<VacationHouseReservation> getAllByUser(User user) {
         return vacationHouseReservationRepository.getAllByUser(user);
+    }
+
+    @Override
+    public Boolean existsByUserAndVacationHouse(User user, VacationHouse house) {
+        return vacationHouseReservationRepository.existsByUserAndVacationHouse(user, house);
     }
 }

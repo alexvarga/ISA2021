@@ -31,13 +31,15 @@ public class UserJpaService implements UserService {
     private final BoatSubscriptionService boatSubscriptionService;
     private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
     private final DeletionRequestService deletionRequestService;
+    private final VacationHouseComplaintService vacationHouseComplaintService;
+    private final BoatComplaintService boatComplaintService;
 
 
 
     @Autowired
     private JavaMailSender mailSender;
 
-    public UserJpaService(UserRepository userRepository, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, DeletionRequestService deletionRequestService, JavaMailSender mailSender) {
+    public UserJpaService(UserRepository userRepository, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, DeletionRequestService deletionRequestService, VacationHouseComplaintService vacationHouseComplaintService, BoatComplaintService boatComplaintService, JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.boatReservationService = boatReservationService;
         this.vacationHouseReservationService = vacationHouseReservationService;
@@ -49,6 +51,8 @@ public class UserJpaService implements UserService {
         this.boatSubscriptionService = boatSubscriptionService;
         this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
         this.deletionRequestService = deletionRequestService;
+        this.vacationHouseComplaintService = vacationHouseComplaintService;
+        this.boatComplaintService = boatComplaintService;
         this.mailSender = mailSender;
     }
 
@@ -267,6 +271,16 @@ public class UserJpaService implements UserService {
         Set<DeletionRequest> dr = deletionRequestService.findAllByUser(user);
         for (DeletionRequest d:dr){
             deletionRequestService.deleteById(d.getId());
+        }
+
+        Set<BoatComplaint> comp = boatComplaintService.getAllByUser(user);
+        for(BoatComplaint bc:comp){
+            boatComplaintService.deleteById(bc.getId());
+        }
+
+        Set<VacationHouseComplaint> vcomp = vacationHouseComplaintService.getAllByUser(user);
+        for(VacationHouseComplaint vc:vcomp){
+            vacationHouseComplaintService.deleteById(vc.getId());
         }
 
         userRepository.delete(user);
