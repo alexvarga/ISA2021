@@ -169,7 +169,8 @@
 
         </table>
     </div>
-    <div th:if="${search==true and numberOfPages>0 }" class="row justify-content-center">
+    <div th:if="${search==true }" class="row justify-content-center">
+        <div th:if="${numberOfPages>0}" >
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
@@ -195,11 +196,12 @@
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
 
-
+        </div>
     </div>
 
 
-    <div th:unless="${search==true and numberOfPages>0}" class="row justify-content-center">
+    <div th:unless="${search==true }" class="row justify-content-center">
+        <div th:if="${numberOfPages>0}" >
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
@@ -225,7 +227,7 @@
         <a th:if="${currentPage<numberOfPages}" th:href="@{'/adventures/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
-
+        </div>
 
     </div>
 </div>
