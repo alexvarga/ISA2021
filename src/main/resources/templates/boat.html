@@ -44,7 +44,7 @@
 
 <div class="container">
     <div class="row">
-        <h3> reviews</h3>
+        <h4>Ocene i komentari</h4>
 
     </div>
     <div class="row">
@@ -70,9 +70,23 @@
 
     </div>
 
+    <div class="row" sec:authorize="hasRole('ROLE_USER')">
+        <div class="col">
+            <a th:if="${allowComplaint==true}" class="btn btn-primary" href="#boat_complaint_modal" data-toggle="modal"
+               th:attr="data-boat-id=''+${boat.id}+''">Žalba</a>
+            <p th:unless="${allowComplaint==true}" class="alert-warning">Nemate pravo žalbe za brod za koji nemate rezervaciju.</p>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+
 </div>
 
 
 <div th:insert="/index.html :: scripts"></div>
+
+<div th:insert="/fragments/modal/_modals::complaintModal('/boats/'+${boat.id}+'/complaint', 'boat_complaint_modal','boat',${boat.id})"></div>
+
 </body>
 </html>

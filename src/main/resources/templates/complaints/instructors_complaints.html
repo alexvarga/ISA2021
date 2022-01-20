@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Žalbe instruktori</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-comment"></span>
+                <h3 class="panel-title">
+                    Žalbe - instruktori</h3>
+
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+
+
+                    <li th:each="r:${complaints}" class="list-group-item container-fluid ">
+                        <div class="row ">
+                            <div class="col-xs-2 col-md-1  ">
+                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" width="80" class="img-circle img-responsive w-100" alt="" /></div>
+                            <div class="col-xs-10 col-md-11 ">
+                                <div>
+                                    <p th:text="'Korisnik: '+${r.user.email}"></p>
+                                    <p th:text="'Instruktor: '+${r.instructor.firstName +' '+r.instructor.lastName}"></p>
+                                </div>
+                                <div class="comment-text">
+                                    Žalba:
+                                    <p th:text="${r.content}"></p>
+                                </div>
+                                <div class="action">
+                                    <span>
+                                    <form  th:id="'responseForm'+${r.id}" th:action="@{/admin/complaints/instructors}" method="post" class="col-auto justify-content-end d-inline " >
+                                        <input type="number" th:value="${r.id}" name="complaintId" hidden>
+
+                                        <textarea  th:form="'responseForm'+${r.id}" class="form-control" id="text" th:name="responseContent" rows="4" placeholder="Tekst odgovora"></textarea>
+                                       <div>
+                                           <button   type="submit" class="btn btn-success">Odgovori</button>
+                                                        </div>
+                                    </form>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

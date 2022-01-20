@@ -30,4 +30,7 @@ public interface UserService extends CrudService<User, Long> {
     void sendRequestDeniedEmail(String messageContent, String ownerMail) throws UnsupportedEncodingException, MessagingException;
 
     void delete(User user);
+
+    public void sendComplaintResponseMail(String messageContent, String complaintContent, String ownerMail, String userMail, String entity, String entityName)
+            throws UnsupportedEncodingException, MessagingException;
 }

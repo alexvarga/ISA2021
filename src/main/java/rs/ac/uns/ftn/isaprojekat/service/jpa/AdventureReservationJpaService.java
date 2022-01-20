@@ -132,4 +132,9 @@ public class AdventureReservationJpaService implements AdventureReservationServi
     public Set<AdventureReservation> getAllByUser(User user) {
         return adventureReservationRepository.getAllByUser(user);
     }
+
+    @Override
+    public Boolean existsByUserAndInstructor_Id(User user, Long instructor_id) {
+        return adventureReservationRepository.existsByUserAndInstructor_Id(user, instructor_id);
+    }
 }

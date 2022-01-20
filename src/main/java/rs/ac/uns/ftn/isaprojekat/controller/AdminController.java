@@ -50,8 +50,17 @@ public class AdminController {
     private final BoatSubscriptionService boatSubscriptionService;
     private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
 
+    private final BoatComplaintService boatComplaintService;
+    private final VacationHouseComplaintService  vacationHouseComplaintService;
 
-    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService, IncomeRateService incomeRateService, AdventureReviewService adventureReviewService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService) {
+    private final InstructorComplaintService instructorComplaintService;
+
+
+
+
+
+
+    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService, IncomeRateService incomeRateService, AdventureReviewService adventureReviewService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, BoatComplaintService boatComplaintService, VacationHouseComplaintService vacationHouseComplaintService, InstructorComplaintService instructorComplaintService) {
         this.instructorService = instructorService;
         this.adventureService = adventureService;
         this.adventureReservationService = adventureReservationService;
@@ -69,6 +78,10 @@ public class AdminController {
         this.instructorSubscriptionService = instructorSubscriptionService;
         this.boatSubscriptionService = boatSubscriptionService;
         this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
+        this.boatComplaintService = boatComplaintService;
+
+        this.vacationHouseComplaintService = vacationHouseComplaintService;
+        this.instructorComplaintService = instructorComplaintService;
     }
 
 
@@ -139,6 +152,11 @@ public class AdminController {
             Set<InstructorSubscription> subs = instructorSubscriptionService.findAllByInstructor(instructor);
             for (InstructorSubscription s:subs){
                 instructorSubscriptionService.deleteById(s.getId());
+            }
+
+            Set<InstructorComplaint> icomp = instructorComplaintService.getAllByInstructor(instructor);
+            for (InstructorComplaint i:icomp){
+                instructorComplaintService.deleteById(i.getId());
             }
 
 
@@ -216,6 +234,11 @@ public class AdminController {
                 boatReservationService.save(1L, reservation);
             }
 
+            Set<BoatComplaint> comp = boatComplaintService.getAllByBoat(boat);
+            for(BoatComplaint bc:comp){
+                boatComplaintService.deleteById(bc.getId());
+            }
+
 
 
             boatService.deleteById(boat.getId());
@@ -290,6 +313,11 @@ public class AdminController {
             Set<VacationHouseSubscription> subs = vacationHouseSubscriptionService.findAllByVacationHouse(house);
             for (VacationHouseSubscription s:subs){
                 vacationHouseSubscriptionService.deleteById(s.getId());
+            }
+
+            Set<VacationHouseComplaint> vcomp = vacationHouseComplaintService.getAllByVacationHouse(house);
+            for(VacationHouseComplaint vc:vcomp){
+                vacationHouseComplaintService.deleteById(vc.getId());
             }
 
 
@@ -435,6 +463,11 @@ public class AdminController {
             System.out.println(vacationHouse.getId());
         }
 
+        Set<VacationHouseComplaint> vcomp = vacationHouseComplaintService.getAllByVacationHouse(vacationHouse);
+        for(VacationHouseComplaint vc:vcomp){
+            vacationHouseComplaintService.deleteById(vc.getId());
+        }
+
         vacationHouseService.deleteById(vacationHouse.getId());
 
 
@@ -506,6 +539,11 @@ public class AdminController {
         Set<BoatSubscription> subs = boatSubscriptionService.findAllByBoat(boat);
         for (BoatSubscription s:subs){
             boatSubscriptionService.deleteById(s.getId());
+        }
+
+        Set<BoatComplaint> comp = boatComplaintService.getAllByBoat(boat);
+        for(BoatComplaint bc:comp){
+            boatComplaintService.deleteById(bc.getId());
         }
 
         boatService.deleteById(boat.getId());

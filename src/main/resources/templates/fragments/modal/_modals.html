@@ -297,6 +297,42 @@
     </div>
 </div>
 
+<!--make complaint-->
+<div th:fragment="complaintModal(action, modalId, entity, entityId)">
+    <div class="modal" th:id="${modalId}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal header</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form  th:action="@{${action}}" method="post">
+                            <div>
+                                <p>Žalba:</p>
+                                <div class="form-outline">
+                                   <textarea class="form-control" id="textArea" name="complaintContent" rows="4"></textarea>
+                                </div>
+                                <input  hidden readonly type="number"  th:name="${entity}+'Id'" th:value="${entityId}"/>
+
+
+                                <button class="button btn-primary" type="submit">Pošalji</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>

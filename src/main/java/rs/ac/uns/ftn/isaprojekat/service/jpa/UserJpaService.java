@@ -31,13 +31,16 @@ public class UserJpaService implements UserService {
     private final BoatSubscriptionService boatSubscriptionService;
     private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
     private final DeletionRequestService deletionRequestService;
+    private final VacationHouseComplaintService vacationHouseComplaintService;
+    private final BoatComplaintService boatComplaintService;
+    private final InstructorComplaintService instructorComplaintService;
 
 
 
     @Autowired
     private JavaMailSender mailSender;
 
-    public UserJpaService(UserRepository userRepository, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, DeletionRequestService deletionRequestService, JavaMailSender mailSender) {
+    public UserJpaService(UserRepository userRepository, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, DeletionRequestService deletionRequestService, VacationHouseComplaintService vacationHouseComplaintService, BoatComplaintService boatComplaintService, InstructorComplaintService instructorComplaintService, JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.boatReservationService = boatReservationService;
         this.vacationHouseReservationService = vacationHouseReservationService;
@@ -49,6 +52,9 @@ public class UserJpaService implements UserService {
         this.boatSubscriptionService = boatSubscriptionService;
         this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
         this.deletionRequestService = deletionRequestService;
+        this.vacationHouseComplaintService = vacationHouseComplaintService;
+        this.boatComplaintService = boatComplaintService;
+        this.instructorComplaintService = instructorComplaintService;
         this.mailSender = mailSender;
     }
 
@@ -269,7 +275,54 @@ public class UserJpaService implements UserService {
             deletionRequestService.deleteById(d.getId());
         }
 
+        Set<BoatComplaint> comp = boatComplaintService.getAllByUser(user);
+        for(BoatComplaint bc:comp){
+            boatComplaintService.deleteById(bc.getId());
+        }
+
+        Set<VacationHouseComplaint> vcomp = vacationHouseComplaintService.getAllByUser(user);
+        for(VacationHouseComplaint vc:vcomp){
+            vacationHouseComplaintService.deleteById(vc.getId());
+        }
+
+        Set<InstructorComplaint> icomp = instructorComplaintService.getAllByUser(user);
+        for (InstructorComplaint i:icomp){
+            instructorComplaintService.deleteById(i.getId());
+        }
+
+
+
         userRepository.delete(user);
 
+    }
+
+    public void sendComplaintResponseMail(String messageContent, String complaintContent, String ownerMail, String userMail, String entity, String entityName)
+            throws UnsupportedEncodingException, MessagingException {
+        String subject = "Žalba";
+        String sender = "isa-projekat";
+        String contentUser = "<p>Odgovor na vašu žalbu.</p>";
+        contentUser+="<p>Tekst žalbe: <i>"+complaintContent+"</i></p>";
+
+        contentUser+="<p>Tekst odgovora: <i>"+messageContent+"</i></p>";
+
+        String contentOwner = "<p>Odgovor na žalbu za vaš"+entity+" "+entityName+".</p>";
+        contentOwner+="<p>Tekst žalbe: <i>"+complaintContent+"</i></p>";
+        contentOwner+="<p>Tekst odgovora: <i>"+messageContent+"</i></p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessage message2 = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        MimeMessageHelper helper2 = new MimeMessageHelper(message2);
+
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
+
+
+        helper.setSubject(subject);
+        helper.setTo(ownerMail);
+        helper.setText(contentOwner, true);
+        mailSender.send(message);
+        helper.setTo(userMail);
+        helper.setText(contentUser, true);
+        mailSender.send(message);
     }
 }

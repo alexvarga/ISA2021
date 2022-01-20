@@ -36,8 +36,9 @@ public class DataLoader implements CommandLineRunner {
 
 
     //test email here
-    String testEmail1 = "test1";
-    String testEmail2 = "test2";
+    String testEmailBoatOwner = "test";
+    String testEmailHouseOwner = "test2";
+    String testEmailInstructor = "test3";
 
 
     @Autowired
@@ -82,7 +83,7 @@ public class DataLoader implements CommandLineRunner {
 
 
         User user = new User();
-        user.setEmail("test");
+        user.setEmail("dkompajler@gmail.com");
         user.setFirstName("pera");
         user.setLastName("perić");
         user.setAddress("a street 1");
@@ -124,7 +125,7 @@ public class DataLoader implements CommandLineRunner {
 
         VacationHouseOwner vho1 = new VacationHouseOwner();
         //vho1.setId(1L);
-        vho1.setEmail("vacationhouseowneremal");
+        vho1.setEmail(testEmailHouseOwner);
         vho1.setFirstName("milan");
         vho1.setLastName("milanović");
 
@@ -179,7 +180,7 @@ public class DataLoader implements CommandLineRunner {
 
         BoatOwner bo1 = new BoatOwner();
         //bo1.setId(1L);
-        bo1.setEmail(testEmail1);
+        bo1.setEmail(testEmailBoatOwner);
         bo1.setFirstName("boat");
         bo1.setLastName("owner");
         boatOwnerService.save(bo1.getId(), bo1);
@@ -246,7 +247,7 @@ public class DataLoader implements CommandLineRunner {
         //i1.setId(1L);
         i1.setFirstName("ivan");
         i1.setLastName("ivanovic");
-        i1.setEmail("instructoremail");
+        i1.setEmail(testEmailInstructor);
         i1.setPassword("plaintext");
         instructorService.save(i1.getId(), i1);
 
@@ -426,7 +427,7 @@ public class DataLoader implements CommandLineRunner {
         adventureReservationService.save(1L, ar3);
 
         AdventureReservation ar4 = new AdventureReservation();
-        ar4.setAdventure(a3);
+        ar4.setAdventure(a2);
         ar4.setPrice(404F);
         ar4.setUser(user);
         ar4.setReservationType(ReservationType.ACTIVE);

@@ -39,4 +39,8 @@ public interface AdventureReservationRepository extends PagingAndSortingReposito
 
     Set<AdventureReservation> getAllByUser(User user);
 
+
+    @Query("select case when count(ar.user.id)>0 then true else false end from AdventureReservation ar where (?1=ar.user and ar.adventure.instructor.id =?2)")
+    Boolean existsByUserAndInstructor_Id(User user, Long instructor_id);
+
 }

@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.*;
-import rs.ac.uns.ftn.isaprojekat.service.UserService;
-import rs.ac.uns.ftn.isaprojekat.service.VacationHouseReviewService;
-import rs.ac.uns.ftn.isaprojekat.service.VacationHouseService;
-import rs.ac.uns.ftn.isaprojekat.service.VacationHouseSubscriptionService;
+import rs.ac.uns.ftn.isaprojekat.service.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -28,15 +25,18 @@ public class VacationHouseController {
 
     private final VacationHouseService vacationHouseService;
     private final VacationHouseReviewService vacationHouseReviewService;
-
+    private final VacationHouseReservationService vacationHouseReservationService;
+    private final VacationHouseComplaintService vacationHouseComplaintService;
     private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
 
     private final UserService userService;
 
 
-    public VacationHouseController(VacationHouseService vacationHouseService, VacationHouseReviewService vacationHouseReviewService, VacationHouseSubscriptionService vacationHouseSubscriptionService, UserService userService) {
+    public VacationHouseController(VacationHouseService vacationHouseService, VacationHouseReviewService vacationHouseReviewService, VacationHouseReservationService vacationHouseReservationService, VacationHouseComplaintService vacationHouseComplaintService, VacationHouseSubscriptionService vacationHouseSubscriptionService, UserService userService) {
         this.vacationHouseService = vacationHouseService;
         this.vacationHouseReviewService = vacationHouseReviewService;
+        this.vacationHouseReservationService = vacationHouseReservationService;
+        this.vacationHouseComplaintService = vacationHouseComplaintService;
         this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
         this.userService = userService;
     }
@@ -85,8 +85,10 @@ public class VacationHouseController {
         Set<VacationHouseReview> vacationHouseReviews =
         vacationHouseReviewService.getAllByVacationHouseAndReviewStatus(vacationHouse, ReviewStatus.ALLOWED);
 
+        Boolean allowComplaint = vacationHouseReservationService.existsByUserAndVacationHouse(user, vacationHouse);
         Boolean subscribed = vacationHouseSubscriptionService.existsByUserAndVacationHouse(user, vacationHouse);
 
+        model.addAttribute("allowComplaint", allowComplaint);
         model.addAttribute("houseReviews", vacationHouseReviews);
         model.addAttribute("house", vacationHouse);
         model.addAttribute("subscribed", subscribed);
@@ -217,5 +219,22 @@ public class VacationHouseController {
         return showHouse(model, houseId);
     }
 
+
+    @PostMapping("/houses/{boatId}/complaint")
+    String makeComplaint(Model model, @PathVariable @RequestParam("houseId") Long houseId, @RequestParam("complaintContent") String complaintContent){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+
+        VacationHouseComplaint complaint = new VacationHouseComplaint();
+        complaint.setVacationHouse(vacationHouseService.findById(houseId));
+        complaint.setUser(user);
+        complaint.setComplaintDate(LocalDate.now());
+        complaint.setContent(complaintContent);
+        vacationHouseComplaintService.save(1L, complaint);
+
+        return "index";
+    }
 
 }
