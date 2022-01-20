@@ -127,4 +127,9 @@ public class AdventureReservationJpaService implements AdventureReservationServi
     public Set<AdventureReservation> getAllByAdventure_Id(Long adventure_id) {
         return adventureReservationRepository.getAllByAdventure_Id(adventure_id);
     }
+
+    @Override
+    public Set<AdventureReservation> getAllByUser(User user) {
+        return adventureReservationRepository.getAllByUser(user);
+    }
 }

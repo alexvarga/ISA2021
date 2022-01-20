@@ -185,7 +185,9 @@
 
     </div>
 
-    <div th:if="${search==true and numberOfPages>0}" class="row justify-content-center">
+
+    <div th:if="${search==true}" class="row justify-content-center">
+        <div th:if="${numberOfPages>0}" >
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
@@ -215,12 +217,13 @@
            th:href="@{'/search/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
-
+        </div>
 
     </div>
 
 
-    <div th:unless="${search==true and numberOfPages>0}" class="row justify-content-center">
+    <div th:unless="${search==true}" class="row justify-content-center">
+        <div th:if="${numberOfPages>0}" >
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
@@ -251,7 +254,7 @@
            th:href="@{'/boats/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
-
+        </div>
 
     </div>
 </div>

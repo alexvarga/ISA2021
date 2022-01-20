@@ -37,4 +37,6 @@ public interface VacationHouseReservationRepository extends PagingAndSortingRepo
     @Query("select case when count(vhr.user.id)>0 then true else false end from VacationHouseReservation vhr where ((?2 between vhr.dateFrom and vhr.dateEnd) or (?3 between vhr.dateFrom and vhr.dateEnd) or (?2<vhr.dateFrom and ?3>vhr.dateEnd) ) and ?1 = vhr.user and ?4=vhr.vacationHouse.id")
     boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
+    Set<VacationHouseReservation> getAllByUser(User user);
+
 }

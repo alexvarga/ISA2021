@@ -16,10 +16,13 @@ public interface VacationHouseSubscriptionRepository extends PagingAndSortingRep
     Page<VacationHouseSubscription> findByUser(User user, Pageable pageable);
 
     Set<VacationHouseSubscription> findAllByUser(User user);
+    Set<VacationHouseSubscription> findAllByVacationHouse(VacationHouse house);
 
     Boolean existsByUserAndVacationHouse(User user, VacationHouse vacationHouse);
 
     VacationHouseSubscription findVacationHouseSubscriptionByVacationHouseAndUser(VacationHouse vacationHouse, User user);
+
+
 
 
 }

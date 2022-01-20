@@ -42,7 +42,16 @@ public class AdminController {
     private final UserService userService;
     private final IncomeRateService incomeRateService;
 
-    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService, IncomeRateService incomeRateService) {
+    private final AdventureReviewService adventureReviewService;
+    private final BoatReviewService boatReviewService;
+    private final VacationHouseReviewService vacationHouseReviewService;
+
+    private final InstructorSubscriptionService instructorSubscriptionService;
+    private final BoatSubscriptionService boatSubscriptionService;
+    private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
+
+
+    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService, IncomeRateService incomeRateService, AdventureReviewService adventureReviewService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService) {
         this.instructorService = instructorService;
         this.adventureService = adventureService;
         this.adventureReservationService = adventureReservationService;
@@ -54,6 +63,12 @@ public class AdminController {
         this.vacationHouseReservationService = vacationHouseReservationService;
         this.userService = userService;
         this.incomeRateService = incomeRateService;
+        this.adventureReviewService = adventureReviewService;
+        this.boatReviewService = boatReviewService;
+        this.vacationHouseReviewService = vacationHouseReviewService;
+        this.instructorSubscriptionService = instructorSubscriptionService;
+        this.boatSubscriptionService = boatSubscriptionService;
+        this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
     }
 
 
@@ -115,6 +130,19 @@ public class AdminController {
                 reservation.setAdventure(null);
                 adventureReservationService.save(1L, reservation);
             }
+
+            Set<AdventureReview> reviews = adventureReviewService.getAllByAdventure_Id(adventure.getId());
+            for (AdventureReview r:reviews){
+                adventureReviewService.deleteById(r.getId());
+            }
+
+            Set<InstructorSubscription> subs = instructorSubscriptionService.findAllByInstructor(instructor);
+            for (InstructorSubscription s:subs){
+                instructorSubscriptionService.deleteById(s.getId());
+            }
+
+
+
             adventureService.deleteById(adventure.getId());
         }
         instructorService.deleteById(id);
@@ -172,11 +200,24 @@ public class AdminController {
             Set<BoatReservation> reservations = boatReservationService.getAllByBoat_Id(boat.getId());
             System.out.println(boat.getId());
 
+            Set<BoatReview> reviews = boatReviewService.getAllByBoat_id(boat.getId());
+            for (BoatReview r:reviews){
+                boatReviewService.deleteById(r.getId());
+            }
+
+            Set<BoatSubscription> subs = boatSubscriptionService.findAllByBoat(boat);
+            for (BoatSubscription s:subs){
+                boatSubscriptionService.deleteById(s.getId());
+            }
+
             for (BoatReservation reservation : reservations) {
                 reservation.setBoat(null);
                 System.out.println(reservation);
                 boatReservationService.save(1L, reservation);
             }
+
+
+
             boatService.deleteById(boat.getId());
         }
         boatOwnerService.deleteById(id);
@@ -240,6 +281,19 @@ public class AdminController {
                 System.out.println(reservation);
                 vacationHouseReservationService.save(1L, reservation);
             }
+
+            Set<VacationHouseReview> reviews = vacationHouseReviewService.getAllByVacationHouse_Id(house.getId());
+            for (VacationHouseReview r:reviews){
+                vacationHouseReviewService.deleteById(r.getId());
+            }
+
+            Set<VacationHouseSubscription> subs = vacationHouseSubscriptionService.findAllByVacationHouse(house);
+            for (VacationHouseSubscription s:subs){
+                vacationHouseSubscriptionService.deleteById(s.getId());
+            }
+
+
+
             vacationHouseService.deleteById(house.getId());
         }
         vacationHouseOwnerService.deleteById(id);
@@ -295,12 +349,18 @@ public class AdminController {
         Adventure adventure = adventureService.findById(id);
         Set<AdventureReservation> reservations =
                 adventureReservationService.getAllByAdventure_Id(adventure.getId());
-
         for (AdventureReservation reservation : reservations) {
             reservation.setAdventure(null);
             System.out.println(reservation);
             adventureReservationService.save(1L, reservation);
         }
+
+        Set<AdventureReview> reviews = adventureReviewService.getAllByAdventure_Id(adventure.getId());
+        for (AdventureReview r:reviews){
+            adventureReviewService.deleteById(r.getId());
+        }
+
+
         adventureService.deleteById(adventure.getId());
 
 
@@ -363,6 +423,18 @@ public class AdminController {
             System.out.println(reservation);
             vacationHouseReservationService.save(1L, reservation);
         }
+
+        Set<VacationHouseReview> reviews = vacationHouseReviewService.getAllByVacationHouse_Id(vacationHouse.getId());
+        for (VacationHouseReview r:reviews){
+            vacationHouseReviewService.deleteById(r.getId());
+        }
+
+        Set<VacationHouseSubscription> subs = vacationHouseSubscriptionService.findAllByVacationHouse(vacationHouse);
+        for (VacationHouseSubscription s:subs){
+            vacationHouseSubscriptionService.deleteById(s.getId());
+            System.out.println(vacationHouse.getId());
+        }
+
         vacationHouseService.deleteById(vacationHouse.getId());
 
 
@@ -425,6 +497,17 @@ public class AdminController {
             System.out.println(reservation);
             boatReservationService.save(1L, reservation);
         }
+
+        Set<BoatReview> reviews = boatReviewService.getAllByBoat_id(boat.getId());
+        for (BoatReview r:reviews){
+            boatReviewService.deleteById(r.getId());
+        }
+
+        Set<BoatSubscription> subs = boatSubscriptionService.findAllByBoat(boat);
+        for (BoatSubscription s:subs){
+            boatSubscriptionService.deleteById(s.getId());
+        }
+
         boatService.deleteById(boat.getId());
 
 

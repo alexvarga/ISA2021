@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.Adventure;
 import rs.ac.uns.ftn.isaprojekat.model.AdventureReview;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.AdventureReviewRepository;
 import rs.ac.uns.ftn.isaprojekat.service.AdventureReviewService;
 
@@ -81,5 +82,10 @@ public class AdventureReviewJpaService implements AdventureReviewService {
     @Override
     public void deleteById(Long aLong) {
         adventureReviewRepository.deleteById(aLong);
+    }
+
+    @Override
+    public Set<AdventureReview> getAllByUser(User user) {
+        return adventureReviewRepository.getAllByUser(user);
     }
 }

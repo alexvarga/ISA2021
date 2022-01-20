@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.model.BoatReview;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.BoatReviewRepository;
 import rs.ac.uns.ftn.isaprojekat.service.BoatReviewService;
 
@@ -80,5 +81,10 @@ public class BoatReviewJpaService implements BoatReviewService {
     @Override
     public Set<BoatReview> getAllByReviewStatus(ReviewStatus status) {
         return boatReviewRepository.getAllByReviewStatus(status);
+    }
+
+    @Override
+    public Set<BoatReview> getAllByUser(User user) {
+        return boatReviewRepository.getAllByUser(user);
     }
 }

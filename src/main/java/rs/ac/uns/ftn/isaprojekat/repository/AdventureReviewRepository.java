@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import rs.ac.uns.ftn.isaprojekat.model.Adventure;
 import rs.ac.uns.ftn.isaprojekat.model.AdventureReview;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 
 import java.util.Set;
 
@@ -22,5 +23,8 @@ public interface AdventureReviewRepository extends PagingAndSortingRepository<Ad
     Set<AdventureReview> getAllByAdventureAndReviewStatus(Adventure adventure, ReviewStatus status);
 
     Set<AdventureReview> getAllByReviewStatus(ReviewStatus status);
+
+    Set<AdventureReview> getAllByUser(User user);
+
 
 }

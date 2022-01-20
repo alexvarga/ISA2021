@@ -25,4 +25,9 @@ public interface UserService extends CrudService<User, Long> {
     void sendReviewInfoEmail(String entityName, String entityType, String reviewContent, Float rating,
                              String firstName, String lastName, String ownerMail)
             throws UnsupportedEncodingException, MessagingException;
+
+    void sendRequestAcceptedEmail(String messageContent, String ownerMail) throws UnsupportedEncodingException, MessagingException;
+    void sendRequestDeniedEmail(String messageContent, String ownerMail) throws UnsupportedEncodingException, MessagingException;
+
+    void delete(User user);
 }

@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.isaprojekat.service;
 
 import org.springframework.data.domain.Page;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReview;
 
@@ -18,4 +19,6 @@ public interface VacationHouseReviewService extends PageableCrudService<Vacation
     Set<VacationHouseReview> getAllByReviewStatus(ReviewStatus status);
 
     Set<VacationHouseReview> getAllByVacationHouse_Id(Long id);
+
+    Set<VacationHouseReview> getAllByUser(User user);
 }

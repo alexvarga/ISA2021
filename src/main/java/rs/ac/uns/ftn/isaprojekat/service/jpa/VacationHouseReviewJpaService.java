@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReview;
 import rs.ac.uns.ftn.isaprojekat.repository.VacationHouseReviewRepository;
@@ -84,5 +85,10 @@ public class VacationHouseReviewJpaService implements VacationHouseReviewService
     public void deleteById(Long aLong) {
         vacationHouseReviewRepository.deleteById(aLong);
 
+    }
+
+    @Override
+    public Set<VacationHouseReview> getAllByUser(User user) {
+        return vacationHouseReviewRepository.getAllByUser(user);
     }
 }

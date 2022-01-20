@@ -73,4 +73,9 @@ public class VacationHouseSubscriptionJpaService implements VacationHouseSubscri
     public void deleteById(Long aLong) {
         vacationHouseSubscriptionRepository.deleteById(aLong);
     }
+
+    @Override
+    public Set<VacationHouseSubscription> findAllByVacationHouse(VacationHouse house) {
+        return vacationHouseSubscriptionRepository.findAllByVacationHouse(house);
+    }
 }

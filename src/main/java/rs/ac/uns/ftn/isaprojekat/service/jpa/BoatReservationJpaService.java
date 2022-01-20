@@ -150,4 +150,9 @@ public class BoatReservationJpaService implements BoatReservationService {
     public Set<BoatReservation> getAllByBoat_Id(Long boat_id) {
         return boatReservationRepository.getAllByBoat_Id(boat_id);
     }
+
+    @Override
+    public Set<BoatReservation> getAllByUser(User user) {
+        return boatReservationRepository.getAllByUser(user);
+    }
 }

@@ -55,9 +55,13 @@
         <table  th:each="hr:${houseReviews}" class="table table-active">
             <tbody >
             <tr>
-                <td  th:text="${hr.user.email}">
+                <td th:if="${hr.user!=null}" th:text="${hr.user.email}">
                     username
                 </td>
+                <td th:if="${hr.user==null}" th:text="'[deleted]'">
+                    username
+                </td>
+
                 <td th:text="${hr.rating}">
                     rating
                 </td>

@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.repository.UserRepository;
-import rs.ac.uns.ftn.isaprojekat.service.UserService;
+import rs.ac.uns.ftn.isaprojekat.service.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -21,11 +21,35 @@ public class UserJpaService implements UserService {
 
     private final UserRepository userRepository;
 
+    private final BoatReservationService boatReservationService;
+    private final VacationHouseReservationService vacationHouseReservationService;
+    private final AdventureReservationService adventureReservationService;
+    private final BoatReviewService boatReviewService;
+    private final VacationHouseReviewService vacationHouseReviewService;
+    private final AdventureReviewService adventureReviewService;
+    private final InstructorSubscriptionService instructorSubscriptionService;
+    private final BoatSubscriptionService boatSubscriptionService;
+    private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
+    private final DeletionRequestService deletionRequestService;
+
+
+
     @Autowired
     private JavaMailSender mailSender;
 
-    public UserJpaService(UserRepository userRepository) {
+    public UserJpaService(UserRepository userRepository, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, DeletionRequestService deletionRequestService, JavaMailSender mailSender) {
         this.userRepository = userRepository;
+        this.boatReservationService = boatReservationService;
+        this.vacationHouseReservationService = vacationHouseReservationService;
+        this.adventureReservationService = adventureReservationService;
+        this.boatReviewService = boatReviewService;
+        this.vacationHouseReviewService = vacationHouseReviewService;
+        this.adventureReviewService = adventureReviewService;
+        this.instructorSubscriptionService = instructorSubscriptionService;
+        this.boatSubscriptionService = boatSubscriptionService;
+        this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
+        this.deletionRequestService = deletionRequestService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -137,5 +161,115 @@ public class UserJpaService implements UserService {
         helper.setText(content, true);
 
         mailSender.send(message);
+    }
+
+
+    public void sendRequestDeniedEmail(String messageContent, String ownerMail)
+            throws UnsupportedEncodingException, MessagingException {
+        String subject = "Zahtev za brisanje naloga";
+        String sender = "isa-projekat";
+        String content = "<p>Vaš zahtev za brisanje naloga je odbijen.</p>";
+        content+="<p>Tekst odgovora: <i>"+messageContent+"</i></p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
+        helper.setTo(ownerMail);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    public void sendRequestAcceptedEmail(String messageContent, String ownerMail)
+            throws UnsupportedEncodingException, MessagingException {
+        String subject = "Zahtev za brisanje naloga";
+        String sender = "isa-projekat";
+        String content = "<p>Vaš zahtev za brisanje naloga je prihvaćen.</p>";
+        content+="<p>Tekst odgovora: <i>"+messageContent+"</i></p>";
+        content+="<p>Vaš nalog je obrisan.</p>";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
+        helper.setTo(ownerMail);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+
+    @Override
+    public void delete(User user) {
+        Set<VacationHouseReservation> vhres = vacationHouseReservationService.getAllByUser(user);
+        for(VacationHouseReservation vhr:vhres){
+            vhr.setUser(null);
+            vacationHouseReservationService.save(1L, vhr);
+        }
+
+        Set<AdventureReservation> ares = adventureReservationService.getAllByUser(user);
+        for(AdventureReservation ar:ares){
+            ar.setUser(null);
+            adventureReservationService.save(1L, ar);
+        }
+        Set<BoatReservation> bres = boatReservationService.getAllByUser(user);
+        for(BoatReservation br:bres){
+
+            br.setUser(null);
+            boatReservationService.save(1L, br);
+        }
+
+        Set<VacationHouseReview> vhrev = vacationHouseReviewService.getAllByUser(user);
+        for (VacationHouseReview v:vhrev){
+            if (v.getReviewStatus()==ReviewStatus.PENDING){
+                vacationHouseReviewService.deleteById(v.getId());
+            }else {
+                v.setUser(null);
+                vacationHouseReviewService.save(1L, v);
+            }
+        }
+        Set<AdventureReview> arev = adventureReviewService.getAllByUser(user);
+        for (AdventureReview a:arev){
+
+            if(a.getReviewStatus()==ReviewStatus.PENDING){
+                adventureReviewService.deleteById(a.getId());
+            }else{
+                a.setUser(null);
+                adventureReviewService.save(1L, a);
+            }
+
+        }
+
+        Set<BoatReview> brev = boatReviewService.getAllByUser(user);
+        for(BoatReview b:brev){
+            if(b.getReviewStatus()==ReviewStatus.PENDING){
+                boatReviewService.deleteById(b.getId());
+            }else {
+                b.setUser(null);
+                boatReviewService.save(1L, b);
+            }
+        }
+
+        Set<VacationHouseSubscription> vsub = vacationHouseSubscriptionService.findAllByUser(user);
+        for(VacationHouseSubscription v:vsub){
+            vacationHouseSubscriptionService.deleteById(v.getId());
+        }
+        Set<BoatSubscription> bsub = boatSubscriptionService.findAllByUser(user);
+        for(BoatSubscription bs:bsub){
+            boatSubscriptionService.deleteById(bs.getId());
+        }
+        Set<InstructorSubscription> isub = instructorSubscriptionService.findAllByUser(user);
+        for(InstructorSubscription i:isub){
+            instructorSubscriptionService.deleteById(i.getId());
+        }
+
+        Set<DeletionRequest> dr = deletionRequestService.findAllByUser(user);
+        for (DeletionRequest d:dr){
+            deletionRequestService.deleteById(d.getId());
+        }
+
+        userRepository.delete(user);
+
     }
 }

@@ -120,4 +120,9 @@ public class VacationHouseReservationJpaService implements VacationHouseReservat
     public Set<VacationHouseReservation> getAllByVacationHouse_Id(Long vacationHouse_id) {
         return vacationHouseReservationRepository.getAllByVacationHouse_Id(vacationHouse_id);
     }
+
+    @Override
+    public Set<VacationHouseReservation> getAllByUser(User user) {
+        return vacationHouseReservationRepository.getAllByUser(user);
+    }
 }

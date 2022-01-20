@@ -33,7 +33,8 @@
                                 <div>
                                     <p th:text="'ocena '+${br.rating}"></p>
                                     <div class="mic-info">
-                                        By: <a th:text="${br.user.email+' '+br.user.firstName+' '+br.user.lastName} " href="#"></a>
+                                        By: <a th:if="${br.user!=null}" th:text="${br.user.email+' '+br.user.firstName+' '+br.user.lastName} " href="#"></a>
+                                        <p th:if="${br.user==null}" th:text="[deleted]"></p>
                                         <p th:text="${br.reviewTime +' for '+br.boat.name}"> </p>
                                     </div>
                                 </div>
