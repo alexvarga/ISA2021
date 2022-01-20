@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.*;
-import rs.ac.uns.ftn.isaprojekat.service.BoatReviewService;
-import rs.ac.uns.ftn.isaprojekat.service.BoatService;
-import rs.ac.uns.ftn.isaprojekat.service.BoatSubscriptionService;
-import rs.ac.uns.ftn.isaprojekat.service.UserService;
+import rs.ac.uns.ftn.isaprojekat.service.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -30,12 +27,16 @@ public class BoatController {
     private final BoatReviewService boatReviewService;
     private final UserService userService;
     private final BoatSubscriptionService boatSubscriptionService;
+    private final BoatReservationService boatReservationService;
+    private final BoatComplaintService boatComplaintService;
 
-    public BoatController(BoatService boatService, BoatReviewService boatReviewService, UserService userService, BoatSubscriptionService boatSubscriptionService) {
+    public BoatController(BoatService boatService, BoatReviewService boatReviewService, UserService userService, BoatSubscriptionService boatSubscriptionService, BoatReservationService boatReservationService, BoatComplaintService boatComplaintService) {
         this.boatService = boatService;
         this.boatReviewService = boatReviewService;
         this.userService = userService;
         this.boatSubscriptionService = boatSubscriptionService;
+        this.boatReservationService = boatReservationService;
+        this.boatComplaintService = boatComplaintService;
     }
 
     @GetMapping({"/boats", "/boats/"})
@@ -81,11 +82,14 @@ public class BoatController {
         User user = userService.findByEmail(email);
 
         Boat boat = boatService.findById(id);
+        Boolean allowComplaint = boatReservationService.existsByUserAndBoat(user, boat);
+        System.out.println(allowComplaint+"allow complaint");
         Set<BoatReview> boatReviews = boatReviewService.getAllByBoatAndReviewStatus(boat, ReviewStatus.ALLOWED);
 
         Boolean subscribed = boatSubscriptionService.existsByUserAndBoat(user, boat);
 
 
+        model.addAttribute("allowComplaint", allowComplaint);
         model.addAttribute("boatReviews", boatReviews);
         model.addAttribute("boat", boat);
         model.addAttribute("subscribed", subscribed);
@@ -223,6 +227,23 @@ public class BoatController {
         boatSubscriptionService.deleteById(boatSubscriptionService.findBoatSubscriptionByBoatAndUser(boat, user).getId());
 
         return showBoat(model, boatId);
+    }
+
+
+    @PostMapping("/boats/{boatId}/complaint")
+    String makeComplaint(Model model, @PathVariable @RequestParam("boatId") Long boatId, @RequestParam("complaintContent") String complaintContent){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+
+        BoatComplaint complaint = new BoatComplaint();
+        complaint.setBoat(boatService.findById(boatId));
+        complaint.setUser(user);
+        complaint.setComplaintDate(LocalDate.now());
+        complaint.setContent(complaintContent);
+        boatComplaintService.save(1L, complaint);
+        return "index";
     }
 
 }

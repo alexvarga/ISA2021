@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
 import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
@@ -154,5 +155,10 @@ public class BoatReservationJpaService implements BoatReservationService {
     @Override
     public Set<BoatReservation> getAllByUser(User user) {
         return boatReservationRepository.getAllByUser(user);
+    }
+
+    @Override
+    public Boolean existsByUserAndBoat(User user, Boat boat) {
+        return boatReservationRepository.existsByUserAndBoat(user, boat);
     }
 }

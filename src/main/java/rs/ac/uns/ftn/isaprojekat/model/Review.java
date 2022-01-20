@@ -1,9 +1,6 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -13,6 +10,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name="user_id")
     private User user;
     private Float rating;
+    @Column(columnDefinition ="TEXT")
     private String content;
     private LocalDateTime reviewTime;
 

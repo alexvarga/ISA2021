@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isaprojekat.service;
 
+import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
 import rs.ac.uns.ftn.isaprojekat.model.User;
 
@@ -10,6 +11,8 @@ public interface BoatReservationService extends PageableCrudReservationService<B
     Set<BoatReservation> getAllByBoat_Id(Long boat_id);
 
     Set<BoatReservation> getAllByUser(User user);
+
+    Boolean existsByUserAndBoat(User user, Boat boat);
 
 
 

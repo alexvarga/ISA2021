@@ -272,4 +272,34 @@ public class UserJpaService implements UserService {
         userRepository.delete(user);
 
     }
+
+    public void sendComplaintResponseMail(String messageContent, String complaintContent, String ownerMail, String userMail, String entity, String entityName)
+            throws UnsupportedEncodingException, MessagingException {
+        String subject = "Žalba";
+        String sender = "isa-projekat";
+        String contentUser = "<p>Odgovor na vašu žalbu.</p>";
+        contentUser+="<p>Tekst žalbe: <i>"+complaintContent+"</i></p>";
+
+        contentUser+="<p>Tekst odgovora: <i>"+messageContent+"</i></p>";
+
+        String contentOwner = "<p>Odgovor na žalbu za vaš"+entity+" "+entityName+".</p>";
+        contentOwner+="<p>Tekst žalbe: <i>"+complaintContent+"</i></p>";
+        contentOwner+="<p>Tekst odgovora: <i>"+messageContent+"</i></p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessage message2 = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        MimeMessageHelper helper2 = new MimeMessageHelper(message2);
+
+        helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
+
+
+        helper.setSubject(subject);
+        helper.setTo(ownerMail);
+        helper.setText(contentOwner, true);
+        mailSender.send(message);
+        helper.setTo(userMail);
+        helper.setText(contentUser, true);
+        mailSender.send(message);
+    }
 }

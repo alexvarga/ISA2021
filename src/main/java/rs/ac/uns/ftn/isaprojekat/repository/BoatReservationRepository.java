@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import rs.ac.uns.ftn.isaprojekat.model.Boat;
 import rs.ac.uns.ftn.isaprojekat.model.BoatReservation;
 import rs.ac.uns.ftn.isaprojekat.model.ReservationType;
 import rs.ac.uns.ftn.isaprojekat.model.User;
@@ -37,4 +38,6 @@ public interface BoatReservationRepository extends PagingAndSortingRepository<Bo
     boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
     Set<BoatReservation> getAllByUser(User user);
+
+    Boolean existsByUserAndBoat(User user, Boat boat);
 }
