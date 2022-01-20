@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             <tr th:each="adventure:${adventures}">
-                <td><a th:href="@{adventures/{id}(id=${adventure.id})}" th:text="${adventure.id}">id</a>
+                <td><a th:href="@{/adventures/{id}(id=${adventure.id})}" th:text="${adventure.id}">id</a>
                 </td>
                 <td th:text="${adventure.name}">name</td>
                 <td th:text="${adventure.address}">address</td>

@@ -23,4 +23,7 @@ public interface BoatSubscriptionRepository extends PagingAndSortingRepository<B
     BoatSubscription findBoatSubscriptionByBoatAndUser(Boat boat, User user);
 
 
+    Set<BoatSubscription> findAllByBoat(Boat boat);
+
+
 }

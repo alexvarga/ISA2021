@@ -16,4 +16,7 @@ public interface VacationHouseSubscriptionService extends PageableCrudService<Va
     Boolean existsByUserAndVacationHouse(User user, VacationHouse vacationHouse);
 
     VacationHouseSubscription findVacationHouseSubscriptionByVacationHouseAndUser(VacationHouse vacationHouse, User user);
+
+    Set<VacationHouseSubscription> findAllByVacationHouse(VacationHouse house);
+
 }

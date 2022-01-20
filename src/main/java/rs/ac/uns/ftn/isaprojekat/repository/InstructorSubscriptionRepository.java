@@ -16,6 +16,7 @@ public interface InstructorSubscriptionRepository extends PagingAndSortingReposi
     Page<InstructorSubscription> findByUser(User user, Pageable pageable);
 
     Set<InstructorSubscription> findAllByUser(User user);
+    Set<InstructorSubscription> findAllByInstructor(Instructor instructor);
 
     Boolean existsByUserAndInstructor(User user, Instructor instructor);
 

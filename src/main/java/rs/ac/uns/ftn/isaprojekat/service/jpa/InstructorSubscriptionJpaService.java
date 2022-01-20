@@ -74,4 +74,9 @@ public class InstructorSubscriptionJpaService implements InstructorSubscriptionS
         instructorSubscriptionRepository.deleteById(aLong);
 
     }
+
+    @Override
+    public Set<InstructorSubscription> findAllByInstructor(Instructor instructor) {
+        return instructorSubscriptionRepository.findAllByInstructor(instructor);
+    }
 }

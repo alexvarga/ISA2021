@@ -215,25 +215,40 @@ public class UserJpaService implements UserService {
         }
         Set<BoatReservation> bres = boatReservationService.getAllByUser(user);
         for(BoatReservation br:bres){
+
             br.setUser(null);
             boatReservationService.save(1L, br);
         }
 
         Set<VacationHouseReview> vhrev = vacationHouseReviewService.getAllByUser(user);
         for (VacationHouseReview v:vhrev){
-            v.setUser(null);
-            vacationHouseReviewService.save(1L, v);
+            if (v.getReviewStatus()==ReviewStatus.PENDING){
+                vacationHouseReviewService.deleteById(v.getId());
+            }else {
+                v.setUser(null);
+                vacationHouseReviewService.save(1L, v);
+            }
         }
         Set<AdventureReview> arev = adventureReviewService.getAllByUser(user);
         for (AdventureReview a:arev){
-            a.setUser(null);
-            adventureReviewService.save(1L, a);
+
+            if(a.getReviewStatus()==ReviewStatus.PENDING){
+                adventureReviewService.deleteById(a.getId());
+            }else{
+                a.setUser(null);
+                adventureReviewService.save(1L, a);
+            }
+
         }
 
         Set<BoatReview> brev = boatReviewService.getAllByUser(user);
         for(BoatReview b:brev){
-            b.setUser(null);
-            boatReviewService.save(1L, b);
+            if(b.getReviewStatus()==ReviewStatus.PENDING){
+                boatReviewService.deleteById(b.getId());
+            }else {
+                b.setUser(null);
+                boatReviewService.save(1L, b);
+            }
         }
 
         Set<VacationHouseSubscription> vsub = vacationHouseSubscriptionService.findAllByUser(user);

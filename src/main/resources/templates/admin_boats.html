@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             <tr th:each="boat:${boats}">
-                <td><a th:href="@{boats/{id}(id=${boat.id})}" th:text="${boat.id}">id</a>
+                <td><a th:href="@{/boats/{id}(id=${boat.id})}" th:text="${boat.id}">id</a>
                 </td>
                 <td th:text="${boat.name}">name</td>
                 <td th:text="${boat.address}">address</td>

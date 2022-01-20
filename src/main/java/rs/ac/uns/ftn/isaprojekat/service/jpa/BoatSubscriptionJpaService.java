@@ -78,4 +78,9 @@ public class BoatSubscriptionJpaService implements BoatSubscriptionService {
     public BoatSubscription findBoatSubscriptionByBoatAndUser(Boat boat, User user) {
         return boatSubscriptionRepository.findBoatSubscriptionByBoatAndUser(boat, user);
     }
+
+    @Override
+    public Set<BoatSubscription> findAllByBoat(Boat boat) {
+        return boatSubscriptionRepository.findAllByBoat(boat);
+    }
 }

@@ -17,4 +17,7 @@ public interface BoatSubscriptionService extends PageableCrudService<BoatSubscri
     Boolean existsByUser_IdAndBoat_Id(Long user_id, Long boat_id);
 
     BoatSubscription findBoatSubscriptionByBoatAndUser(Boat boat, User user);
+
+    Set<BoatSubscription> findAllByBoat(Boat boat);
+
 }

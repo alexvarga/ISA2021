@@ -16,4 +16,6 @@ public interface InstructorSubscriptionService extends PageableCrudService<Instr
     Boolean existsByUserAndInstructor(User user, Instructor instructor);
 
     InstructorSubscription findInstructorSubscriptionByInstructorAndUser(Instructor instructor, User user);
+    Set<InstructorSubscription> findAllByInstructor(Instructor instructor);
+
 }

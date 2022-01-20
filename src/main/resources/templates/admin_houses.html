@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             <tr th:each="house:${houses}">
-                <td><a th:href="@{houses/{id}(id=${house.id})}" th:text="${house.id}">id</a>
+                <td><a th:href="@{/houses/{id}(id=${house.id})}" th:text="${house.id}">id</a>
                 </td>
                 <td th:text="${house.name}">name</td>
                 <td th:text="${house.address}">address</td>

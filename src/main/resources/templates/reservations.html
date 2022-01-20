@@ -106,7 +106,7 @@
                     cancelled
                 </td>
                 <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and boatHistory==true}">
-                    <a th:attr="data-boat-id=''+${reservation.boat.id}+''" href="#rate_boat_modal" data-toggle="modal">Oceni</a>
+                    <a th:if="${reservation.boat !=null}" th:attr="data-boat-id=''+${reservation.boat.id}+''" href="#rate_boat_modal" data-toggle="modal">Oceni</a>
                 </td>
                 <td th:unless="${boatHistory==true or reservation.boat==null}">
                     <a class="btn btn-primary" href="#cancel_boat_modal" data-toggle="modal"
@@ -271,7 +271,7 @@
                     cancelled
                 </td>
                 <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and adventureHistory==true}">
-                    <a th:attr="data-adventure-id=''+${reservation.adventure.id}+''" href="#rate_adventure_modal" data-toggle="modal">Oceni</a>
+                    <a th:if="${reservation.adventure != null}"  th:attr="data-adventure-id=''+${reservation.adventure.id}+''" href="#rate_adventure_modal" data-toggle="modal">Oceni</a>
                 </td>
                 <td th:unless="${adventureHistory==true}">
 
@@ -445,7 +445,7 @@
                         canceled
                     </td>
                     <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and vacationHouseHistory==true}">
-                        <a th:attr="data-house-id=''+${reservation.vacationHouse.id}+''" href="#rate_house_modal" data-toggle="modal">Oceni</a>
+                        <a th:if="${reservation.vacationHouse!=null}" th:attr="data-house-id=''+${reservation.vacationHouse.id}+''" href="#rate_house_modal" data-toggle="modal">Oceni</a>
                     </td>
                     <td th:unless="${vacationHouseHistory==true}">
                         <a class="btn btn-primary" href="#cancel_house_modal" data-toggle="modal"
