@@ -53,11 +53,14 @@ public class AdminController {
     private final BoatComplaintService boatComplaintService;
     private final VacationHouseComplaintService  vacationHouseComplaintService;
 
+    private final InstructorComplaintService instructorComplaintService;
 
 
 
 
-    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService, IncomeRateService incomeRateService, AdventureReviewService adventureReviewService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, BoatComplaintService boatComplaintService, VacationHouseComplaintService vacationHouseComplaintService) {
+
+
+    public AdminController(InstructorService instructorService, AdventureService adventureService, AdventureReservationService adventureReservationService, BoatOwnerService boatOwnerService, BoatService boatService, BoatReservationService boatReservationService, VacationHouseOwnerService vacationHouseOwnerService, VacationHouseService vacationHouseService, VacationHouseReservationService vacationHouseReservationService, UserService userService, IncomeRateService incomeRateService, AdventureReviewService adventureReviewService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, InstructorSubscriptionService instructorSubscriptionService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, BoatComplaintService boatComplaintService, VacationHouseComplaintService vacationHouseComplaintService, InstructorComplaintService instructorComplaintService) {
         this.instructorService = instructorService;
         this.adventureService = adventureService;
         this.adventureReservationService = adventureReservationService;
@@ -77,8 +80,8 @@ public class AdminController {
         this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
         this.boatComplaintService = boatComplaintService;
 
-
         this.vacationHouseComplaintService = vacationHouseComplaintService;
+        this.instructorComplaintService = instructorComplaintService;
     }
 
 
@@ -149,6 +152,11 @@ public class AdminController {
             Set<InstructorSubscription> subs = instructorSubscriptionService.findAllByInstructor(instructor);
             for (InstructorSubscription s:subs){
                 instructorSubscriptionService.deleteById(s.getId());
+            }
+
+            Set<InstructorComplaint> icomp = instructorComplaintService.getAllByInstructor(instructor);
+            for (InstructorComplaint i:icomp){
+                instructorComplaintService.deleteById(i.getId());
             }
 
 

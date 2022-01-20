@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import rs.ac.uns.ftn.isaprojekat.model.BoatComplaint;
+import rs.ac.uns.ftn.isaprojekat.model.InstructorComplaint;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseComplaint;
 import rs.ac.uns.ftn.isaprojekat.service.BoatComplaintService;
+import rs.ac.uns.ftn.isaprojekat.service.InstructorComplaintService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 import rs.ac.uns.ftn.isaprojekat.service.VacationHouseComplaintService;
 
@@ -20,11 +22,13 @@ public class ComplaintsController {
 
     private final BoatComplaintService boatComplaintService;
     private final VacationHouseComplaintService vacationHouseComplaintService;
+    private final InstructorComplaintService instructorComplaintService;
     private final UserService userService;
 
-    public ComplaintsController(BoatComplaintService boatComplaintService, VacationHouseComplaintService vacationHouseComplaintService, UserService userService) {
+    public ComplaintsController(BoatComplaintService boatComplaintService, VacationHouseComplaintService vacationHouseComplaintService, InstructorComplaintService instructorComplaintService, UserService userService) {
         this.boatComplaintService = boatComplaintService;
         this.vacationHouseComplaintService = vacationHouseComplaintService;
+        this.instructorComplaintService = instructorComplaintService;
         this.userService = userService;
     }
 
@@ -90,4 +94,34 @@ public class ComplaintsController {
 
 
     }
+
+    @GetMapping("/admin/complaints/instructors")
+    String showInstructorComplaints(Model model){
+        Set<InstructorComplaint> complaints = instructorComplaintService.findAll();
+
+        model.addAttribute("complaints", complaints);
+
+        return "complaints/instructors_complaints";
+    }
+
+    @PostMapping("/admin/complaints/instructors")
+    String answerToInstructorComplaint(Model model, @RequestParam(value = "complaintId") Long complaintId,
+                                  @RequestParam(value = "responseContent") String responseContent)
+            throws UnsupportedEncodingException, MessagingException {
+
+
+        InstructorComplaint complaint = instructorComplaintService.findById(complaintId);
+        userService.sendComplaintResponseMail(responseContent, complaint.getContent(),
+                complaint.getInstructor().getEmail(),
+                complaint.getUser().getEmail(), " profil", "");
+
+
+        instructorComplaintService.deleteById(complaintId);
+
+        return showBoatComplaints(model);
+
+
+    }
+
+
 }

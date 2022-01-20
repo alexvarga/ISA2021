@@ -11,5 +11,6 @@ public interface AdventureReservationService extends PageableCrudReservationServ
 
     Set<AdventureReservation> getAllByUser(User user);
 
+    Boolean existsByUserAndInstructor_Id(User user, Long instructor_id);
 
 }

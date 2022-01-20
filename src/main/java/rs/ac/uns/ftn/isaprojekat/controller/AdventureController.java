@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isaprojekat.model.*;
-import rs.ac.uns.ftn.isaprojekat.service.AdventureReviewService;
-import rs.ac.uns.ftn.isaprojekat.service.AdventureService;
-import rs.ac.uns.ftn.isaprojekat.service.InstructorSubscriptionService;
-import rs.ac.uns.ftn.isaprojekat.service.UserService;
+import rs.ac.uns.ftn.isaprojekat.service.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -30,13 +27,16 @@ public class AdventureController {
     private final UserService userService;
     private final AdventureReviewService adventureReviewService;
     private final InstructorSubscriptionService instructorSubscriptionService;
+    private final AdventureReservationService adventureReservationService;
+    private final InstructorComplaintService instructorComplaintService;
 
-
-    public AdventureController(AdventureService adventureService, UserService userService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService) {
+    public AdventureController(AdventureService adventureService, UserService userService, AdventureReviewService adventureReviewService, InstructorSubscriptionService instructorSubscriptionService, AdventureReservationService adventureReservationService, InstructorComplaintService instructorComplaintService) {
         this.adventureService = adventureService;
         this.userService = userService;
         this.adventureReviewService = adventureReviewService;
         this.instructorSubscriptionService = instructorSubscriptionService;
+        this.adventureReservationService = adventureReservationService;
+        this.instructorComplaintService = instructorComplaintService;
     }
 
     @RequestMapping({"/adventures"})
@@ -81,8 +81,11 @@ public class AdventureController {
         Adventure adventure = adventureService.findById(id);
         Set<AdventureReview> adventureReviews = adventureReviewService.getAllByAdventureAndReviewStatus(adventure, ReviewStatus.ALLOWED);
 
+        Boolean allowComplaint = adventureReservationService.existsByUserAndInstructor_Id(user, adventure.getInstructor().getId());
+
         Boolean subscribed = instructorSubscriptionService.existsByUserAndInstructor(user, adventure.getInstructor());
 
+        model.addAttribute("allowComplaint", allowComplaint);
         model.addAttribute("adventureReviews", adventureReviews);
         model.addAttribute("adventure", adventureService.findById(id));
         model.addAttribute("subscribed", subscribed);
@@ -212,6 +215,23 @@ public class AdventureController {
                         (adventure.getInstructor(), user).getId());
 
         return showAdventure(model, adventureId);
+    }
+
+    @PostMapping("/adventures/{adventureId}/complaint")
+    String makeComplaint(Model model, @PathVariable @RequestParam("adventureId") Long adventureId, @RequestParam("complaintContent") String complaintContent){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+
+        InstructorComplaint complaint = new InstructorComplaint();
+        complaint.setInstructor(adventureService.findById(adventureId).getInstructor());
+        complaint.setUser(user);
+        complaint.setComplaintDate(LocalDate.now());
+        complaint.setContent(complaintContent);
+        instructorComplaintService.save(1L, complaint);
+
+        return "index";
     }
 
 }
