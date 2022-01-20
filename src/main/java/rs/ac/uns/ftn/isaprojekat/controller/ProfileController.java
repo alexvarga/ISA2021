@@ -10,18 +10,23 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import rs.ac.uns.ftn.isaprojekat.model.DeletionRequest;
 import rs.ac.uns.ftn.isaprojekat.model.User;
+import rs.ac.uns.ftn.isaprojekat.service.DeletionRequestService;
 import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 @Controller
 public class ProfileController {
 
     private final UserService userService;
+    private final DeletionRequestService deletionRequestService;
 
-    public ProfileController(UserService userService) {
+    public ProfileController(UserService userService, DeletionRequestService deletionRequestService) {
         this.userService = userService;
+        this.deletionRequestService = deletionRequestService;
     }
 
     @GetMapping({"/profile", "/profile/"})
@@ -98,6 +103,20 @@ public class ProfileController {
 
 
         return "/profile";
+    }
+
+    @PostMapping("/profile/request")
+    String sendDeletionRequest(Model model, @RequestParam(value = "content") String content){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        DeletionRequest deletionRequest = new DeletionRequest();
+        deletionRequest.setUser(user);
+        deletionRequest.setDateOfRequest(LocalDate.now());
+        deletionRequest.setText(content);
+        deletionRequestService.save(1L, deletionRequest);
+
+        return show(model);
     }
 
 

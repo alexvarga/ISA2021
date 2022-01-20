@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,16 +8,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import rs.ac.uns.ftn.isaprojekat.model.DeletionRequest;
 import rs.ac.uns.ftn.isaprojekat.service.DeletionRequestService;
+import rs.ac.uns.ftn.isaprojekat.service.UserService;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
 @Controller
 public class DeletionRequestsController {
 
     private final DeletionRequestService deletionRequestService;
+    private final UserService userService;
 
-    public DeletionRequestsController(DeletionRequestService deletionRequestService) {
+    public DeletionRequestsController(DeletionRequestService deletionRequestService, UserService userService) {
         this.deletionRequestService = deletionRequestService;
+        this.userService = userService;
     }
 
     @GetMapping("/admin/deletion_requests")
@@ -29,25 +35,28 @@ public class DeletionRequestsController {
     }
 
     @PostMapping("/admin/deletion_requests")
-    String accept(Model model, @RequestParam(value="reviewId") Long reviewId,  @RequestParam(value = "textAreaContent") String textAreaContent){
+    String accept(Model model, @RequestParam(value="requestId") Long requestId,  @RequestParam(value = "textAreaContent") String textAreaContent) throws UnsupportedEncodingException, MessagingException {
 
-        Set<DeletionRequest> requests = deletionRequestService.findAll();
+        DeletionRequest request = deletionRequestService.findById(requestId);
 
-        model.addAttribute("requests", requests);
+        userService.delete(request.getUser());
 
-        System.out.println(textAreaContent);
+        userService.sendRequestAcceptedEmail(textAreaContent, request.getUser().getEmail());
 
-        return "deletion_requests";
+
+
+        return showRequests(model);
     }
     @PostMapping("/admin/deletion_requests/decline")
-    String decline(Model model, @RequestParam(value="reviewId") Long reviewId, @RequestParam(value = "textAreaContent") String textAreaContent){
+    String decline(Model model, @RequestParam(value="requestId") Long requestId, @RequestParam(value = "textAreaContent") String textAreaContent) throws UnsupportedEncodingException, MessagingException {
 
-        Set<DeletionRequest> requests = deletionRequestService.findAll();
-        model.addAttribute("requests", requests);
+        DeletionRequest request = deletionRequestService.findById(requestId);
 
-        System.out.println(textAreaContent);
+        userService.sendRequestDeniedEmail(textAreaContent, request.getUser().getEmail());
 
-        return "deletion_requests";
+        deletionRequestService.deleteById(requestId);
+
+        return showRequests(model);
     }
 
 

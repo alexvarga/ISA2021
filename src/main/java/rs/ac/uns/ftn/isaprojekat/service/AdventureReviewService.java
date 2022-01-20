@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import rs.ac.uns.ftn.isaprojekat.model.Adventure;
 import rs.ac.uns.ftn.isaprojekat.model.AdventureReview;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 
 import java.util.Set;
 
@@ -19,5 +20,8 @@ public interface AdventureReviewService extends PageableCrudService<AdventureRev
     Set<AdventureReview> getAllByAdventureAndReviewStatus(Adventure adventure, ReviewStatus status);
 
     Set<AdventureReview> getAllByReviewStatus(ReviewStatus status);
+
+    Set<AdventureReview> getAllByUser(User user);
+
 
 }

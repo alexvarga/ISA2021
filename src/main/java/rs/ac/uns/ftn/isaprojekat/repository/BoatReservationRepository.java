@@ -36,4 +36,5 @@ public interface BoatReservationRepository extends PagingAndSortingRepository<Bo
     @Query("select case when count(br.user.id)>0 then true else false end from BoatReservation br where ((?2 between br.dateFrom and br.dateEnd) or (?3 between br.dateFrom and br.dateEnd) or (?2<br.dateFrom and ?3>br.dateEnd) ) and ?1 = br.user and ?4=br.boat.id")
     boolean existsByUser(User user, LocalDateTime start, LocalDateTime end, Long id);
 
+    Set<BoatReservation> getAllByUser(User user);
 }

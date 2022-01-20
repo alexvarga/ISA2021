@@ -40,7 +40,7 @@
                                 <div class="action">
                                     <span>
                                     <form  th:id="'responseForm'+${r.id}" th:action="@{/admin/deletion_requests}" method="post" class="col-auto justify-content-end d-inline " >
-                                        <input type="number" th:value="${r.id}" name="reviewId" hidden>
+                                        <input type="number" th:value="${r.id}" name="requestId" hidden>
 
                                         <textarea  th:form="'responseForm'+${r.id}" class="form-control" id="text" th:name="textAreaContent" rows="4" placeholder="Tekst odgovora"></textarea>
                                        <div>

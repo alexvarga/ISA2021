@@ -261,5 +261,42 @@
     </div>
 </div>
 
+
+<!--request deletion-->
+<div th:fragment="deletionModal">
+    <div class="modal" th:id="deletionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal header</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form  th:action="@{'/profile/request'}" method="post">
+                            <div>
+                                <p>Obrazloženje:</p>
+                                <div class="form-outline">
+
+                                    <textarea class="form-control" id="deletionTextArea" name="content" rows="4"></textarea>
+                                </div>
+                                <input  hidden readonly type="number"  th:name="deletionRequestText" value=""/>
+
+                                <button class="button btn-primary" type="submit">Pošalji</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

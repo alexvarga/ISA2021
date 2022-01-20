@@ -1,10 +1,7 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -14,6 +11,7 @@ public class DeletionRequest extends BaseEntity{
     @OneToOne
     @JoinColumn(name="user_id")
     private User user;
+    @Column(columnDefinition ="TEXT")
     private String text;
     private LocalDate dateOfRequest;
 

@@ -22,4 +22,6 @@ public interface VacationHouseSubscriptionRepository extends PagingAndSortingRep
     VacationHouseSubscription findVacationHouseSubscriptionByVacationHouseAndUser(VacationHouse vacationHouse, User user);
 
 
+
+
 }

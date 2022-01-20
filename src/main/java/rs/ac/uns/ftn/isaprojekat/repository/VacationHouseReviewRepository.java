@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import rs.ac.uns.ftn.isaprojekat.model.ReviewStatus;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouse;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseReview;
 
@@ -22,5 +23,7 @@ public interface VacationHouseReviewRepository extends PagingAndSortingRepositor
     Set<VacationHouseReview> getAllByReviewStatus(ReviewStatus status);
 
     Set<VacationHouseReview> getAllByVacationHouse_Id(Long id);
+
+    Set<VacationHouseReview> getAllByUser(User user);
 
 }

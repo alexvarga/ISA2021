@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.isaprojekat.service.jpa;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isaprojekat.model.DeletionRequest;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.repository.DeletionRequestRepository;
 import rs.ac.uns.ftn.isaprojekat.service.DeletionRequestService;
 
@@ -32,5 +33,15 @@ public class DeletionRequestJpaService implements DeletionRequestService {
     @Override
     public DeletionRequest save(Long aLong, DeletionRequest object) {
         return deletionRequestRepository.save(object);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        deletionRequestRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<DeletionRequest> findAllByUser(User user) {
+        return deletionRequestRepository.findAllByUser(user);
     }
 }
