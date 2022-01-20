@@ -26,8 +26,14 @@ public class DataLoader implements CommandLineRunner {
     private final VacationHouseReviewService vacationHouseReviewService;
     private final AdventureReviewService adventureReviewService;
 
+    private final BoatSubscriptionService boatSubscriptionService;
+    private final VacationHouseSubscriptionService vacationHouseSubscriptionService;
+    private final InstructorSubscriptionService instructorSubscriptionService;
+
     private final IncomeRateService incomeRateService;
     private final DeletionRequestService deletionRequestService;
+
+
 
     //test email here
     String testEmail1 = "test1";
@@ -35,7 +41,7 @@ public class DataLoader implements CommandLineRunner {
 
 
     @Autowired
-    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, IncomeRateService incomeRateService, DeletionRequestService deletionRequestService) {
+    public DataLoader(VacationHouseService vacationHouseService, BoatService boatService, AdventureService adventureService, InstructorService instructorService, VacationHouseOwnerService vacationHouseOwnerService, BoatOwnerService boatOwnerService, UserService userService, BoatReservationService boatReservationService, VacationHouseReservationService vacationHouseReservationService, AdventureReservationService adventureReservationService, BoatReviewService boatReviewService, VacationHouseReviewService vacationHouseReviewService, AdventureReviewService adventureReviewService, BoatSubscriptionService boatSubscriptionService, VacationHouseSubscriptionService vacationHouseSubscriptionService, InstructorSubscriptionService instructorSubscriptionService, IncomeRateService incomeRateService, DeletionRequestService deletionRequestService) {
         this.vacationHouseService = vacationHouseService;
         this.boatService = boatService;
         this.adventureService = adventureService;
@@ -49,6 +55,9 @@ public class DataLoader implements CommandLineRunner {
         this.boatReviewService = boatReviewService;
         this.vacationHouseReviewService = vacationHouseReviewService;
         this.adventureReviewService = adventureReviewService;
+        this.boatSubscriptionService = boatSubscriptionService;
+        this.vacationHouseSubscriptionService = vacationHouseSubscriptionService;
+        this.instructorSubscriptionService = instructorSubscriptionService;
         this.incomeRateService = incomeRateService;
         this.deletionRequestService = deletionRequestService;
     }
@@ -495,14 +504,17 @@ public class DataLoader implements CommandLineRunner {
 
 
         DeletionRequest deletionRequest = new DeletionRequest();
-        deletionRequest.setText("requesting deletion of my account asdf a a a a a a a  a sa d fas df asd fa sd fas df as a    asd fasd fas fda sdf as fas fa sdf as dfsa    a sd d fds afsd asfd fds fda afd f sadf fda fsad afsd d fd fsad asfd fasd fsd afd sfd s fsda");
-        deletionRequest.setUser(user);
+        deletionRequest.setText("requesting deletion of my account ");
+        deletionRequest.setUser(user3);
         deletionRequestService.save(1L, deletionRequest);
 
         DeletionRequest deletionRequest2 = new DeletionRequest();
-        deletionRequest2.setText("requesting deletion of my account  s fsda");
+        deletionRequest2.setText("requesting deletion of my account ");
         deletionRequest2.setUser(user);
         deletionRequestService.save(1L, deletionRequest2);
+
+
+
 
     }
 }
