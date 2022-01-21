@@ -83,7 +83,6 @@ public class ProfileController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 
-        //System.out.println(dbUser.getPassword()); if(!dbUser.getPassword().equals(encoder.encode(user.getPassword()))){
 
         if(!encoder.matches(user.getPassword(), dbUser.getPassword())){
             bindingResult.addError(new FieldError("user", "password", "Uneta lozinka nije ispravna."));
@@ -94,6 +93,7 @@ public class ProfileController {
         }
 
         if(bindingResult.hasErrors()){
+
             System.out.println("imam greske ovde ");
             return "profile";
         }else{
@@ -101,7 +101,7 @@ public class ProfileController {
             userService.save(1L, dbUser);
         }
 
-
+        model.addAttribute("user", dbUser);
         return "/profile";
     }
 

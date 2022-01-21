@@ -11,74 +11,141 @@
 <header th:insert="/index.html :: header"></header>
 
 
-<div class="container">
-    <div class="row-5">
-        <div class="row">
-            <div class="col">
-                ime
-            </div>
-            <div class="col">
-                <div th:text="${user.firstName}"> name</div>
+
+
+
+<div class="container text-center">
+    <form th:action="@{/profile/}" method="post"
+          th:object="${user}"
+          style="max-width: 600px; margin: 0 auto"
+    >
+
+        <h4>Podaci korisnika</h4>
+        <div class="form-control">
+            <div class="m-3">
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="email">email</label>
+                    <div class="col-8">
+                        <input  th:readonly="*{email}" id="email" type="email"
+                               class="form-control" th:field="*{email}" required minlength="6"
+                               maxlength="64"/>
+                        <div id="email-error" class="alert alert-danger "
+                             th:if="${#fields.hasErrors('email')}" th:errors="*{email}">a
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="fn">ime</label>
+                    <div class="col-8">
+                        <input id="fn" type="text" class="form-control" th:field="*{firstName}"
+                               required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="ln">prezime</label>
+                    <div class="col-8">
+                        <input id="ln" type="text" class="form-control" th:field="*{lastName}"
+                               required/>
+                    </div>
+                </div>
+
+                <!--- -------------------------------------------------------->
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="ad">adresa</label>
+                    <div class="col-8">
+                        <input id="ad" type="text" class="form-control" th:field="*{address}" required/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="ct">grad</label>
+                    <div class="col-8">
+                        <input id="ct" type="text" class="form-control" th:field="*{city}" required/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="st">država</label>
+                    <div class="col-8">
+                        <input id="st" type="text" class="form-control" th:field="*{state}" required/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="pn">broj telefona</label>
+                    <div class="col-8">
+                        <input id="pn" type="text" class="form-control" title="xxx-xxx-xxxx"
+                               pattern="^\d{10}$" th:field="*{phoneNumber}"
+                               required/>
+                    </div>
+                </div>
+
+                <div class="form-group row text-center">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">izmeni</button>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                prezime
-            </div>
-            <div class="col">
-                <div th:text="${user.lastName}"> name</div>
+    </form>
+
+    <!-- promena lozinke posebna form -->
+    <h4>Izmena lozinke</h4>
+    <form class="form-control" th:action="@{/profile/password}" th:method="post"
+          th:object="${user}"
+          style="max-width: 600px; margin: 0 auto"
+    >
+
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="pw">lozinka</label>
+            <div class="col-8">
+                <input id="pw" type="password" class="form-control"
+                       th:field="*{password}" required/>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col">
-                adresa
-            </div>
-            <div class="col">
-                <div th:text="${user.address}"> name</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                grad
-            </div>
-            <div class="col">
-                <div th:text="${user.city}"> name</div>
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="pwn">lozinka</label>
+            <div class="col-8">
+                <input id="pwn" type="password" class="form-control"
+                       th:name="new-password" required/>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                država
-            </div>
-            <div class="col">
-                <div th:text="${user.state}"> name</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                broj telefona
-            </div>
-            <div class="col">
-                <div th:text="${user.phoneNumber}"> name</div>
-            </div>
-        </div>
-    </div>
 
+        <div class="form-group row">
+            <label class="col-form-label col-4" for="pwnc">potvrda lozinke</label>
+            <div class="col-8">
+                <input id="pwnc" type="password" th:name="password-confirm"
+                       class="form-control" required/>
+                <div id="password-error" class="alert alert-danger "
+                     th:if="${#fields.hasErrors('password')}" th:errors="*{password}">a
+                </div>
+            </div>
+        </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#asdf">
-        izmeni
-    </button>
-    <!-- Button trigger modal -->
+        <div class="form-group row text-center">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">izmeni</button>
+            </div>
+        </div>
+
+    </form>
+
+<div class="row">
+    <div class="col">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deletionModal">
         Zahtev za brisanje naloga
     </button>
+    </div>
 
+</div>
 </div>
 
 <th:block th:replace="fragments/modal/_modals::deletionModal">modal</th:block>
-<th:block th:replace="fragments/modal/_modals::frag">modal</th:block>
-<th:block th:replace="fragments/modal/_modals :: modal('exampleModal')">modal</th:block>
+
 
 
 <div th:insert="/index.html :: scripts"></div>
