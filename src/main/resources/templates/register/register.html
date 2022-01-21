@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Registracija</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 </head>
 <body>
@@ -17,7 +17,7 @@
 
     <div class="m-3">
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">email</label>
+            <label class="col-form-label col-4" for="">Email - korisničko ime</label>
             <div class="col-8">
                 <input id="email" type="email" class="form-control" th:field="*{email}" required minlength="6" maxlength="64" />
                 <div id="email-error" class="alert alert-danger " th:if="${#fields.hasErrors('email')}" th:errors="*{email}">a</div>
@@ -25,14 +25,14 @@
 
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">password</label>
+            <label class="col-form-label col-4" for="">Lozinka</label>
             <div class="col-8">
                 <input id="password" type="password" class="form-control" th:field="*{password}" required />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">confirm password</label>
+            <label class="col-form-label col-4" for="">Ponovljena lozinka</label>
             <div class="col-8">
                 <input id="password-confirm" type="password" th:name="password-confirm" class="form-control" required />
                 <div id="password-error" class="alert alert-danger " th:if="${#fields.hasErrors('password')}" th:errors="*{password}">a</div>
@@ -41,48 +41,48 @@
 
 
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">first name</label>
+            <label class="col-form-label col-4" for="">Ime</label>
             <div class="col-8">
                 <input type="text" class="form-control" th:field="*{firstName}" required />
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">last name</label>
+            <label class="col-form-label col-4" for="">Prezime</label>
             <div class="col-8">
                 <input type="text" class="form-control" th:field="*{lastName}" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">adresa</label>
+            <label class="col-form-label col-4" for="">Adresa</label>
             <div class="col-8">
                 <input type="text" class="form-control" th:field="*{address}" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">grad</label>
+            <label class="col-form-label col-4" for="">Grad</label>
             <div class="col-8">
                 <input type="text" class="form-control" th:field="*{city}" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">država</label>
+            <label class="col-form-label col-4" for="">Država</label>
             <div class="col-8">
                 <input type="text" class="form-control" th:field="*{state}" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label col-4" for="">broj telefona </label>
+            <label class="col-form-label col-4" for="">Broj telefona </label>
             <div class="col-8">
                 <input type="tel" class="form-control" title="xxx-xxx-xxxx" pattern="^\d{10}$" th:field="*{phoneNumber}" required/>
             </div>
         </div>
 
         <div>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <button type="submit" class="btn btn-primary">Registrujte se</button>
         </div>
 
     </div>

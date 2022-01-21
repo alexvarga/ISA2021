@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>brod</title>
+    <title>Zahtevi za brisanje naloga</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 
 </head>
@@ -28,10 +28,12 @@
                     <li th:each="r:${requests}" class="list-group-item container-fluid ">
                         <div class="row ">
                             <div class="col-xs-2 col-md-1  ">
-                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" width="80" class="img-circle img-responsive w-100" alt="" /></div>
+                                <img src="/img/user.png" width="100" class="img-circle responsive w-100 " alt="" /></div>
+
                             <div class="col-xs-10 col-md-11 ">
                                 <div>
                                     <p th:text="'Korisnik: '+${r.getUser().email}"></p>
+                                    <p th:text="'Datum zahteva: '+${#temporals.format(r.dateOfRequest, 'dd-MM-yyyy ')}"></p>
                                 </div>
                                 <div class="comment-text">
                                  Zahtev:

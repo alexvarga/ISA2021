@@ -15,23 +15,33 @@
 
         <table class="table table-striped text-center">
             <thead>
+            <h4>Vikendice</h4>
             <td>
                 <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
             </td>
             <td>
-                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">name</a>
+                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">Ime</a>
             </td>
             <td>
-                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">addressa</a>
+                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">Adresa</a>
             </td>
             <td>
-                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">info</a>
+                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">Info</a>
             </td>
             <td>
-                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">rating</a>
+                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">Ocena</a>
             </td>
             <td>
-                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">price</a>
+                <a th:href="@{'/admin/houses/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">Cena</a>
+            </td>
+            <td>
+                Ime vlasnika
+            </td>
+            <td>
+                Prezime vlasnika
+            </td>
+            <td>
+                Brisanje
             </td>
             </tr>
             </thead>
@@ -61,11 +71,10 @@
 
     </div>
 
-    <div th:if="${numberOfPages>0}" class="row justify-content-center">
+    <div th:if="${numberOfPages>0}" class="row justify-content-center border-top">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
-        <a th:if="${currentPage>1}" th:href="@{'/admin/houses/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <a th:if="${currentPage>1}" th:href="@{'/admin/houses/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;

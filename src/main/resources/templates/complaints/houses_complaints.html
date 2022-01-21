@@ -28,10 +28,11 @@
                     <li th:each="r:${complaints}" class="list-group-item container-fluid ">
                         <div class="row ">
                             <div class="col-xs-2 col-md-1  ">
-                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" width="80" class="img-circle img-responsive w-100" alt="" /></div>
+                                <img src="/img/user.png" width="80" class="img-circle img-responsive w-100" alt="" /></div>
                             <div class="col-xs-10 col-md-11 ">
                                 <div>
                                     <p th:text="'Korisnik: '+${r.user.email}"></p>
+                                    <p th:text="'Datum: '+${#temporals.format(r.complaintDate, 'dd-MM-yyyy ')}"></p>
                                     <p th:text="'Vikendica: '+${r.vacationHouse.name}"></p>
                                     <p th:text="'Vlasnik: '+${r.vacationHouse.vacationHouseOwner.firstName+' '+r.vacationHouse.vacationHouseOwner.lastName}"></p>
                                 </div>

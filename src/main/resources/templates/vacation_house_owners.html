@@ -15,18 +15,21 @@
 
         <table class="table table-striped text-center">
             <thead>
+            <h4>Vlasnici vikendica</h4>
+            <td>
+                <a th:href="@{'/admin/houseOwners/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id</a>
+            </td>
+            <td>
+                <a th:href="@{'/admin/houseOwners/page/'+${currentPage} + '?sortField=email&sortDirection=' + ${reverseSortDirection}}">email</a>
 
-            <td>
-                id
             </td>
             <td>
-                Email
+                <a th:href="@{'/admin/houseOwners/page/'+${currentPage} + '?sortField=firstName&sortDirection=' + ${reverseSortDirection}}">Ime</a>
+
             </td>
             <td>
-                Ime
-            </td>
-            <td>
-                Prezime
+                <a th:href="@{'/admin/houseOwners/page/'+${currentPage} + '?sortField=lastName&sortDirection=' + ${reverseSortDirection}}">Prezime</a>
+
             </td>
             <td>
                 Adresa
@@ -39,6 +42,9 @@
             </td>
             <td>
                 Telefon
+            </td>
+            <td>
+                Brisanje
             </td>
             </tr>
             </thead>
@@ -68,7 +74,7 @@
 
     </div>
 
-    <div th:if="${numberOfPages>0}" class="row justify-content-center">
+    <div th:if="${numberOfPages>0}" class="row justify-content-center border-top">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 

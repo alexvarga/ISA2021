@@ -28,13 +28,13 @@
                     <li th:each="ar:${reviews}" class="list-group-item container-fluid ">
                         <div class="row ">
                             <div class="col-xs-2 col-md-1">
-                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" width="80" class="img-circle img-responsive" alt="" /></div>
+                                <img src="/img/user.png" width="100" class="img-circle img-responsive w-100 " alt="" /></div>
                             <div class="col-xs-10 col-md-11">
                                 <div>
                                     <p th:text="'ocena '+${ar.rating}"></p>
                                     <div class="mic-info">
-                                        By: <a th:text="${ar.user.email+' '+ar.user.firstName+' '+ar.user.lastName} " href="#"></a>
-                                        <p th:text="${ar.reviewTime +' for '+ar.adventure.name}"> </p>
+                                        Od: <a th:text="${ar.user.email+' '+ar.user.firstName+' '+ar.user.lastName} " href="#"></a>
+                                        <p th:text="${#temporals.format(ar.reviewTime, 'dd-MM-yyyy hh:mm ') +' za '+ar.adventure.name}"> </p>
                                     </div>
                                 </div>
                                 <div class="comment-text">

@@ -15,18 +15,19 @@
 
         <table class="table table-striped text-center">
             <thead>
+            <h4>Vlasnici brodova</h4>
 
             <td>
-                id
+                <a th:href="@{'/admin/boatOwners/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id</a>
             </td>
             <td>
-                Email
+                <a th:href="@{'/admin/boatOwners/page/'+${currentPage} + '?sortField=email&sortDirection=' + ${reverseSortDirection}}">Email</a>
             </td>
             <td>
-                Ime
+                <a th:href="@{'/admin/boatOwners/page/'+${currentPage} + '?sortField=firstName&sortDirection=' + ${reverseSortDirection}}">Ime</a>
             </td>
             <td>
-                Prezime
+                <a th:href="@{'/admin/boatOwners/page/'+${currentPage} + '?sortField=lastName&sortDirection=' + ${reverseSortDirection}}">Prezime</a>
             </td>
             <td>
                 Adresa
@@ -57,8 +58,6 @@
 
 
                 <td>
-                    <!--                    <a class="btn btn-primary" href="#my_modal" data-toggle="modal"-->
-                    <!--                       th:attr="data-boat-id=''+${boat.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">rez</a>-->
                     <form th:method="delete" th:action="@{/admin/boatOwners/delete}">
                         <input hidden type="number" name="id" th:value="${owner.id}">
                         <button type="submit" class="btn btn-danger">Obriši</button>
@@ -71,7 +70,7 @@
 
     </div>
 
-    <div th:if="${numberOfPages>0}" class="row justify-content-center">
+    <div th:if="${numberOfPages>0}" class="row justify-content-center border-top">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
