@@ -43,7 +43,7 @@
             <tbody>
             <tr th:each="offer:${adventureDiscountOffers}">
                 <td th:text="${offer.id}"></td>
-                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy')}">name</td>
+                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy HH:mm')}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
                 <td th:text="${#temporals.format(offer.dateEnd, 'dd-MM-yyyy ')}">info</td>
 

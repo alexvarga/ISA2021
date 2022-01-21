@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import rs.ac.uns.ftn.isaprojekat.model.*;
 import rs.ac.uns.ftn.isaprojekat.service.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -392,8 +393,8 @@ public class DataLoader implements CommandLineRunner {
         vhrd.setReservationType(ReservationType.DISCOUNTOFFER);
         vhrd.setReservationTime(LocalDateTime.now());
         vhrd.setPrice(10F);
-        vhrd.setDateFrom(LocalDateTime.of(2021, 9, 1, 0, 0));
-        vhrd.setDateEnd(LocalDateTime.of(2021, 9, 6, 0, 0));
+        vhrd.setDateFrom(LocalDateTime.of(2022, 9, 1, 0, 0));
+        vhrd.setDateEnd(LocalDateTime.of(2022, 9, 6, 0, 0));
         vacationHouseReservationService.save(1L, vhrd);
 
         AdventureReservation ar1 = new AdventureReservation();
@@ -504,13 +505,11 @@ public class DataLoader implements CommandLineRunner {
         adventureReviewService.save(1L, adventureReview);
 
 
-        DeletionRequest deletionRequest = new DeletionRequest();
-        deletionRequest.setText("requesting deletion of my account ");
-        deletionRequest.setUser(user3);
-        deletionRequestService.save(1L, deletionRequest);
+
 
         DeletionRequest deletionRequest2 = new DeletionRequest();
         deletionRequest2.setText("requesting deletion of my account ");
+        deletionRequest2.setDateOfRequest(LocalDate.now());
         deletionRequest2.setUser(user);
         deletionRequestService.save(1L, deletionRequest2);
 

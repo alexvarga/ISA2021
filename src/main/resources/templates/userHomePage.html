@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -7,11 +7,7 @@
 </head>
 <body>
 <header th:insert="/index.html :: header"> </header>
-<div sec:authorize="isAuthenticated()">
-    Welcome <b><span sec:authentication="name">Username</span></b>
-    &nbsp;
 
-</div>
 
 <div class="container">
 

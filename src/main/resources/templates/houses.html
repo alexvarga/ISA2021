@@ -12,17 +12,20 @@
 
 <div class="container">
 
-    <div class="row"><p></p></div>
+    <div class="row text-center">
+        <div class="col"><h4>Vikendice</h4> </div>
+        <p></p></div>
 
     <div class="row">
-        <div class="col-lg-6 col-md-6 mx-auto">
+        <div class="col-lg-2 col-md-2 mx-auto border-right"></div>
+        <div class="col-lg-7 col-md-7 mx-auto border-right">
             <form class="" name="myForm" th:action="@{/search/houses}" method="post" onsubmit="return validateForm();">
                 <div class="row"><p class="col text-center">Unesite željeni period rezervacije</p></div>
                 <div class="row ">
                     <div class="col align-items-center text-center">
                         <div id="date-error" name="date-error "
                              class="alert alert-danger "
-                             style="display: none">Početak ne sme biti pre danas i ne sme biti više od kraja.
+                             style="display: none">Početak ne sme biti pre danas i ne sme biti posle kraja.
                         </div></div>
                 </div>
                 <div class="row">
@@ -55,20 +58,20 @@
                 <div class="row" >
                     <div class="col">
                         <div class="form-group">
-                            <label class="form-label" for="from">Broj putnika</label>
+                            <label class="form-label" for="from">Broj gostiju</label>
                             <input id="noOfPersons" type="number" min="1" placeholder="1"  class="form-control" th:name="noOfPersons" required></div>
                     </div>
 
                     <div class="col ">
                         <div><p>Dodatne opcije</p></div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="tag1" id="tag1" th:value="kapetan" />
-                            <label class="form-check-label" for="tag1">Kapetan</label>
+                            <input class="form-check-input" type="checkbox" name="tag1" id="tag1" th:value="parking" />
+                            <label class="form-check-label" for="tag1">Parking</label>
                         </div>
 
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="tag2" id="tag2" th:value="bar" />
-                            <label class="form-check-label" for="tag2">Bar</label>
+                            <input class="form-check-input" type="checkbox" name="tag2" id="tag2" th:value="bazen" />
+                            <label class="form-check-label" for="tag2">Bazen</label>
                         </div>
 
                         <div class="form-check form-check-inline">
@@ -91,14 +94,23 @@
                 <div class="form-group row">
                     <div class="col-12">
                         <div class="input-group-btn">
-                            <button class=" btn btn-secondary" type="submit">Go!</button>
+                            <button class=" btn btn-secondary" type="submit">Pretraži</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
+
+        <div class="col-lg-2 col-md-2 mx-auto justify-content-center text-center ">
+
+            <p>Pogledajte sve akcije <a href="/houses/discount">ovde</a>.</p>
+
+        </div>
+
+
     </div>
 
+    <div class="row"><p></p></div>
 
 
 
@@ -110,18 +122,18 @@
                     <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">id </a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">name</a>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Ime</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">addressa</a>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Adresa</a>
                 <td>
-                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">info</a>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Info</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">rating</a>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Ocena</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">price</a>
+                    <a th:href="@{'/search/houses/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Cena</a>
                 </td>
             </tr>
             <tr th:unless="${search==true}">
@@ -129,18 +141,18 @@
                     <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
                 </td>
                 <td>
-                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">name</a>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">Ime</a>
                 </td>
                 <td>
-                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">addressa</a>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">Adresa</a>
                 <td>
-                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">info</a>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">Info</a>
                 </td>
                 <td>
-                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">rating</a>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">Ocena</a>
                 </td>
                 <td>
-                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">price</a>
+                    <a th:href="@{'/houses/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">Cena</a>
                 </td>
             </tr>
             </thead>
@@ -148,14 +160,15 @@
             <tr th:each="house:${houses}">
                 <td><a th:href="@{/houses/{id}(id=${house.id})}" th:text="${house.id}">id</a>
                 </td>
-                <td th:text="${house.name}">name</td>
+                <td><a th:href="@{/houses/{id}(id=${house.id})}" th:text="${house.name}">name</a>
+                </td>
                 <td th:text="${house.address}">address</td>
                 <td th:text="${house.info}">info</td>
                 <td th:text="${house.avgRating}">rating</td>
                 <td th:text="${house.price}">price</td>
                 <td th:if="${search==true}">
                     <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
-                       th:attr="data-house-id=''+${house.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">rez</a>
+                       th:attr="data-house-id=''+${house.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">Rezerviši</a>
 
                 </td>
             </tr>
@@ -164,7 +177,7 @@
         </table>
     </div>
 
-    <div th:if="${search==true}" class="row justify-content-center">
+    <div th:if="${search==true}" class="row justify-content-center border-top">
         <div th:if="${numberOfPages>0}" >
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
@@ -196,12 +209,11 @@
     </div>
 
 
-    <div th:unless="${search==true }" class="row justify-content-center">
+    <div th:unless="${search==true }" class="row justify-content-center border-top">
         <div th:if="${numberOfPages>0}" >
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
-        <a th:if="${currentPage>1}" th:href="@{'/houses/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <a th:if="${currentPage>1}" th:href="@{'/houses/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
         <span th:unless="${currentPage>1}">Prva</span>
         &nbsp;

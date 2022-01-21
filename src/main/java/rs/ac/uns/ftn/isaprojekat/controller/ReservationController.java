@@ -79,6 +79,8 @@ public class ReservationController {
 
         List<AdventureReservation> entitiesAdventure = pageAdventure.getContent();
 
+        System.out.println(pageAdventure.iterator().next().getReservationTime() + " REservationTIME");
+
 
         Long numberOfElementsHouse = pageHouse.getTotalElements();
         int numberOfPagesHouse = pageHouse.getTotalPages();

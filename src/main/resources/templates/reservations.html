@@ -79,7 +79,7 @@
                 <td>
                    <p  th:text="${reservation.id}"> </p>
                 </td>
-                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy ')}">name</td>
+                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy HH:mm ')}">name</td>
                 <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">date from</td>
                 <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
                 <td> <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.avgRating}">rating </p>
@@ -244,7 +244,7 @@
             <tr th:each="reservation:${adventureReservations}">
                 <td th:text="${reservation.id}">
                 </td>
-                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy ')}">name</td>
+                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy HH:mm ')}">name</td>
                 <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
                 <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
                 <td>
@@ -411,7 +411,7 @@
                 <tr th:each="reservation:${vacationHouseReservations}">
                     <td th:text="${reservation.id}">
                     </td>
-                    <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy ')}">name</td>
+                    <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy HH:mm ')}">name</td>
                     <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
                     <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
 

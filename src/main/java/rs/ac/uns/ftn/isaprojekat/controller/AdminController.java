@@ -639,7 +639,7 @@ public class AdminController {
 
 
 
-    @PostMapping("/admin/reports")
+    @PostMapping("/admin/reports/custom")
     public String customReport(Model model, @Param(value = "start") String start, @Param(value = "end") String end) {
 
         Float boatPercent = (incomeRateService.findByEntityName("boat").getEntityPercent())/100;

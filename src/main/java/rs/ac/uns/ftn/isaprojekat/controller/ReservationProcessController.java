@@ -79,7 +79,7 @@ public class ReservationProcessController {
             boatReservationService.save(1L, reservation);
             userService.sendReservationConfirmationEmail(boat.getName(), "brod", dateFrom, dateEnd, boat.getAddress(), email);
 
-            return "reservation_form";
+            return "reservation_success";
         }
     }
 
@@ -123,7 +123,7 @@ public class ReservationProcessController {
             userService.sendReservationConfirmationEmail(adventure.getName(), "avanturu", dateFrom, dateEnd, adventure.getAddress(), email);
 
 
-            return "reservation_form";
+            return "reservation_success";
         }
     }
 
@@ -166,7 +166,7 @@ public class ReservationProcessController {
             vacationHouseReservationService.save(1L, reservation);
             userService.sendReservationConfirmationEmail(vacationHouse.getName(), "vikendicu", dateFrom, dateEnd, vacationHouse.getAddress(), email);
 
-            return "reservation_form";
+            return "reservation_success";
         }
     }
 

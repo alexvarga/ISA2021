@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import rs.ac.uns.ftn.isaprojekat.model.DeletionRequest;
 import rs.ac.uns.ftn.isaprojekat.model.User;
@@ -71,7 +72,7 @@ public class ProfileController {
         }
     }
 
-    @PostMapping("/profile/password")
+    @PutMapping("/profile")
     public String updateUser(User user, BindingResult bindingResult, Model model,
                              @RequestParam(value="password-confirm", required = false) String passwordConfirm,
                              @RequestParam(value="new-password", required = false) String passwordNew,
