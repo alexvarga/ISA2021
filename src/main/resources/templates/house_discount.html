@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Vikendice - Akcije</title>
+    <title>Vikendice - akcije</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 
@@ -12,7 +12,7 @@
 <header th:insert="/index.html :: header"></header>
 
 <div class="container">
-
+    <div class="text-center"> <h4 class="text-center">Vikendice akcije</h4></div>
     <div class="row">
 
         <table class="table table-striped">
@@ -34,14 +34,15 @@
                 <td>Vlasnik</td>
                 <td>Vlasnik</td>
                 <td>Vikendica</td>
+                <td>Rezervacija</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="offer:${vacationHouseDiscountOffers}">
                 <td th:text="${offer.id}"></td>
-                <td th:text="${offer.reservationTime}">name</td>
+                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy ')}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
-                <td th:text="${offer.dateEnd}">info</td>
+                <td th:text="${#temporals.format(offer.dateEnd, 'dd-MM-yyyy ')}">info</td>
 
                 <td>
                     <p th:if="${offer.vacationHouse != null}" th:text="${offer.vacationHouse.avgRating}">rating</p>
@@ -70,7 +71,7 @@
                 <td th:if="${offer.vacationHouse != null}">
                     <form th:action="@{/houses/discount/reserve}" method="post">
                         <input hidden name="offerId" th:value="${offer.id}"/>
-                        <button type="submit" class="btn btn-primary">rez</button>
+                        <button type="submit" class="btn btn-primary">Rezerviši</button>
 
 
                     </form>
@@ -84,7 +85,9 @@
         </table>
     </div>
 
+
     <div class="row justify-content-center border-top">
+        <div th:if="${numberOfPages>0}">
         Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
 
@@ -113,7 +116,7 @@
         <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
         &nbsp;
 
-
+        </div>
     </div>
 
 

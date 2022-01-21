@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Brodovi</title>
+    <title>Brodovi - akcije</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 
@@ -12,6 +12,7 @@
 <header th:insert="/index.html :: header"></header>
 
 <div class="container">
+    <div class="text-center"> <h4 class="text-center">Brodovi akcije</h4></div>
 
     <div class="row">
 
@@ -33,14 +34,16 @@
                 <td>Ocena broda</td>
                 <td>Vlasnik</td>
                 <td>Vlasnik</td>
+                <td>Brod</td>
+                <td>Rezervacija</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="offer:${boatDiscountOffers}">
                 <td th:text="${offer.id}"></td>
-                <td th:text="${offer.reservationTime}">name</td>
+                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy ')}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
-                <td th:text="${offer.dateEnd}">info</td>
+                <td th:text="${#temporals.format(offer.dateEnd, 'dd-MM-yyyy ')}">info</td>
 
 
                 <td>
@@ -63,7 +66,7 @@
                 <td th:if="${offer.boat!=null}">
                     <form th:action="@{/boats/discount/reserve}" method="post">
                         <input hidden name="offerId" th:value="${offer.id}"/>
-                        <button type="submit" class="btn btn-primary">rez</button>
+                        <button type="submit" class="btn btn-primary">Rezerviši</button>
 
 
                     </form>
@@ -77,6 +80,7 @@
         </table>
     </div>
 
+    <div class="border-top" th:if="${numberOfPages>0}">
     <div class="row justify-content-center">
         Ukupno: [[${numberOfElements}]] - Strana [[${currentPage}]] od [[${numberOfPages}]]
         &nbsp; - &nbsp;
@@ -108,7 +112,7 @@
 
 
     </div>
-
+    </div>
 
 </div>
 

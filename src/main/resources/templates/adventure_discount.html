@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Avanture - Akcije</title>
+    <title>Avanture - akcije</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 
@@ -13,7 +13,9 @@
 
 <div class="container">
 
+   <div class="text-center"> <h4 class="text-center">Avanture akcije</h4></div>
     <div class="row">
+
 
         <table class="table table-striped">
             <thead>
@@ -30,21 +32,21 @@
                 <td>
                     <a th:href="@{'/adventures/discount/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do </a>
                 </td>
-                <td>datend</td>
-                <td>*** id</td>
-                <td>--- rating</td>
+
+                <td>Ocena</td>
+                <td>Instruktor</td>
+                <td>Instruktor</td>
+                <td>Avantura</td>
+                <td>Rezervacija</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="offer:${adventureDiscountOffers}">
                 <td th:text="${offer.id}"></td>
-                <td th:text="${offer.reservationTime}">name</td>
+                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy')}">name</td>
                 <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
-                <td th:text="${offer.dateEnd}">info</td>
-                <td>
-                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.id}">rating</p>
-                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
-                </td>
+                <td th:text="${#temporals.format(offer.dateEnd, 'dd-MM-yyyy ')}">info</td>
+
                 <td>
                     <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.avgRating}">rating</p>
                     <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
@@ -59,14 +61,15 @@
                     <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
                 </td>
                 <td>
-                    <a th:if="${offer.adventure!=null}" th:href="@{/adventures/{id}(id=${offer.adventure.id})}" th:text="${offer.adventure.id}">id
-                    broda</a>
+                    <a th:if="${offer.adventure!=null}" th:href="@{/adventures/{id}(id=${offer.adventure.id})}"
+                       th:text="${offer.adventure.id}">id
+                        broda</a>
                     <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
                 </td>
                 <td>
                     <form th:if="${offer.adventure!=null}" th:action="@{/adventures/discount/reserve}" method="post">
                         <input hidden name="offerId" th:value="${offer.id}"/>
-                        <button type="submit" class="btn btn-primary">rez</button>
+                        <button type="submit" class="btn btn-primary">Rezerviši</button>
 
 
                     </form>
@@ -79,8 +82,9 @@
             </tr>
             </tbody>
         </table>
+    </div>
 
-        <div class="row justify-content-center">
+        <div class="border-top" th:if="${numberOfPages>0}">
             <div class="row justify-content-center" th:if="${numberOfPages>0}">
                 Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
                 &nbsp; - &nbsp;
@@ -91,7 +95,7 @@
                 &nbsp;
                 <a th:if="${currentPage>1}"
                    th:href="@{'/adventures/discount/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
-                <span th:unless="${currentPage>1}">prethodna</span>
+                <span th:unless="${currentPage>1}">Prethodna</span>
                 &nbsp;
 
                 <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
@@ -112,12 +116,12 @@
 
 
             </div>
-
-
         </div>
 
 
-        <div th:insert="/index.html :: scripts"></div>
+
+
+    <div th:insert="/index.html :: scripts"></div>
 
 </body>
 </html>

@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-12 text-center">
-            <h2>Hello....</h2>
+            <h3>Početna strana za korisnika</h3>
         </div>
     </div>
 
@@ -25,43 +25,75 @@
     <div class="row">
         <p></p>
     </div>
-<div class="border">
+<div class="border-top">
 
+    <div class="row">
+        <div class="col text-center"> <h4>Ponude</h4> </div>
+        </div>
     <div class="row text-center ">
-        <div class="col-3"><h3>ponude</h3></div>
-        <div class="col-3 ">
+
+        <div class="col-4 ">
             <a th:href="@{/houses}" class="btn btn-dark btn-lg">Vikendice</a>
         </div>
-        <div class="col-3 ">
+        <div class="col-4 ">
             <a th:href="@{/boats}" class="btn btn-dark btn-lg">Brodovi</a>
         </div>
-        <div class="col-3  ">
+        <div class="col-4  ">
             <a th:href="@{/adventures}" class="btn btn-dark btn-lg ">Avanture</a>
         </div>
     </div>
 </div>
     <p></p>
-    <div class="border">
+    <div class="border-top">
+
+        <div class="row">
+            <div class="col text-center"> <h4>Istorija rezervacija</h4> </div>
+        </div>
     <div class="row text-center ">
-        <div class="col-3"><h3>istorija rezervacija</h3></div>
-        <div class="col-3 ">
-            <a th:href="@{/}" class="btn btn-dark btn-lg">Vikendice</a>
+
+        <div class="col-4 ">
+            <a th:href="@{/houseHistory}" class="btn btn-dark btn-lg">Vikendice</a>
         </div>
-        <div class="col-3 ">
-            <a th:href="@{/}" class="btn btn-dark btn-lg">Brodovi</a>
+        <div class="col-4 ">
+            <a th:href="@{/boatHistory}" class="btn btn-dark btn-lg">Brodovi</a>
         </div>
-        <div class="col-3 ">
-            <a th:href="@{/}" class="btn btn-dark btn-lg">Avanture</a>
+        <div class="col-4 ">
+            <a th:href="@{/adventureHistory}" class="btn btn-dark btn-lg">Avanture</a>
         </div>
+
     </div>
     </div>
     <p></p>
+    <div class="border-top">
+
+        <div class="row">
+            <div class="col text-center"> <h4>Akcije</h4> </div>
+        </div>
+        <div class="row text-center ">
+
+            <div class="col-4 ">
+                <a th:href="@{/houses/discount}" class="btn btn-dark btn-lg">Vikendice</a>
+            </div>
+            <div class="col-4 ">
+                <a th:href="@{/boats/discount}" class="btn btn-dark btn-lg">Brodovi</a>
+            </div>
+            <div class="col-4 ">
+                <a th:href="@{/adventures/discount}" class="btn btn-dark btn-lg">Avanture</a>
+            </div>
+        </div>
+    </div>
+
+    <p></p>
+    <div class="border-top">
+        <div class="row">
+            <div class="col text-center"> <h4></h4> </div>
+        </div>
     <div class="row text-center justify-content-center ">
         <div class="col-3">
             <a th:href="@{/reservations}" class="btn btn-dark btn-lg">Zakazano</a>
         </div>
         <div class="col-3 ">
-            <a th:href="@{/}" class="btn btn-dark btn-lg">Pretplate</a>
+            <a th:href="@{/subscriptions}" class="btn btn-dark btn-lg">Pretplate</a>
         </div>
         <div class="col-3 ">
             <a th:href="@{/}" class="btn btn-dark btn-lg">Žalbe</a>
@@ -70,6 +102,7 @@
             <a th:href="@{/}" class="btn btn-dark btn-lg">Penali</a>
         </div>
 
+    </div>
     </div>
 
     </div>

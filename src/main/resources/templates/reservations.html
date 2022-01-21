@@ -79,9 +79,9 @@
                 <td>
                    <p  th:text="${reservation.id}"> </p>
                 </td>
-                <td th:text="${reservation.reservationTime}">name</td>
+                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy ')}">name</td>
                 <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">date from</td>
-                <td th:text="${reservation.dateEnd}">info</td>
+                <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
                 <td> <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.avgRating}">rating </p>
                     <p th:if="${reservation.boat==null}" >Obrisan</p>
                 </td>
@@ -244,9 +244,9 @@
             <tr th:each="reservation:${adventureReservations}">
                 <td th:text="${reservation.id}">
                 </td>
-                <td th:text="${reservation.reservationTime}">name</td>
-                <td th:text="${reservation.dateFrom}">address</td>
-                <td th:text="${reservation.dateEnd}">info</td>
+                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy ')}">name</td>
+                <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
+                <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
                 <td>
                     <p th:if="${reservation.adventure != null}" th:text="${reservation.adventure.avgRating}">rating</p>
                     <p th:if="${reservation.adventure == null}" th:text="Obrisana">rating</p>
@@ -349,8 +349,8 @@
     </div>
     <p></p>
 
-    <div th:if="${vacationHouseReservations}">
-        <div class="row">
+    <div th:if="${vacationHouseReservations}" >
+        <div class="row justify-content-center">
 
 
             <table class="table table-striped">
@@ -411,9 +411,9 @@
                 <tr th:each="reservation:${vacationHouseReservations}">
                     <td th:text="${reservation.id}">
                     </td>
-                    <td th:text="${reservation.reservationTime}">name</td>
-                    <td th:text="${reservation.dateFrom}">address</td>
-                    <td th:text="${reservation.dateEnd}">info</td>
+                    <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy ')}">name</td>
+                    <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
+                    <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
 
                     <td>
                         <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.avgRating}">rating</p>

@@ -3,20 +3,14 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Index page</title>
+    <title>Početna</title>
 
-    <!--
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    -->
-    <!-- <script th:src="@{/bootstrap.bundle.min.js}"></script>
-     <script th:src="@{/bootstrap.min}"></script>
-     -->
     <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 
 </head>
 <body>
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-start">
         <a class="navbar-brand" href="/index.html">: )</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +27,7 @@
                             class="sr-only">(current)</span></a>
                     <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
+
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -98,7 +90,15 @@
                             <li>
                                 <div class="dropdown-divider"></div>
                             </li>
-                            <li><a class="dropdown-item" th:href="@{/}">Akcije</a></li>
+
+                            <li><p class="dropdown-header">Akcije</p></li>
+                            <li><a class="dropdown-item" th:href="@{/houses/discount}">Vikendice</a></li>
+                            <li><a class="dropdown-item" th:href="@{/boats/discount}">Brodovi</a></li>
+                            <li><a class="dropdown-item" th:href="@{/adventures/discount}">Avanture</a></li>
+                            <li>
+                                <div class="dropdown-divider"></div>
+                            </li>
+
                             <li><a class="dropdown-item" th:href="@{/}">Pretplate</a></li>
                             <li><a class="dropdown-item" th:href="@{/}">Žalbe</a></li>
                             <li><a class="dropdown-item" th:href="@{/}">Penali</a></li>
@@ -126,13 +126,13 @@
 
         <div class="d-flex flex-row order-2 order-lg-3">
             <div sec:authorize="isAnonymous()">
-                <a class="btn btn-outline-primary" th:href="@{/login}">login</a>
+                <a class="btn btn-outline-primary" th:href="@{/login}">Prijavite se</a>
             </div>
         </div>
         <div class="d-flex flex-row order-2 order-lg-3">
             <div sec:authorize="isAuthenticated()">
                 <a th:href="@{/profile}"> <b><span sec:authentication="name">Username</span></b> </a>
-                <a href="/logout" class="btn btn-outline-primary">logout</a>
+                <a href="/logout" class="btn btn-outline-primary">Odjavite se</a>
             </div>
 
         </div>
@@ -143,7 +143,7 @@
 
     <div class="row">
         <div class="col-12 text-center">
-            <h2>Hello....</h2>
+            <h2>Početna</h2>
         </div>
     </div>
 
@@ -166,48 +166,17 @@
         </div>
 
     </div>
+<!--    <div class="row text-center justify-content-center"><div sec:authorize="isAuthenticated()">-->
+<!--        Welcome <b><span sec:authentication="name">Username</span></b>-->
+<!--        &nbsp;-->
+
+<!--    </div></div>-->
 </div>
 
-<div sec:authorize="isAuthenticated()">
-    Welcome <b><span sec:authentication="name">Username</span></b>
-    &nbsp;
 
-</div>
 
-<div sec:authorize="hasRole('ROLE_USER')">
-    This content is only shown to users.
-</div>
 
-<!--
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <td>id</td>
-        <td>name</td>
-        <td>address</td>
-        <td>info</td>
-        <td>rating</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="house:${houses}">
-        <td th:text="${house.id}">id</td>
-        <td th:text="${house.name}">name</td>
-        <td th:text="${house.address}">address</td>
-        <td th:text="${house.info}">info</td>
-        <td th:text="${house.avgRating}">rating</td>
-    </tr>
-    </tbody>
 
-</table>
--->
-
-<!--
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
- -->
 <div th:fragment="scripts">
     <script th:src="@{/jquery-3.6.0.min.js}"></script>
     <script th:src="@{/bootstrap.bundle.min.js}"></script>
