@@ -47,8 +47,6 @@ public class LoginRegisterController {
 
         if(bindingResult.hasErrors()){
 
-
-
             return ("register/register");
         }else {
 

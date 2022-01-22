@@ -29,13 +29,13 @@ public class LoggedInUserDetails implements UserDetails {
 
     public String getRole(){
         if(user.getUserRole()==UserRole.ADMIN){
-            System.out.println("user je admin - iz UserDetailsIMPL");
+           // System.out.println("user je admin - iz UserDetailsIMPL");
             return "admin";
         }else if (user.getUserRole()==UserRole.USER){
-            System.out.println("user je user - iz UserDetailsIMPL");
+           // System.out.println("user je user - iz UserDetailsIMPL");
             return "user";
         }else if (user.getUserRole()==UserRole.ADMIN_NEW) {
-            System.out.println("admin new");
+           // System.out.println("admin new");
             return "admin_new";
         } else {
             return "";

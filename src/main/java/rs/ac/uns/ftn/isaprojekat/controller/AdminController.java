@@ -164,7 +164,7 @@ public class AdminController {
         }
         instructorService.deleteById(id);
 
-        return listBoatOwners(model);
+        return listInstructors(model);
     }
 
 

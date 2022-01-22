@@ -15,8 +15,8 @@
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${house.imageLink}}" alt="..." /></div>
             <div class="col-md-6">
-                <div class="small mb-1" th:text="${'Vlasnik: '+ house.vacationHouseOwner}" >SKU: BST-498</div>
-                <div class="small mb-1" th:text="${ 'Ocena: '+ house.avgRating}" >SKU: BST-498</div>
+                <div class="small mb-1" th:text="${'Vlasnik: '+ house.vacationHouseOwner.firstName+' '+house.vacationHouseOwner.lastName}" >SKU: BST-498</div>
+                <div class="small mb-1" th:text="${ 'Ocena: '+ #numbers.formatDecimal(house.avgRating,1, 1, 'POINT')}" >SKU: BST-498</div>
                 <h1 class="display-5 fw-bolder" th:text="${house.name}" >Shop item template</h1>
                 <div class="fs-5 mb-5">
 
@@ -55,14 +55,18 @@
         <table  th:each="hr:${houseReviews}" class="table table-active">
             <tbody >
             <tr>
-                <td th:if="${hr.user!=null}" th:text="${hr.user.email}">
+                <td th:if="${hr.user!=null}" th:text="${'Od '+hr.user.email}">
                     username
                 </td>
                 <td th:if="${hr.user==null}" th:text="'[deleted]'">
                     username
                 </td>
 
-                <td th:text="${hr.rating}">
+                <td  th:text="${'Vreme: '+#temporals.format(hr.reviewTime, 'dd-MM-yyyy HH:mm')}">
+                    username
+                </td>
+
+                <td th:text="${'Ocena '+hr.rating}">
                     rating
                 </td>
             </tr>

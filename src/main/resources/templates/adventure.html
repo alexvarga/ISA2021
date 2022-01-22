@@ -20,7 +20,7 @@
                      th:text="${'Instruktor: '+ adventure.instructor.firstName +' '+adventure.instructor.lastName}">SKU:
                     BST-498
                 </div>
-                <div class="small mb-1" th:text="${ 'Ocena: '+ adventure.avgRating}">SKU: BST-498</div>
+                <div class="small mb-1" th:text="${ 'Ocena: '+ #numbers.formatDecimal(adventure.avgRating,1, 1, 'POINT')}">SKU: BST-498</div>
                 <h1 class="display-5 fw-bolder" th:text="${adventure.name}">Shop item template</h1>
                 <div class="fs-5 mb-5">
 
@@ -53,7 +53,7 @@
 
 <div class="container">
     <div class="row">
-        <h3>Ocene i revizije</h3>
+        <h3>Ocene i komentari</h3>
 
     </div>
     <div class="row">
@@ -61,18 +61,21 @@
         <table th:each="ar:${adventureReviews}" class="table table-active">
             <tbody>
             <tr>
-                <td th:if="${ar.user!=null}" th:text="${ar.user.email}">
+                <td th:if="${ar.user!=null}" th:text="${'Od '+ar.user.email}">
                     username
                 </td>
                 <td th:if="${ar.user==null}" th:text="'[deleted]'">
                     username
                 </td>
-                <td th:text="${ar.rating}">
+                <td  th:text="${'Vreme: '+#temporals.format(ar.reviewTime, 'dd-MM-yyyy HH:mm')}">
+                    vreme
+                </td>
+                <td th:text="${'Ocena ' +ar.rating}">
                     rating
                 </td>
             </tr>
             <tr>
-                <td colspan="2" th:text="${ar.content}"> content</td>
+                <td colspan="3" th:text="${ar.content}"> content</td>
             </tr>
             </tbody>
         </table>

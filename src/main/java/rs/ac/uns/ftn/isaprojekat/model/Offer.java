@@ -2,18 +2,25 @@ package rs.ac.uns.ftn.isaprojekat.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public class Offer extends BaseEntity {
 
+    @NotNull
     private String name;
+    @NotNull
     private String address;
+    @NotNull
     @Column(columnDefinition ="TEXT")
     private String info;
+    @NotNull
     private Float avgRating;
     private Integer noOfRatings;
+    @NotNull
     private Float price;
     private String misc;
+    @NotNull
     private Integer noOfPersons;
     private String imageLink;
 

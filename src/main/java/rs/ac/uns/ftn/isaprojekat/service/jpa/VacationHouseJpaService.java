@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class VacationHouseJpaService implements VacationHouseService {
 
     private final VacationHouseRepository vacationHouseRepository;
-    private int itemsPerPage = 2;
+    private int itemsPerPage = 5;
 
     public VacationHouseJpaService(VacationHouseRepository vacationHouseRepository) {
         this.vacationHouseRepository = vacationHouseRepository;

@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>fail</title>
+    <title>Neuspešna rezervacija</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
 </head>
 <body>
-hi. fail.
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h3>Neuspeša rezervacija</h3>
+            <h4>Nemate pravo rezervacije u ovom periodu</h4>
+            <h4>Imate otkazanu rezervaciju za istu ponudu u istom periodu</h4>
+            <a class="btn-outline-primary btn" th:href="@{/userHomePage}">Početna</a>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
 </body>
 </html>
