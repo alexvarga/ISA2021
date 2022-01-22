@@ -7,9 +7,9 @@ insert into users (address, city, email, first_name, last_name, password, phone_
 
 insert into income_rate (entity_name, entity_percent) values ('boat', 20), ('house', 10), ('adventure', 5);
 
---Da bi stigao odgovor administratora na žalbu i vlasniku, ovde treba upisati ispravan mail.
+--Da bi stigao odgovor administratora na žalbu i vlasniku, ovde treba upisati ispravanu mail adresu.
 insert into boat_owners (address, city, email, first_name, last_name, password) values
- ('Adresa bo1', 'Novi Sad', 'bo1@email', 'Žarko', 'Žarković', 'test'),
+ ('Adresa bo1', 'Novi Sad', 'aleksandra.varga@yahoo.com', 'Žarko', 'Žarković', 'test'),
  ('Adresa bo2', 'Subotica', 'bo2@email', 'Darko', 'Darković', 'test');
 
 insert into vacation_house_owners (address, city, email, first_name, last_name, password) values
@@ -40,19 +40,19 @@ insert into boats (address, avg_rating, image_link, info, misc, name, no_of_pers
  ('2022-03-06 00:00:00', '2022-03-01 00:00:00', 300, '2022-01-20 20:30:00', 'ACTIVE', 1, 1),
  ('2022-04-06 00:00:00', '2022-04-01 00:00:00', 250, '2022-01-20 20:30:00', 'ACTIVE', 1, 2),
  ('2021-12-20 00:00:00', '2021-12-10 00:00:00', 650, '2021-11-20 20:30:00', 'ACTIVE', 1, 3),
- ('2022-12-24 00:00:00', '2022-12-30 00:00:00', 250, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
+ ('2022-12-30 00:00:00', '2022-12-24 00:00:00', 250, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
 
  insert into boat_reservations (date_end, date_from, price, reservation_time, reservation_type, user_id, boat_id) values
   ('2022-04-06 00:00:00', '2022-04-01 00:00:00', 300, '2022-01-20 20:30:00', 'ACTIVE', 1, 1),
  ('2022-05-06 00:00:00', '2022-05-01 00:00:00', 150, '2022-01-20 20:30:00', 'CANCELLED', 1, 2),
  ('2021-11-20 00:00:00', '2021-11-10 00:00:00', 1050, '2021-10-20 20:30:00', 'ACTIVE', 1, 3),
- ('2022-12-24 00:00:00', '2022-12-30 00:00:00', 299, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
+ ('2022-12-17 00:00:00', '2022-12-10 00:00:00', 299, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
 
  insert into vacation_house_reservations (date_end, date_from, price, reservation_time, reservation_type, user_id, vacation_house_id) values
   ('2022-05-06 00:00:00', '2022-05-01 00:00:00', 300, '2022-01-20 20:30:00', 'ACTIVE', 1, 1),
  ('2022-06-06 00:00:00', '2022-06-01 00:00:00', 250, '2022-01-20 20:30:00', 'ACTIVE', 1, 2),
- ('2021-10-28 00:00:00', '2021-10-30 00:00:00', 650, '2021-10-20 20:30:00', 'ACTIVE', 1, 3),
- ('2022-12-24 00:00:00', '2022-12-30 00:00:00', 250, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
+ ('2021-10-30 00:00:00', '2021-10-28 00:00:00', 650, '2021-10-20 20:30:00', 'ACTIVE', 1, 3),
+ ('2022-12-04 00:00:00', '2022-12-01 00:00:00', 250, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
 
  insert into adventure_reviews(content, rating, review_status, review_time, user_id, adventure_id) values
  ('Sve prošlo u najboljem redu. Preporuka!', 5, 1, '2022-01-20 20:30:00', 1, 1),

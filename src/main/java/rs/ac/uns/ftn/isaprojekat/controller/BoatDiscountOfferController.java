@@ -86,7 +86,7 @@ public class BoatDiscountOfferController {
                 "brod", boatReservation.getDateFrom().format(formatter), boatReservation.getDateEnd().format(formatter),
                 boatReservation.getBoat().getAddress(), email );
 
-        return "index";
+        return showOffers(model);
 
     }
 

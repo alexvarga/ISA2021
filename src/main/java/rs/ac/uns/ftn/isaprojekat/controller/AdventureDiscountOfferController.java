@@ -86,7 +86,7 @@ public class AdventureDiscountOfferController {
                 "brod", adventureReservation.getDateFrom().format(formatter), adventureReservation.getDateEnd().format(formatter),
                 adventureReservation.getAdventure().getAddress(), email );
 
-        return "index";
+        return showOffers(model);
 
     }
 

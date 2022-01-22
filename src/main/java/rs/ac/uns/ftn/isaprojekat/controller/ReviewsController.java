@@ -68,6 +68,7 @@ public class ReviewsController {
         review.setReviewStatus(ReviewStatus.ALLOWED);
 
         String ownerMail = boat.getOwner().getEmail();
+        //System.out.println(ownerMail);
         String userFirst = review.getUser().getFirstName();
         String userLast = review.getUser().getLastName();
         String reviewContent = review.getContent();

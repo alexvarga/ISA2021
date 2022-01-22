@@ -89,9 +89,9 @@ public class VacationHouseDiscountOfferController {
                 vacationHouseReservation.getVacationHouse().getAddress(), email );
 
 
-        //TODO mail confirmation
 
-        return "index";
+
+        return showOffers(model);
 
     }
 

@@ -95,7 +95,7 @@ public class UserJpaService implements UserService {
         String subject = "Potvrda registracije";
         String sender = "isa-projekat";
         String content = "<p>Pozdrav, "+user.getFirstName() + ",</p>";
-        content+="<p>Molimo vas kliknite link da bist potvrdili registraciju. </p>";
+        content+="<p>Molimo vas kliknite link da biste potvrdili registraciju. </p>";
         String verifyUrl = siteUrl+"/register/verify?code="+user.getVerificationCode(); //todo
 
         content+="<a href=\""+verifyUrl+"\">POTVRDA REGISTRACIJE</a>";
