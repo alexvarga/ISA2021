@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje žalbe</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-comment"></span>
+                <h3 class="panel-title">
+                    Moje žalbe</h3>
+
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+
+
+                    <li th:each="r:${complaintsBoat}" class="list-group-item  ">
+                        <div class="row ">
+
+                            <div class="col-xs-10 col-md-11 ">
+                                <div>
+                                    <p th:text="'Datum: '+${#temporals.format(r.complaintDate, 'dd-MM-yyyy ')}"></p>
+                                    <p th:text="'Brod: '+${r.boat.name}"></p>
+                                    <p th:text="'Vlasnik: '+${r.boat.owner.firstName+' '+r.boat.owner.lastName}"></p>
+                                </div>
+                                <div class="comment-text">
+                                    Žalba:
+                                    <p th:text="${r.content}"></p>
+                                </div>
+                                <div class="action">
+                                    <span>
+
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+
+
+                    <li th:each="r:${complaintsHouse}" class="list-group-item ">
+                        <div class="row ">
+
+                            <div class="col-xs-10 col-md-11 ">
+                                <div>
+                                    <p th:text="'Datum: '+${#temporals.format(r.complaintDate, 'dd-MM-yyyy ')}"></p>
+                                    <p th:text="'Brod: '+${r.vacationHouse.name}"></p>
+                                    <p th:text="'Vlasnik: '+${r.vacationHouse.vacationHouseOwner.firstName+' '+r.vacationHouse.vacationHouseOwner.lastName}"></p>
+                                </div>
+                                <div class="comment-text">
+                                    Žalba:
+                                    <p th:text="${r.content}"></p>
+                                </div>
+                                <div class="action">
+                                    <span>
+
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+                <ul class="list-group">
+
+
+                    <li th:each="r:${complaintsInstructor}" class="list-group-item ">
+                        <div class="row ">
+
+                            <div class="col-xs-10 col-md-11 ">
+                                <div>
+                                    <p th:text="'Datum: '+${#temporals.format(r.complaintDate, 'dd-MM-yyyy ')}"></p>
+                                    <p th:text="'Instruktor: '+${r.instructor.firstName+' '+r.instructor.lastName}"></p>
+
+                                </div>
+                                <div class="comment-text">
+                                    Žalba:
+                                    <p th:text="${r.content}"></p>
+                                </div>
+                                <div class="action">
+                                    <span>
+
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

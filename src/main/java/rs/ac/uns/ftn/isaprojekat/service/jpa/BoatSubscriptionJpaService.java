@@ -19,7 +19,7 @@ public class BoatSubscriptionJpaService implements BoatSubscriptionService {
 
 
     private final BoatSubscriptionRepository boatSubscriptionRepository;
-    private int itemsPerPage = 2;
+    private int itemsPerPage = 5;
 
     public BoatSubscriptionJpaService(BoatSubscriptionRepository boatSubscriptionRepository) {
         this.boatSubscriptionRepository = boatSubscriptionRepository;

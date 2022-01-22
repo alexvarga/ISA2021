@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class InstructorJpaService implements InstructorService {
 
     private final InstructorRepository instructorRepository;
-    public int pageSize = 2;
+    public int pageSize = 5;
 
     public InstructorJpaService(InstructorRepository instructorRepository) {
         this.instructorRepository = instructorRepository;

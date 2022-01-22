@@ -51,7 +51,7 @@ public class AdventureController {
                                            @Param(value="sortField") String sortField,
                                            @Param(value="sortDirection") String sortDirection){
 
-        System.out.println(sortField);
+
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
         Page<Adventure> page = adventureService.findAll(currentPage, sortField, sortDirection);
@@ -123,16 +123,10 @@ public class AdventureController {
 
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
-        System.out.println(tag1+" " +tag2+ " "+tag3 + " ");
-        System.out.println(noOfPersons);
-        System.out.println(maxPrice);
-        System.out.println(minRating);
 
 
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateEnd", dateEnd);
-        System.out.println(dateFrom + "+++" + dateEnd);
-
 
         Page<Adventure> page = adventureService.findAdventureNotReserved(currentPage,
                 sortField,

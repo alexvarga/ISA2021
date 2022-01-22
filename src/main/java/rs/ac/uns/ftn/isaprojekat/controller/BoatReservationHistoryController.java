@@ -44,8 +44,6 @@ public class BoatReservationHistoryController {
         String email = authentication.getName();
         User user = userService.findByEmail(email);
 
-        // currentPage = 1;
-        System.out.println(sortField);
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
         Page<BoatReservation> page = boatReservationService.getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(user, LocalDateTime.now(), currentPage, sortField, sortDirection);
@@ -53,10 +51,6 @@ public class BoatReservationHistoryController {
 
         Long numberOfElements = page.getTotalElements();
         int numberOfPages = page.getTotalPages();
-
-        //Set<BoatReservation> boatReservations = boatReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now());
-
-       //if(!boatReservations.isEmpty())model.addAttribute("boatReservations", boatReservationService.getAllByUserAndDateEndBefore(user, LocalDateTime.now()));
 
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("numberOfElements", numberOfElements);
@@ -70,9 +64,6 @@ public class BoatReservationHistoryController {
         String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
         model.addAttribute("reverseSortDirection", reverseSortDirection);
         model.addAttribute("boatHistory", true);
-
-        //test query
-        //System.out.println(boatReservationService.existsByUser(user, LocalDateTime.of(2022, 1, 2, 0,0), LocalDateTime.of(2023, 1, 5, 0, 0))+ " test custom query");
 
         return "reservations";
     }

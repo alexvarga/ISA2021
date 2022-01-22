@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.isaprojekat.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import rs.ac.uns.ftn.isaprojekat.model.BoatComplaint;
 import rs.ac.uns.ftn.isaprojekat.model.InstructorComplaint;
+import rs.ac.uns.ftn.isaprojekat.model.User;
 import rs.ac.uns.ftn.isaprojekat.model.VacationHouseComplaint;
 import rs.ac.uns.ftn.isaprojekat.service.BoatComplaintService;
 import rs.ac.uns.ftn.isaprojekat.service.InstructorComplaintService;
@@ -119,6 +122,27 @@ public class ComplaintsController {
         instructorComplaintService.deleteById(complaintId);
 
         return showBoatComplaints(model);
+
+
+    }
+
+    @GetMapping("/complaints")
+    String showMyComplaints(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+
+        Set<VacationHouseComplaint> complaintsHouse = vacationHouseComplaintService.getAllByUser(user);
+        Set<InstructorComplaint> complaintsInstructor = instructorComplaintService.getAllByUser(user);
+        Set<BoatComplaint> complaintsBoat = boatComplaintService.getAllByUser(user);
+
+        model.addAttribute("complaintsHouse", complaintsHouse);
+        model.addAttribute("complaintsInstructor", complaintsInstructor);
+        model.addAttribute("complaintsBoat", complaintsBoat);
+
+
+
+        return "complaints/user_complaints";
 
 
     }

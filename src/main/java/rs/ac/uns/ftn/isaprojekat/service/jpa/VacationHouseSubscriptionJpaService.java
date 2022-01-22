@@ -18,7 +18,7 @@ import java.util.Set;
 public class VacationHouseSubscriptionJpaService implements VacationHouseSubscriptionService {
 
     private final VacationHouseSubscriptionRepository vacationHouseSubscriptionRepository;
-    private int itemsPerPage = 2;
+    private int itemsPerPage = 5;
 
     public VacationHouseSubscriptionJpaService(VacationHouseSubscriptionRepository vacationHouseSubscriptionRepository) {
         this.vacationHouseSubscriptionRepository = vacationHouseSubscriptionRepository;

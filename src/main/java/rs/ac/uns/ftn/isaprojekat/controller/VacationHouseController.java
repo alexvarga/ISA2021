@@ -52,7 +52,6 @@ public class VacationHouseController {
                                            @Param(value="sortField") String sortField,
                                            @Param(value="sortDirection") String sortDirection){
 
-        System.out.println(sortField);
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
         Page<VacationHouse> page = vacationHouseService.findAll(currentPage, sortField, sortDirection);
@@ -132,8 +131,6 @@ public class VacationHouseController {
 
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateEnd", dateEnd);
-        System.out.println(dateFrom + "+++" + dateEnd);
-
 
         Page<VacationHouse> page = vacationHouseService.findVacationHousesNotReserved(currentPage,
                 sortField, sortDirection,

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class BoatJpaService implements BoatService {
 
     private final BoatRepository boatRepository;
-    public int pageSize = 2;
+    public int pageSize = 5;
 
     public BoatJpaService(BoatRepository boatRepository) {
         this.boatRepository = boatRepository;

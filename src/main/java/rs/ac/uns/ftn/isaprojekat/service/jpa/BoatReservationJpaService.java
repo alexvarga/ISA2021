@@ -23,6 +23,7 @@ import java.util.Set;
 public class BoatReservationJpaService implements BoatReservationService {
 
     private final BoatReservationRepository boatReservationRepository;
+    private int itemsPerPage = 2;
 
     public BoatReservationJpaService(BoatReservationRepository boatReservationRepository) {
         this.boatReservationRepository = boatReservationRepository;
@@ -39,7 +40,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort); //zero based index
         return boatReservationRepository.findAll(pageable);
     }
 
@@ -62,7 +63,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort);
         return boatReservationRepository.getAllByUser(user, pageable);
     }
 
@@ -75,7 +76,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort);
         return boatReservationRepository.getAllByUserAndDateEndBefore(user, time, pageable);
     }
 
@@ -88,7 +89,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort);
         return boatReservationRepository.getAllByUserAndDateEndAfter(user, time, pageable);
     }
 
@@ -106,7 +107,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort);
         return boatReservationRepository.getAllByUserAndDateEndAfterAndReservationTypeNotDiscount(user, time, pageable);
     }
 
@@ -119,7 +120,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort);
         return boatReservationRepository.getAllByUserAndDateEndBeforeAndReservationTypeNotDiscount(user, time, pageable);
     }
 
@@ -132,7 +133,7 @@ public class BoatReservationJpaService implements BoatReservationService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, 2, sort);
+        Pageable pageable = PageRequest.of(pageNumber - 1, itemsPerPage, sort);
         return boatReservationRepository.getAllByReservationType(type, pageable);
     }
 

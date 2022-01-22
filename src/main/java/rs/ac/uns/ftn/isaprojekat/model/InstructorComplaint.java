@@ -1,7 +1,7 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class InstructorComplaint extends Complaint {
 
     @ManyToOne
-    @JoinTable(name="instructor_id")
+    @JoinColumn(name="instructor_id")
     private Instructor instructor;
 
     public Instructor getInstructor() {

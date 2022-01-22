@@ -42,7 +42,6 @@ public class ReservationController {
     @GetMapping({"/", ""})
     public String show(Model model){
 
-        System.out.println("reservations ovdeeeeeeeeeeeeeeeee");
 
         return showReservationsByPage(model, 1, 1, 1, "id", "id", "id", "asc", "asc", "asc");
     }
@@ -79,7 +78,7 @@ public class ReservationController {
 
         List<AdventureReservation> entitiesAdventure = pageAdventure.getContent();
 
-        System.out.println(pageAdventure.iterator().next().getReservationTime() + " REservationTIME");
+
 
 
         Long numberOfElementsHouse = pageHouse.getTotalElements();
@@ -103,17 +102,14 @@ public class ReservationController {
         model.addAttribute("numberOfPagesAdventure", numberOfPagesAdventure);
         if(!entitiesHouse.isEmpty()){         model.addAttribute("vacationHouseReservations", entitiesHouse);
             model.addAttribute("vacationHouseHistory", false);
-            System.out.println("vh not empty");
         }
 
         if(!entitiesBoat.isEmpty()){         model.addAttribute("boatReservations", entitiesBoat);
             model.addAttribute("boatHistory", false);
-            System.out.println("b not empty");
         }
 
         if(!entitiesAdventure.isEmpty()){         model.addAttribute("adventureReservations", entitiesAdventure);
             model.addAttribute("adventureHistory", false);
-            System.out.println("a not empty");
         }
 
         model.addAttribute("sortFieldA", sortFieldA);
@@ -140,7 +136,6 @@ public class ReservationController {
    public String cancelBoatReservation(Model model, @Param(value="boatentityId") Long boatentityId){
 
        BoatReservation boatReservation = boatReservationService.findById(boatentityId);
-       System.out.println(boatReservation.getReservationType());
        boatReservation.setReservationType(ReservationType.CANCELLED);
        boatReservationService.save(1L, boatReservation);
        return show(model);
@@ -152,7 +147,6 @@ public class ReservationController {
         AdventureReservation adventureReservation = adventureReservationService.findById(adventureentityId);
         adventureReservation.setReservationType(ReservationType.CANCELLED);
         adventureReservationService.save(1L, adventureReservation);
-        System.out.println("adventure "+adventureReservation.getReservationType());
         return show(model);
     }
 
@@ -161,7 +155,6 @@ public class ReservationController {
         VacationHouseReservation vacationHouseReservation = vacationHouseReservationService.findById(houseentityId);
         vacationHouseReservation.setReservationType(ReservationType.CANCELLED);
         vacationHouseReservationService.save(1L, vacationHouseReservation);
-        System.out.println("house "+vacationHouseReservation.getReservationType());
 
         return show(model);
     }

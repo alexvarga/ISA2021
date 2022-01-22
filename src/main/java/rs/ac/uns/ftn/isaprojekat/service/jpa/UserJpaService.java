@@ -312,7 +312,6 @@ public class UserJpaService implements UserService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessage message2 = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        MimeMessageHelper helper2 = new MimeMessageHelper(message2);
 
         helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
 

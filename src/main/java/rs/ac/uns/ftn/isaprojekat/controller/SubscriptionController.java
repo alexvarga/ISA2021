@@ -55,8 +55,6 @@ public class SubscriptionController {
         String email = authentication.getName();
         User user = userService.findByEmail(email);
 
-        System.out.println(entityType + " "+ id);
-
         switch (entityType){
             case "boat":
                 boatSubscriptionService.deleteById(id);
