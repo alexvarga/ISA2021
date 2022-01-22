@@ -11,11 +11,12 @@ Naziv baze: ``` isa ```, username: ``` postgres ```, password: ``` asdf ```
 
 
 
-#### Pokretanje projekta 
+### Pokretanje projekta 
 
 Importovati projekat u workspace, instalirati sve zavisnosti iz pom.xml i run as Java Application.
 
 Pokrenut projekat dostupan na ``` localhost:8080 ```.
 
 Kredencijali za administratora: username: ```admin```, password: ```test```.
+
 Kredencijali za korisnika: username ```aleksandra.varga0@gmail.com```, password: ```test```.
