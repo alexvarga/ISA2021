@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Avanture</title>
@@ -173,7 +173,7 @@
                 <td th:text="${adventure.info}">info</td>
                 <td th:text="${adventure.avgRating}">rating</td>
                 <td th:text="${adventure.price}">price</td>
-                <td th:if="${search==true}">
+                <td sec:authorize="hasRole('ROLE_USER')" th:if="${search==true}">
                     <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
                        th:attr="data-adventure-id=''+${adventure.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">Rezerviši</a>
 

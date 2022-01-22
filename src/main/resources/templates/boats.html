@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -142,7 +142,7 @@
                     <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Ocena</a>
                 </td>
                 <td>
-                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Cena*</a>
+                    <a th:href="@{'/search/boats/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Cena</a>
                 </td>
             </tr>
             <tr th:unless="${search==true}">
@@ -175,7 +175,7 @@
                 <td th:text="${boat.avgRating}">rating</td>
                 <td th:text="${boat.price}">rating</td>
 
-                <td th:if="${search==true}">
+                <td sec:authorize="hasRole('ROLE_USER')" th:if="${search==true}">
                     <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
                        th:attr="data-boat-id=''+${boat.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">Rezerviši</a>
 

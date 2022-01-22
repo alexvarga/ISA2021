@@ -55,12 +55,26 @@ insert into boats (address, avg_rating, image_link, info, misc, name, no_of_pers
  ('2022-12-24 00:00:00', '2022-12-30 00:00:00', 250, '2022-01-20 20:30:00', 'DISCOUNTOFFER', null, 2);
 
  insert into adventure_reviews(content, rating, review_status, review_time, user_id, adventure_id) values
- ('Sve prošlo u najboljem redu. Preporuka!', 5, 0, '2022-01-20 20:30:00', 1, 1);
+ ('Sve prošlo u najboljem redu. Preporuka!', 5, 1, '2022-01-20 20:30:00', 1, 1),
+ ('Test komentar.', 5, 0, '2022-01-20 07:32:00', 1, 1);
  insert into boat_reviews(content, rating, review_status, review_time, user_id, boat_id) values
-  ('Test komentar.', 3, 0, '2022-01-20 20:30:00', 1, 1);
+  ('Test komentar za brod 1.', 3, 0, '2022-01-20 20:30:00', 1, 1),
+  ('Test komentar za brod 1.', 3, 1, '2022-01-20 20:30:00', 1, 1);
  insert into vacation_house_reviews(content, rating, review_status, review_time, user_id, vacation_house_id) values
-  ('Sve prošlo u najboljem redu. Preporuka!', 5, 1, '2022-01-20 20:30:00', 1, 1);
+  ('Sve prošlo u najboljem redu. Preporuka!', 5, 1, '2022-01-20 20:30:00', 1, 1),
+  ('Test pending review!', 5, 0, '2022-01-20 20:30:00', 1, 1),
+  ('Test review za vikendicu 2!', 5, 1, '2022-01-20 20:30:00', 1, 2),
+  ('Test review za vikendicu 3!', 5, 1, '2022-01-20 20:30:00', 1, 3),
+  ('Test odbijena recenzija za vikendicu 1', 5, 2, '2022-01-20 20:30:00', 1, 1);
 
-
+insert into boat_complaints(complaint_date, content, user_id, boat_id) values
+('2022-01-21', 'Test žalba za brod 2', 1, 2),
+('2022-01-21', 'Test žalba 2 za brod 1', 1, 1);
+insert into instructor_complaints(complaint_date, content, user_id, instructor_id) values
+('2022-01-21', 'Test žalba za instruktora 2', 1, 2),
+('2022-01-21', 'Test žalba 2 za instruktora 1', 1, 1);
+insert into vacation_house_complaints(complaint_date, content, user_id, vacation_house_id) values
+('2022-01-21', 'Test žalba za vikendicu 2', 1, 2),
+('2022-01-21', 'Test žalba 2 za vikendicu 1', 1, 1);
 
 

@@ -71,7 +71,7 @@
                 <td>
                     <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=price&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Cena</a>
                 </td>
-                <td>boat id</td>
+                <td>Brod</td>
             </tr>
             </thead>
             <tbody>
@@ -447,7 +447,7 @@
                     <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and vacationHouseHistory==true}">
                         <a th:if="${reservation.vacationHouse!=null}" th:attr="data-house-id=''+${reservation.vacationHouse.id}+''" href="#rate_house_modal" data-toggle="modal">Oceni</a>
                     </td>
-                    <td th:unless="${vacationHouseHistory==true}">
+                    <td th:unless="${vacationHouseHistory==true or reservation.vacationHouse==null}">
                         <a class="btn btn-primary" href="#cancel_house_modal" data-toggle="modal"
                            th:attr="data-house-reservation-id=''+${reservation.id}+'', data-house-date-from=''+${reservation.dateFrom}+'', data-house-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
 
