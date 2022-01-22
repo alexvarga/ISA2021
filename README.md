@@ -13,7 +13,7 @@ Naziv baze: ``` isa ```, username: ``` postgres ```, password: ``` asdf ```
 
 ### Pokretanje projekta 
 
-Importovati projekat u workspace, instalirati sve zavisnosti iz pom.xml i run as Java Application.
+Importovati projekat u workspace (Import..., Existing Maven Project), instalirati sve zavisnosti iz pom.xml i run as Java Application.
 
 Pokrenut projekat dostupan na ``` localhost:8080 ```.
 
