@@ -132,7 +132,6 @@ public class AdminController {
 
     @DeleteMapping("/admin/instructors/delete")
     String deleteInstructor(Model model, @Param("id") Long id) {
-        System.out.println(id);
         // not a very scalable solution :(
         Instructor instructor = instructorService.findById(id);
         Set<Adventure> adventures = instructor.getAdventures();
@@ -165,7 +164,7 @@ public class AdminController {
         }
         instructorService.deleteById(id);
 
-        return listBoatOwners(model);
+        return listInstructors(model);
     }
 
 
@@ -210,13 +209,11 @@ public class AdminController {
 
     @DeleteMapping("/admin/boatOwners/delete")
     String deleteBoatOwners(Model model, @Param("id") Long id) {
-        System.out.println(id);
 
         BoatOwner owner = boatOwnerService.findById(id);
         Set<Boat> boats = owner.getBoats();
         for (Boat boat : boats) {
             Set<BoatReservation> reservations = boatReservationService.getAllByBoat_Id(boat.getId());
-            System.out.println(boat.getId());
 
             Set<BoatReview> reviews = boatReviewService.getAllByBoat_id(boat.getId());
             for (BoatReview r:reviews){
@@ -230,7 +227,6 @@ public class AdminController {
 
             for (BoatReservation reservation : reservations) {
                 reservation.setBoat(null);
-                System.out.println(reservation);
                 boatReservationService.save(1L, reservation);
             }
 
@@ -290,18 +286,15 @@ public class AdminController {
 
     @DeleteMapping("/admin/houseOwners/delete")
     String deleteVacationHouseOwner(Model model, @Param("id") Long id) {
-        System.out.println(id);
 
         VacationHouseOwner owner = vacationHouseOwnerService.findById(id);
         Set<VacationHouse> houses = owner.getVacationHouses();
         for (VacationHouse house : houses) {
             Set<VacationHouseReservation> reservations =
                     vacationHouseReservationService.getAllByVacationHouse_Id(house.getId());
-            System.out.println(house.getId());
 
             for (VacationHouseReservation reservation : reservations) {
                 reservation.setVacationHouse(null);
-                System.out.println(reservation);
                 vacationHouseReservationService.save(1L, reservation);
             }
 
@@ -372,14 +365,13 @@ public class AdminController {
 
     @DeleteMapping("/admin/adventures/delete")
     String deleteAdventure(Model model, @Param("id") Long id) {
-        System.out.println(id);
 
         Adventure adventure = adventureService.findById(id);
         Set<AdventureReservation> reservations =
                 adventureReservationService.getAllByAdventure_Id(adventure.getId());
         for (AdventureReservation reservation : reservations) {
             reservation.setAdventure(null);
-            System.out.println(reservation);
+
             adventureReservationService.save(1L, reservation);
         }
 
@@ -421,7 +413,7 @@ public class AdminController {
 
         Long numberOfElements = page.getTotalElements();
         int numberOfPages = page.getTotalPages();
-        System.out.println(numberOfPages);
+
 
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("numberOfElements", numberOfElements);
@@ -448,7 +440,6 @@ public class AdminController {
 
         for (VacationHouseReservation reservation : reservations) {
             reservation.setVacationHouse(null);
-            System.out.println(reservation);
             vacationHouseReservationService.save(1L, reservation);
         }
 
@@ -460,7 +451,6 @@ public class AdminController {
         Set<VacationHouseSubscription> subs = vacationHouseSubscriptionService.findAllByVacationHouse(vacationHouse);
         for (VacationHouseSubscription s:subs){
             vacationHouseSubscriptionService.deleteById(s.getId());
-            System.out.println(vacationHouse.getId());
         }
 
         Set<VacationHouseComplaint> vcomp = vacationHouseComplaintService.getAllByVacationHouse(vacationHouse);
@@ -525,9 +515,7 @@ public class AdminController {
                 boatReservationService.getAllByBoat_Id(boat.getId());
 
         for (BoatReservation reservation : reservations) {
-            System.out.println(reservation.getDateEnd());
             reservation.setBoat(null);
-            System.out.println(reservation);
             boatReservationService.save(1L, reservation);
         }
 
@@ -571,7 +559,6 @@ public class AdminController {
                            Principal principal, HttpSession session, HttpServletResponse response) throws IOException {
 
         User dbUser = userService.findByEmail(principal.getName());
-        System.out.println(dbUser);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (!passwordNew.equals(passwordConfirm)) {
@@ -579,7 +566,6 @@ public class AdminController {
         }
 
         if (bindingResult.hasErrors()) {
-            System.out.println("imam greske ovde ");
             return "admin_change_pass";
         } else {
             dbUser.setPassword(encoder.encode(passwordNew));
@@ -649,7 +635,6 @@ public class AdminController {
         LocalDateTime startDateTime = LocalDateTime.parse(start + " 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime endDateTime = LocalDateTime.parse(end + " 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
-        System.out.println("start " + startDateTime + " end " + endDateTime);
 
         Map<String, Float> boats = new LinkedHashMap<String, Float>();
         Map<String, Float> adventures = new LinkedHashMap<String, Float>();
@@ -785,7 +770,6 @@ public class AdminController {
             housesWeek.put((now.minusDays(i).toLocalDate().toString()), 0F);
         }
 
-        System.out.println(boatsWeek.keySet());
 
 
         ArrayList<BoatReservation> boatRes = boatReservationService.findAll();
@@ -858,9 +842,7 @@ public class AdminController {
 
             if (ar.getDateFrom().isBefore(lastDayOfLastMonth) && ar.getDateFrom().isAfter(lastDayOfLastMonth.minusMonths(12)) && ar.getReservationType().equals(ReservationType.ACTIVE)) {
 
-                System.out.println(ar.getId());
                 Float temp = adventures.get(YearMonth.from(ar.getDateFrom()).toString());
-                System.out.println(adventures.get(YearMonth.from(ar.getDateFrom()).toString()));
                 adventures.put(YearMonth.from(ar.getDateFrom()).toString(), temp + ar.getPrice()*adventurePercent);
 
                 if (ar.getDateFrom().isAfter(firstDayOfLastMonth) && ar.getDateFrom().isBefore(lastDayOfLastMonth)) {
@@ -920,9 +902,7 @@ public class AdminController {
 
             if (vhr.getDateFrom().isBefore(lastDayOfLastMonth) && vhr.getDateFrom().isAfter(lastDayOfLastMonth.minusMonths(12)) && vhr.getReservationType().equals(ReservationType.ACTIVE)) {
 
-                System.out.println(vhr.getId());
                 Float temp = houses.get(YearMonth.from(vhr.getDateFrom()).toString());
-                System.out.println(houses.get(YearMonth.from(vhr.getDateFrom()).toString()));
                 houses.put(YearMonth.from(vhr.getDateFrom()).toString(), temp + vhr.getPrice()*housePercent);
 
                 if (vhr.getDateFrom().isAfter(firstDayOfLastMonth) && vhr.getDateFrom().isBefore(lastDayOfLastMonth)) {
@@ -974,7 +954,6 @@ public class AdminController {
         }
 
 
-        System.out.println(boatsWeek.keySet() + " boatsweek keyset");
 
         ArrayList<Float> list = new ArrayList<Float>();
         list.addAll(boats.values());

@@ -70,7 +70,6 @@ public class BoatDiscountOfferController {
     @PostMapping({"/boats/discount/reserve"})
     public String makeAReservation(Model model, @Param(value = "offerId") Long offerId ) throws UnsupportedEncodingException, MessagingException {
 
-        System.out.println(offerId);
         BoatReservation boatReservation = boatReservationService.findById(offerId);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

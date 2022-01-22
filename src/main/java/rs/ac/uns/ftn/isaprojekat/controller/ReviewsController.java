@@ -123,7 +123,6 @@ public class ReviewsController {
 
 
         String ownerMail = house.getVacationHouseOwner().getEmail();
-        System.out.println("owner mail "+ownerMail);
         String userFirst = review.getUser().getFirstName();
         String userLast = review.getUser().getLastName();
         String reviewContent = review.getContent();

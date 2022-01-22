@@ -1,9 +1,13 @@
+--administrator user/pass: admin/test
+--korisnik user/pass: aleksandra.varga0@gmail.com/test
+
 insert into users (address, city, email, first_name, last_name, password, phone_number, state, username, enabled, locked, user_role, verification_code) values
  ('Adresa 1', 'Vršac', 'aleksandra.varga0@gmail.com', 'Aleksandra', 'Varga', '$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum', '0003579100', 'Srbija', null, true, false, 'USER', null ),
  ('Adresa 2', 'Beograd', 'admin', 'admin', 'admin', '$2y$10$5cnScY3HzyxpCF3CzAoFAeNu2trrzxneiGQH49BQoDQeJZ/zgnHum', '5551555123', 'Srbija', null, true, false, 'ADMIN', null );
 
 insert into income_rate (entity_name, entity_percent) values ('boat', 20), ('house', 10), ('adventure', 5);
 
+--Da bi stigao odgovor administratora na žalbu i vlasniku, ovde treba upisati ispravan mail.
 insert into boat_owners (address, city, email, first_name, last_name, password) values
  ('Adresa bo1', 'Novi Sad', 'bo1@email', 'Žarko', 'Žarković', 'test'),
  ('Adresa bo2', 'Subotica', 'bo2@email', 'Darko', 'Darković', 'test');

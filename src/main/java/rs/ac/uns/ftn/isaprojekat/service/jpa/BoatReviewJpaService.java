@@ -19,7 +19,7 @@ import java.util.Set;
 public class BoatReviewJpaService implements BoatReviewService {
 
     private final BoatReviewRepository boatReviewRepository;
-    private int itemsPerPage = 2;
+    private int itemsPerPage = 5;
 
 
     public BoatReviewJpaService(BoatReviewRepository boatReviewRepository) {

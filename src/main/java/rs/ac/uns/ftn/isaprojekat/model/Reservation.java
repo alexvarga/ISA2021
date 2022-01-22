@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -10,10 +11,14 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name="user_id")
     private User user;
 
+    @NotNull
     private LocalDateTime dateFrom;
+    @NotNull
     private LocalDateTime dateEnd;
+    @NotNull
     private LocalDateTime reservationTime;
 
+    @NotNull
     private Float price;
 
     @Enumerated(EnumType.STRING)

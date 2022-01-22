@@ -1,12 +1,14 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
 @Table(name="vacation_houses")
 public class VacationHouse extends Offer {
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="owner_id")
     private VacationHouseOwner vacationHouseOwner;

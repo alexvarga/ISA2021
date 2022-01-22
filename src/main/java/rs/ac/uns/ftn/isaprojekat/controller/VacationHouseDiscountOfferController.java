@@ -72,7 +72,6 @@ public class VacationHouseDiscountOfferController {
     @PostMapping({"/houses/discount/reserve"})
     public String makeAReservation(Model model, @Param(value = "offerId") Long offerId ) throws UnsupportedEncodingException, MessagingException {
 
-        System.out.println(offerId);
         VacationHouseReservation vacationHouseReservation = vacationHouseReservationService.findById(offerId);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

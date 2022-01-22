@@ -19,7 +19,7 @@ import java.util.Set;
 public class AdventureReviewJpaService implements AdventureReviewService {
 
     private final AdventureReviewRepository adventureReviewRepository;
-    private int itemsPerPage = 2;
+    private int itemsPerPage = 5;
 
     public AdventureReviewJpaService(AdventureReviewRepository adventureReviewRepository) {
         this.adventureReviewRepository = adventureReviewRepository;

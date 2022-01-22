@@ -92,15 +92,15 @@ public class UserJpaService implements UserService {
 
     @Override
     public void sendVerificationEmail(User user, String siteUrl) throws UnsupportedEncodingException, MessagingException {
-        String subject = "Verify registration";
+        String subject = "Potvrda registracije";
         String sender = "isa-projekat";
-        String content = "<p>Hello "+user.getFirstName() + ",</p>";
-        content+="<p>Please click the link below to verify your registration. </p>";
+        String content = "<p>Pozdrav, "+user.getFirstName() + ",</p>";
+        content+="<p>Molimo vas kliknite link da bist potvrdili registraciju. </p>";
         String verifyUrl = siteUrl+"/register/verify?code="+user.getVerificationCode(); //todo
 
-        content+="<a href=\""+verifyUrl+"\">VERIFY</a>";
+        content+="<a href=\""+verifyUrl+"\">POTVRDA REGISTRACIJE</a>";
 
-        content+= "<p>Thank you.</p>";
+        content+= "<p>Hvala.</p>";
 
 
         MimeMessage message = mailSender.createMimeMessage();
@@ -312,7 +312,6 @@ public class UserJpaService implements UserService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessage message2 = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        MimeMessageHelper helper2 = new MimeMessageHelper(message2);
 
         helper.setFrom("isa.projekat.ftn.ra175.2012@gmail.com", sender);
 

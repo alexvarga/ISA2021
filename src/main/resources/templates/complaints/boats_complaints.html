@@ -10,8 +10,6 @@
 <header th:insert="/index.html :: header"></header>
 
 
-
-
 <div class="container">
     <div class="row">
         <div class="panel panel-default widget">
@@ -28,26 +26,35 @@
                     <li th:each="r:${complaints}" class="list-group-item container-fluid ">
                         <div class="row ">
                             <div class="col-xs-2 col-md-1  ">
-                                <img src="/img/user.png" width="80" class="img-circle img-responsive w-100" alt="" /></div>
+                                <img src="/img/user.png" width="80" class="img-circle img-responsive w-100" alt=""/>
+                            </div>
                             <div class="col-xs-10 col-md-11 ">
                                 <div>
                                     <p th:text="'Korisnik: '+${r.getUser().email}"></p>
                                     <p th:text="'Datum: '+${#temporals.format(r.complaintDate, 'dd-MM-yyyy ')}"></p>
-                                    <p th:text="'Brod: '+${r.boat.name}"></p>
-                                    <p th:text="'Vlasnik: '+${r.boat.owner.firstName+' '+r.boat.owner.lastName}"></p>
+                                    <div th:if="${r.boat!=null}">
+                                        <p th:text="'Brod: '+${r.boat.name}"></p>
+                                        <p th:text="'Vlasnik: '+${r.boat.owner.firstName+' '+r.boat.owner.lastName}"></p>
+                                    </div>
+                                    <dib th:if="${r.boat==null}">
+                                        [Brod je obrisan]
+                                    </dib>
                                 </div>
                                 <div class="comment-text">
                                     Žalba:
                                     <p th:text="${r.content}"></p>
                                 </div>
-                                <div class="action">
+                                <div class="action" th:if="${r.boat!=null}">
                                     <span>
-                                    <form  th:id="'responseForm'+${r.id}" th:action="@{/admin/complaints/boats}" method="post" class="col-auto justify-content-end d-inline " >
+                                    <form th:id="'responseForm'+${r.id}" th:action="@{/admin/complaints/boats}"
+                                          method="post" class="col-auto justify-content-end d-inline ">
                                         <input type="number" th:value="${r.id}" name="complaintId" hidden>
 
-                                        <textarea  th:form="'responseForm'+${r.id}" class="form-control" id="text" th:name="responseContent" rows="4" placeholder="Tekst odgovora"></textarea>
+                                        <textarea th:form="'responseForm'+${r.id}" class="form-control" id="text"
+                                                  th:name="responseContent" rows="4"
+                                                  placeholder="Tekst odgovora"></textarea>
                                        <div>
-                                           <button   type="submit" class="btn btn-success">Odgovori</button>
+                                           <button type="submit" class="btn btn-success">Odgovori</button>
                                                         </div>
                                     </form>
 

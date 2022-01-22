@@ -52,7 +52,6 @@ public class BoatController {
 
 
        // currentPage = 1;
-        System.out.println(sortField);
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
         Page<Boat> page = boatService.findAll(currentPage, sortField, sortDirection);
@@ -83,7 +82,6 @@ public class BoatController {
 
         Boat boat = boatService.findById(id);
         Boolean allowComplaint = boatReservationService.existsByUserAndBoat(user, boat);
-        System.out.println(allowComplaint+"allow complaint");
         Set<BoatReview> boatReviews = boatReviewService.getAllByBoatAndReviewStatus(boat, ReviewStatus.ALLOWED);
 
         Boolean subscribed = boatSubscriptionService.existsByUserAndBoat(user, boat);
@@ -131,16 +129,9 @@ public class BoatController {
         if (sortField==null){sortField="id";}
         if(sortDirection==null){sortDirection="asc";}
 
-        System.out.println(tag1+" " +tag2+ " "+tag3 + " ");
-        System.out.println(noOfPersons);
-        System.out.println(maxPrice);
-        System.out.println(minRating);
-
-       // System.out.println(check.isEmpty());
 
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateEnd", dateEnd);
-        System.out.println(dateFrom + "+++" + dateEnd);
 
 
         Page<Boat> page = boatService.findBoatsNotReserved(currentPage,

@@ -1,19 +1,25 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class Review extends BaseEntity {
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+    @NotNull
     private Float rating;
+    @NotNull
     @Column(columnDefinition ="TEXT")
     private String content;
+    @NotNull
     private LocalDateTime reviewTime;
 
+    @NotNull
     @Enumerated
     private ReviewStatus reviewStatus;
 

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 @Service
 public class AdventureJpaService implements AdventureService {
     private final AdventureRepository adventureRepository;
+    private int itemsPerPage = 5;
 
     public AdventureJpaService(AdventureRepository adventureRepository) {
         this.adventureRepository = adventureRepository;
@@ -31,7 +32,7 @@ public class AdventureJpaService implements AdventureService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort); //zero based index
 
         return adventureRepository.findAll(pageable);
     }
@@ -65,7 +66,7 @@ public class AdventureJpaService implements AdventureService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort); //zero based index
 
 
         return adventureRepository.findAdventuresNotReserved(dateFrom, dateEnd, maxPrice, minRating, noOfPersons, tag1, tag2, tag3, pageable);

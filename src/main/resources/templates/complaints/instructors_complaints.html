@@ -30,16 +30,20 @@
                             <div class="col-xs-2 col-md-1  ">
                                 <img src="/img/user.png" width="80" class="img-circle img-responsive w-100" alt="" /></div>
                             <div class="col-xs-10 col-md-11 ">
-                                <div>
+
                                     <p th:text="'Korisnik: '+${r.user.email}"></p>
                                     <p th:text="'Datum: '+${#temporals.format(r.complaintDate, 'dd-MM-yyyy ')}"></p>
+                                <div th:if="${r.instructor!=null}">
                                     <p th:text="'Instruktor: '+${r.instructor.firstName +' '+r.instructor.lastName}"></p>
+                                </div>
+                                <div th:if="${r.instructor==null}">
+                                    [Instruktor je obrisan.]
                                 </div>
                                 <div class="comment-text">
                                     Žalba:
                                     <p th:text="${r.content}"></p>
                                 </div>
-                                <div class="action">
+                                <div class="action" th:if="${r.instructor!=null}">
                                     <span>
                                     <form  th:id="'responseForm'+${r.id}" th:action="@{/admin/complaints/instructors}" method="post" class="col-auto justify-content-end d-inline " >
                                         <input type="number" th:value="${r.id}" name="complaintId" hidden>

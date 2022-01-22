@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class VacationHouseJpaService implements VacationHouseService {
 
     private final VacationHouseRepository vacationHouseRepository;
+    private int itemsPerPage = 5;
 
     public VacationHouseJpaService(VacationHouseRepository vacationHouseRepository) {
         this.vacationHouseRepository = vacationHouseRepository;
@@ -33,7 +34,7 @@ public class VacationHouseJpaService implements VacationHouseService {
             sort = Sort.by(sortField).descending();
         }
 
-        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort); //zero based index
 
         return vacationHouseRepository.findAll(pageable);
     }
@@ -61,9 +62,8 @@ public class VacationHouseJpaService implements VacationHouseService {
             sort = Sort.by(sortField).descending();
         }
 
-        //sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
 
-        Pageable pageable = PageRequest.of(pageNumber-1, 2, sort); //zero based index
+        Pageable pageable = PageRequest.of(pageNumber-1, itemsPerPage, sort);
 
 
         return vacationHouseRepository.findVacationHousesNotReserved(dateFrom, dateEnd, maxPrice,

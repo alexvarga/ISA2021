@@ -1,7 +1,6 @@
 package rs.ac.uns.ftn.isaprojekat.model;
 
 
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +15,7 @@ public class User extends Person  {
     private UserRole userRole;
     private Boolean enabled;
     private Boolean locked;
-    //private Boolean visitedStatus;
+
     private String verificationCode;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

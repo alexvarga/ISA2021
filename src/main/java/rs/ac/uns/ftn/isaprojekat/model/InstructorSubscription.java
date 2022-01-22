@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="instructor_subscriptions")
@@ -11,6 +12,7 @@ public class InstructorSubscription extends Subscription {
 
     @ManyToOne
     @JoinColumn(name="instructor_id")
+    @NotNull
     private Instructor instructor;
 
     public Instructor getInstructor() {
