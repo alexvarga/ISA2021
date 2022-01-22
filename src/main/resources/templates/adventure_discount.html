@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Avanture - akcije</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+<div class="container">
+
+   <div class="text-center"> <h4 class="text-center">Avanture akcije</h4></div>
+    <div class="row">
+
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>
+                    <a th:href="@{'/adventures/discount/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/discount/page/'+${currentPage} + '?sortField=reservationTime&sortDirection=' + ${reverseSortDirection}}">Vreme
+                        rezervacije </a></td>
+                <td>
+                    <a th:href="@{'/adventures/discount/page/'+${currentPage} + '?sortField=dateFrom&sortDirection=' + ${reverseSortDirection}}">Od </a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/discount/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do </a>
+                </td>
+
+                <td>Ocena</td>
+                <td>Instruktor</td>
+                <td>Instruktor</td>
+                <td>Avantura</td>
+                <td>Rezervacija</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="offer:${adventureDiscountOffers}">
+                <td th:text="${offer.id}"></td>
+                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy HH:mm')}">name</td>
+                <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
+                <td th:text="${#temporals.format(offer.dateEnd, 'dd-MM-yyyy ')}">info</td>
+
+                <td>
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.avgRating}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+                </td>
+                <td>
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.instructor.lastName}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${offer.adventure!=null}" th:text="${offer.adventure.instructor.firstName}">rating</p>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+                </td>
+                <td>
+                    <a th:if="${offer.adventure!=null}" th:href="@{/adventures/{id}(id=${offer.adventure.id})}"
+                       th:text="${offer.adventure.id}">id
+                        broda</a>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+                </td>
+                <td>
+                    <form th:if="${offer.adventure!=null}" th:action="@{/adventures/discount/reserve}" method="post">
+                        <input hidden name="offerId" th:value="${offer.id}"/>
+                        <button type="submit" class="btn btn-primary">Rezerviši</button>
+
+
+                    </form>
+                    <p th:if="${offer.adventure==null}" th:text="Obrisana">rating</p>
+
+                </td>
+
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+        <div class="border-top" th:if="${numberOfPages>0}">
+            <div class="row justify-content-center" th:if="${numberOfPages>0}">
+                Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+                &nbsp; - &nbsp;
+
+                <a th:if="${currentPage>1}"
+                   th:href="@{'/adventures/discount/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+                <span th:unless="${currentPage>1}">Prva</span>
+                &nbsp;
+                <a th:if="${currentPage>1}"
+                   th:href="@{'/adventures/discount/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+                <span th:unless="${currentPage>1}">Prethodna</span>
+                &nbsp;
+
+                <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/adventures/discount/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+                <a th:if="${currentPage<numberOfPages}"
+                   th:href="@{'/adventures/discount/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+                <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+                &nbsp;
+                <a th:if="${currentPage<numberOfPages}"
+                   th:href="@{'/adventures/discount/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+                <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+                &nbsp;
+
+
+            </div>
+        </div>
+
+
+
+
+    <div th:insert="/index.html :: scripts"></div>
+
+</body>
+</html>

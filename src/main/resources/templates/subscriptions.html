@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pretplate</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+<div class="container">
+<div>
+    <div class="div text-center">
+        <h4>Pretplate</h4>
+    </div>
+</div>
+    <div class="row">
+        <div class="col">
+            <table th:if="${!boatSubscriptions.isEmpty()}" class="table table-striped">
+                <thead>
+                <tr>
+
+                    <td>id</td>
+                    <td>Ime broda</td>
+                    <td>Datum pretplate</td>
+                    <td>Odjava</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sub:${boatSubscriptions}">
+                    <td th:text="${sub.id}"></td>
+                    <td><a th:href="@{/boats/{id}(id=${sub.boat.id})}" th:text="${sub.boat.name}">id</a></td>
+                    <td th:text="${sub.boat.name}">name</td>
+                    <td th:text="${#temporals.format(sub.dateOfSubscribing, 'dd-MM-yyyy ')}">address</td>
+
+
+                    <td>
+                        <form th:action="@{/subscriptions}" th:method="post">
+                            <input hidden name="entityType" th:value="boat"/>
+                            <input hidden name="id" th:value="${sub.id}"/>
+                            <button type="submit" class="btn btn-primary">Odjavi se</button>
+
+
+                        </form>
+
+                    </td>
+
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+        <div class="row">
+            <div class="col">
+            <table th:if="${!houseSubscriptions.isEmpty()}" class="table table-striped">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>Ime vikendice</td>
+                    <td>Datum pretplate</td>
+                    <td>Odjava</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sub:${houseSubscriptions}">
+                    <td th:text="${sub.id}"></td>
+                    <td><a th:href="@{/houses/{id}(id=${sub.vacationHouse.id})}" th:text="${sub.vacationHouse.name}">name</a></td>
+                    <td th:text="${#temporals.format(sub.dateOfSubscribing, 'dd-MM-yyyy ')}">address</td>
+
+
+                    <td>
+                        <form th:action="@{/subscriptions}" th:method="post">
+                            <input hidden name="entityType" th:value="house"/>
+                            <input hidden name="id" th:value="${sub.id}"/>
+                            <button type="submit" class="btn btn-primary">Odjavi se</button>
+
+
+                        </form>
+
+                    </td>
+
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <table th:if="${!instructorSubscriptions.isEmpty()}" class="table table-striped">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>Ime instruktora</td>
+                    <td>Prezime instruktora</td>
+                    <td>Datum pretplate</td>
+                    <td>Odjava</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sub:${instructorSubscriptions}">
+                    <td th:text="${sub.id}"></td>
+                    <td th:text="${sub.instructor.firstName}">name</td>
+                    <td th:text="${sub.instructor.lastName}">name</td>
+                    <td th:text="${#temporals.format(sub.dateOfSubscribing, 'dd-MM-yyyy ')}">address</td>
+
+
+                    <td>
+                        <form th:action="@{/subscriptions}" th:method="post">
+                            <input hidden name="entityType" th:value="instructor"/>
+                            <input hidden name="id" th:value="${sub.id}"/>
+                            <button type="submit" class="btn btn-primary">Odjavi se</button>
+
+
+                        </form>
+
+                    </td>
+
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Avanture</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+<div class="container">
+
+    <div class="row text-center">
+       <div class="col"><h4>Avanture</h4> </div>
+        <p></p></div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 mx-auto border-right"></div>
+
+        <div class="col-lg-7 col-md-7 mx-auto border-right">
+
+
+            <form class="" name="myForm" th:action="@{/search/adventures}" method="post" onsubmit="return validateForm();">
+                <div class="row"><p class="col text-center">Unesite željeni period rezervacije</p></div>
+                <div class="row ">
+                    <div class="col align-items-center text-center">
+                        <div id="date-error" name="date-error "
+                             class="alert alert-danger "
+                             style="display: none">Početak ne sme biti pre danas i ne sme biti posle kraja.
+                        </div></div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label" for="from">Od</label>
+                            <input id="from" type="date" class="form-control" th:name="dateFrom" required></div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label" for="from">Do</label>
+                            <input id="to" type="date" class="form-control" th:name="dateEnd" required></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label" for="from">Maksimalna cena</label>
+                            <input id="maxPrice" type="number" min="0"  placeholder="1000"  class="form-control" th:name="maxPrice" required></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label" for="from">Minimalna ocena</label>
+                            <input id="minRating" type="number" min="0" max="5" step="0.05" placeholder="1" class="form-control" th:name="minRating"  required></div>
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="form-label" for="from">Broj učesnika</label>
+                            <input id="noOfPersons" type="number" min="1" placeholder="1"  class="form-control" th:name="noOfPersons" required></div>
+                    </div>
+
+                    <div class="col ">
+                        <div><p>Dodatne opcije</p></div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="tag1" id="tag1" th:value="čamac" />
+                            <label class="form-check-label" for="tag1">Čamac</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="tag2" id="tag2" th:value="prevoz" />
+                            <label class="form-check-label" for="tag2">Prevoz</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    id="tag3"
+                                    th:value="parking"
+                                    name="tag3"
+
+                            />
+                            <label class="form-check-label" for="tag3">Parking</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-12">
+                        <div class="input-group-btn">
+                            <button class=" btn btn-secondary" type="submit">Pretraži</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-lg-2 col-md-2 mx-auto justify-content-center text-center ">
+
+            <p>Pogledajte sve akcije <a href="/adventures/discount">ovde</a>.</p>
+
+        </div>
+
+    </div>
+
+    <div class="row"><p></p></div>
+
+
+    <div class="row">
+
+        <table class="table table-striped">
+            <thead>
+            <tr th:if="${search==true}">
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Naziv</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Adresa</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Ocena</a>
+                </td>
+                <td>
+                    <a th:href="@{'/search/adventures/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Cena</a>
+                </td>
+            </tr>
+            <tr th:unless="${search==true}">
+                <td>
+                    <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">Naziv</a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=address&sortDirection=' + ${reverseSortDirection}}">Adresa</a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=info&sortDirection=' + ${reverseSortDirection}}">Info</a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=avgRating&sortDirection=' + ${reverseSortDirection}}">Ocena</a>
+                </td>
+                <td>
+                    <a th:href="@{'/adventures/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">Cena</a>
+                </td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="adventure:${adventures}">
+                <td><a th:href="@{/adventures/{id}(id=${adventure.id})}" th:text="${adventure.id}">id</a>
+                </td>
+                <td><a th:href="@{/adventures/{id}(id=${adventure.id})}" th:text="${adventure.name}">name</a>
+                </td>
+                <td th:text="${adventure.address}">address</td>
+                <td th:text="${adventure.info}">info</td>
+                <td th:text="${adventure.avgRating}">rating</td>
+                <td th:text="${adventure.price}">price</td>
+                <td th:if="${search==true}">
+                    <a class="btn btn-primary" href="#my_modal" data-toggle="modal"
+                       th:attr="data-adventure-id=''+${adventure.id}+'', data-date-from=''+${dateFrom}+'', data-date-end=''+${dateEnd}+'' ">Rezerviši</a>
+
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div th:if="${search==true }" class="row justify-content-center border-top">
+        <div th:if="${numberOfPages>0}" >
+        Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+        &nbsp; - &nbsp;
+
+        <a th:if="${currentPage>1}" th:href="@{'/search/adventures/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prva</a>
+
+        <span th:unless="${currentPage>1}">Prva</span>
+        &nbsp;
+        <a th:if="${currentPage>1}" th:href="@{'/search/adventures/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Prethodna </a>
+        <span th:unless="${currentPage>1}">prethodna</span>
+        &nbsp;
+
+        <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a></a>
+                <a th:if="${i != currentPage}" th:href="@{'/search/adventures/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+        <a th:if="${currentPage<numberOfPages}" th:href="@{'/search/adventures/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Sledeća</a>
+        <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+        &nbsp;
+        <a th:if="${currentPage<numberOfPages}" th:href="@{'/search/adventures/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}+'&dateFrom='+${dateFrom} +'&dateEnd='+${dateEnd}+'&maxPrice='+${maxPrice}+'&minRating='+${minRating}+'&noOfPersons='+${noOfPersons}+'&tag1='+${tag1}+'&tag2='+${tag2}+'&tag3='+${tag3}}">Poslednja </a>
+        <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+        &nbsp;
+
+        </div>
+    </div>
+
+
+    <div th:unless="${search==true }" class="row justify-content-center border-top">
+        <div th:if="${numberOfPages>0}" >
+        Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+        &nbsp; - &nbsp;
+
+        <a th:if="${currentPage>1}" th:href="@{'/adventures/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <a th:if="${currentPage>1}" th:href="@{'/adventures/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <span th:unless="${currentPage>1}">Prva</span>
+        &nbsp;
+        <a th:if="${currentPage>1}" th:href="@{'/adventures/page/'+${currentPage - 1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+        <span th:unless="${currentPage>1}">prethodna</span>
+        &nbsp;
+
+        <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a></a>
+                <a th:if="${i != currentPage}" th:href="@{'/adventures/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+
+        <a th:if="${currentPage<numberOfPages}" th:href="@{'/adventures/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+        <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+        &nbsp;
+        <a th:if="${currentPage<numberOfPages}" th:href="@{'/adventures/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+        <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+        &nbsp;
+        </div>
+
+    </div>
+</div>
+
+
+
+<div th:insert="/fragments/modal/_modals::reservationModal('/reserve/adventure')"></div>
+
+<div th:insert="/index.html :: scripts"></div>
+
+<script>
+    $('#my_modal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget)
+        var entityId = button.data('adventure-id');
+        var dateFrom = button.data('date-from');
+        var dateEnd = button.data('date-end');
+        $(e.currentTarget).find('input[name="entityId"]').val(entityId);
+        $(e.currentTarget).find('input[name="dateFrom"]').val(dateFrom);
+        $(e.currentTarget).find('input[name="dateEnd"]').val(dateEnd);
+    });
+</script>
+</body>
+</html>

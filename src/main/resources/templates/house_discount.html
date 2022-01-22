@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vikendice - akcije</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+<div class="container">
+    <div class="text-center"> <h4 class="text-center">Vikendice akcije</h4></div>
+    <div class="row">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>
+                    <a th:href="@{'/houses/discount/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
+                </td>
+                <td>
+                    <a th:href="@{'/houses/discount/page/'+${currentPage} + '?sortField=reservationTime&sortDirection=' + ${reverseSortDirection}}">Vreme
+                        rezervacije </a></td>
+                <td>
+                    <a th:href="@{'/houses/discount/page/'+${currentPage} + '?sortField=dateFrom&sortDirection=' + ${reverseSortDirection}}">Od </a>
+                </td>
+                <td>
+                    <a th:href="@{'/houses/discount/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do </a>
+                </td>
+                <td>Ocena vikendice</td>
+                <td>Vlasnik</td>
+                <td>Vlasnik</td>
+                <td>Vikendica</td>
+                <td>Rezervacija</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="offer:${vacationHouseDiscountOffers}">
+                <td th:text="${offer.id}"></td>
+                <td th:text="${#temporals.format(offer.reservationTime, 'dd-MM-yyyy ')}">name</td>
+                <td th:text="${#temporals.format(offer.dateFrom, 'dd-MM-yyyy ')}">address</td>
+                <td th:text="${#temporals.format(offer.dateEnd, 'dd-MM-yyyy ')}">info</td>
+
+                <td>
+                    <p th:if="${offer.vacationHouse != null}" th:text="${offer.vacationHouse.avgRating}">rating</p>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                </td>
+
+                <td>
+                    <p th:if="${offer.vacationHouse != null}"
+                       th:text="${offer.vacationHouse.vacationHouseOwner.lastName}">last name</p>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">last name</p>
+
+                </td>
+                <td>
+                    <p th:if="${offer.vacationHouse != null}"
+                       th:text="${offer.vacationHouse.vacationHouseOwner.firstName}">first name</p>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">first name</p>
+
+                </td>
+
+                <td>
+                    <a th:if="${offer.vacationHouse != null}" th:href="@{/houses/{id}(id=${offer.vacationHouse.id})}"
+                       th:text="${offer.vacationHouse.id}">id broda</a>
+                    <p th:if="${offer.vacationHouse == null}" th:text="Obrisana">rating</p>
+                </td>
+                <td th:if="${offer.vacationHouse != null}">
+                    <form th:action="@{/houses/discount/reserve}" method="post">
+                        <input hidden name="offerId" th:value="${offer.id}"/>
+                        <button type="submit" class="btn btn-primary">Rezerviši</button>
+
+
+                    </form>
+
+                </td>
+
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="row justify-content-center border-top">
+        <div th:if="${numberOfPages>0}">
+        Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+        &nbsp; - &nbsp;
+
+        <a th:if="${currentPage>1}"
+           th:href="@{'/houses/discount/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+        <span th:unless="${currentPage>1}">Prva</span>
+        &nbsp;
+        <a th:if="${currentPage>1}"
+           th:href="@{'/houses/discount/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+        <span th:unless="${currentPage>1}">prethodna</span>
+        &nbsp;
+
+        <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/houses/discount/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/houses/discount/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+        <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+        &nbsp;
+        <a th:if="${currentPage<numberOfPages}"
+           th:href="@{'/houses/discount/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+        <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+        &nbsp;
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+
+</body>
+</html>

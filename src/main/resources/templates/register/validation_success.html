@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Uspešno</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+<h3>Uspešna aktivacija</h3>
+<h2>Prijavite se</h2>
+<a class="btn-outline-primary btn" th:href="@{/login}">Prijavite se</a>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

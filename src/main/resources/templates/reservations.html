@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervacije</title>
+
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}" ></script>
+
+</head>
+<body>
+
+<div th:replace="index.html::header"></div>
+
+<div class="container">
+
+    <div class="row"><p></p></div>
+
+
+
+    <div th:if="${boatReservations}" class="row justify-content-center">
+        <div ><p></p>
+
+        </div>
+
+
+        <table class="table table-striped">
+            <thead>
+            <div th:if="${boatHistory}"> <!-- ako je history objekat -->
+                <h4>Istorija rezervacija brodova</h4>
+                <tr>
+                    <td>
+                        <a th:href="@{'/boatHistory/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/boatHistory/page/'+${currentPage} + '?sortField=reservationTime&sortDirection=' + ${reverseSortDirection}}">Vreme
+                            rezervacije</a></td>
+                    <td>
+                        <a th:href="@{'/boatHistory/page/'+${currentPage} + '?sortField=dateFrom&sortDirection=' + ${reverseSortDirection}}">Od</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/boatHistory/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do</a>
+                    </td>
+                    <td>Ocena broda</td>
+                    <td>Vlasnik</td>
+                    <td>Vlasnik</td>
+                    <td>
+                        <a th:href="@{'/boatHistory/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">Cena</a>
+                    </td>
+                    <td>Brod</td>
+                </tr>
+            </div>
+            <tr th:unless="${boatHistory==true}">
+                <h4>Rezervacije brodova</h4>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=id&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">id</a>
+                </td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=reservationTime&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Vreme rezervacije</a>
+                </td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=dateFrom&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Od</a>
+                </td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=dateEnd&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Do</a>
+                </td>
+                <td>Ocena broda</td>
+                <td>Vlasnik</td>
+                <td>Vlasnik</td>
+
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldB=price&sortFieldA='+${sortFieldA}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${reverseSortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Cena</a>
+                </td>
+                <td>boat id</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation:${boatReservations}">
+                <td>
+                   <p  th:text="${reservation.id}"> </p>
+                </td>
+                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy HH:mm ')}">name</td>
+                <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">date from</td>
+                <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
+                <td> <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.avgRating}">rating </p>
+                    <p th:if="${reservation.boat==null}" >Obrisan</p>
+                </td>
+                <td> <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.owner.lastName}">rating </p>
+                    <p th:if="${reservation.boat==null}" th:text="Obrisan">
+                        Obrisan</p>
+                </td>
+                <td>
+                    <p th:if="${reservation.boat!=null}" th:text="${reservation.boat.owner.firstName}">rating </p>
+                    <p th:if="${reservation.boat==null}" >Obrisan</p>
+                </td>
+                <td>
+                    <p   th:text="${reservation.price}">cena</p>
+
+                </td>
+
+                <td><a
+                    th:if="${reservation.boat!=null}" th:href="@{/boats/{id}(id=${reservation.boat.id})}" th:text="${reservation.boat.id}">id broda</a>
+                    <p th:if="${reservation.boat==null}" >Obrisan</p>
+                </td>
+                <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
+                    cancelled
+                </td>
+                <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and boatHistory==true}">
+                    <a th:if="${reservation.boat !=null}" th:attr="data-boat-id=''+${reservation.boat.id}+''" href="#rate_boat_modal" data-toggle="modal">Oceni</a>
+                </td>
+                <td th:unless="${boatHistory==true or reservation.boat==null}">
+                    <a class="btn btn-primary" href="#cancel_boat_modal" data-toggle="modal"
+                       th:attr="data-boat-reservation-id=''+${reservation.id}+'', data-boat-date-from=''+${reservation.dateFrom}+'', data-boat-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <div th:if="${boatHistory==true and numberOfPages>0}" class="row justify-content-center">
+            Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPage>1}"
+               th:href="@{'/boatHistory/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+            <span th:unless="${currentPage>1}">Prva</span>
+            &nbsp;
+            <a th:if="${currentPage>1}"
+               th:href="@{'/boatHistory/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+            <span th:unless="${currentPage>1}">prethodna</span>
+            &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/boatHistory/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+            <a th:if="${currentPage<numberOfPages}"
+               th:href="@{'/boatHistory/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+            <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+            &nbsp;
+            <a th:if="${currentPage<numberOfPages}"
+               th:href="@{'/boatHistory/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+            <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+            &nbsp;
+
+
+        </div>
+
+        <div th:unless="${boatHistory==true and numberOfPages>0}" class="row justify-content-center">
+            Ukupno: [[${numberOfElementsBoat}]] - Stranica [[${currentPageB}]] od [[${numberOfPagesBoat}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPageB>1}"
+               th:href="@{'/reservations/page/1/' + ${currentPageH}+'/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prva</a>
+            <span th:unless="${currentPageB>1}">Prva</span>
+            &nbsp;
+            <a th:if="${currentPageB>1}"
+               th:href="@{'/reservations/page/'+${currentPageB-1}+ '/'+${currentPageH}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prethodna </a>
+            <span th:unless="${currentPageB>1}">prethodna</span>
+            &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, numberOfPagesBoat)}">
+                <a th:if="${i != currentPageB}"
+                   th:href="@{'/reservations/page/' + ${i}+'/' + ${currentPageH}+ '/'+${currentPageA}  + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPageB}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+            <a th:if="${currentPageB<numberOfPagesBoat}"
+               th:href="@{'/reservations/page/'+${currentPageB+1} + '/'+${currentPageH}+ '/'+${currentPageA}  + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Sledeća</a>
+            <span th:unless="${currentPageB<numberOfPagesBoat}">Sledeća</span>
+            &nbsp;
+            <a th:if="${currentPageB<numberOfPagesBoat}"
+               th:href="@{'/reservations/page/'+${numberOfPagesBoat} + '/'+${currentPageH}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Poslednja </a>
+            <span th:unless="${currentPageB<numberOfPagesBoat}">Poslednja</span>
+            &nbsp;
+
+
+        </div>
+
+
+    </div>
+
+
+    <p></p>
+    <div th:if="${adventureReservations}" class="row justify-content-center">
+
+        <table class="table table-striped">
+            <thead>
+            <div th:if="${adventureHistory==true}"> <!-- ako je history objekat -->
+                <h4>Istorija rezervacija avantura</h4>
+                <tr>
+                    <td>
+                        <a th:href="@{'/adventureHistory/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/adventureHistory/page/'+${currentPage} + '?sortField=reservationTime&sortDirection=' + ${reverseSortDirection}}">Vreme
+                            rezervacije </a></td>
+                    <td>
+                        <a th:href="@{'/adventureHistory/page/'+${currentPage} + '?sortField=dateFrom&sortDirection=' + ${reverseSortDirection}}">Od</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/adventureHistory/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do</a>
+                    </td>
+
+                    <td>Ocena avanture</td>
+                    <td>Instruktor</td>
+                    <td>Instruktor</td>
+                    <td>
+                        <a th:href="@{'/adventureHistory/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">Cena</a>
+                    </td>
+                    <td>avantura</td>
+                </tr>
+            </div>
+            <tr th:unless="${adventureHistory==true}">
+                <h4>Rezervacije avantura</h4>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldA=id&sortFieldB='+${sortFieldB}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${reverseSortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">id</a>
+                </td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldA=reservationTime&sortFieldB='+${sortFieldB}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${reverseSortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Vreme rezervacije</a>
+                </td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldA=dateFrom&sortFieldB='+${sortFieldB}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${reverseSortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Od</a>
+                </td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldA=dateEnd&sortFieldB='+${sortFieldB}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${reverseSortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Do</a>
+                </td>
+                <td>Ocena avanture</td>
+                <td>Instruktor</td>
+                <td>Instruktor</td>
+                <td>
+                    <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldA=price&sortFieldB='+${sortFieldB}+'&sortFieldH='+${sortFieldH} + '&sortDirectionA='+ ${reverseSortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Cena</a>
+                </td>
+                <td>Avantura</td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation:${adventureReservations}">
+                <td th:text="${reservation.id}">
+                </td>
+                <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy HH:mm ')}">name</td>
+                <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
+                <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
+                <td>
+                    <p th:if="${reservation.adventure != null}" th:text="${reservation.adventure.avgRating}">rating</p>
+                    <p th:if="${reservation.adventure == null}" th:text="Obrisana">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${reservation.adventure != null}"  th:text="${reservation.adventure.instructor.lastName}">rating</p>
+                    <p th:if="${reservation.adventure == null}" th:text="Obrisan">rating</p>
+
+                </td>
+                <td>
+                    <p th:if="${reservation.adventure != null}"  th:text="${reservation.adventure.instructor.firstName}">rating</p>
+                    <p th:if="${reservation.adventure == null}"  th:text="Obrisan">rating</p>
+
+                </td>
+                <td th:text="${reservation.price}">rating</td>
+                <td><a th:if="${reservation.adventure != null}" th:href="@{/adventures/{id}(id=${reservation.adventure.id})}"
+                       th:text="${reservation.adventure.id}">id</a>
+                    <p th:if="${reservation.adventure == null}">Obrisana</p>
+                </td>
+                <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
+                    cancelled
+                </td>
+                <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and adventureHistory==true}">
+                    <a th:if="${reservation.adventure != null}"  th:attr="data-adventure-id=''+${reservation.adventure.id}+''" href="#rate_adventure_modal" data-toggle="modal">Oceni</a>
+                </td>
+                <td th:unless="${adventureHistory==true}">
+
+                    <a th:if="${reservation.adventure != null}" class="btn btn-primary" href="#cancel_adventure_modal" data-toggle="modal"
+                       th:attr="data-adventure-reservation-id=''+${reservation.id}+'', data-adventure-date-from=''+${reservation.dateFrom}+'', data-adventure-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+                    <p th:if="${reservation.adventure==null}"> </p>
+
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+        <div class="row justify-content-center" th:if="${adventureHistory==true and numberOfPages>0}">
+            Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPage>1}"
+               th:href="@{'/adventureHistory/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}  }">Prva</a>
+            <span th:unless="${currentPage>1}">Prva</span>
+            &nbsp;
+            <a th:if="${currentPage>1}"
+               th:href="@{'/adventureHistory/page/'+${currentPage-1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna </a>
+            <span th:unless="${currentPage>1}">prethodna</span>
+            &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/adventureHistory/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+            <a th:if="${currentPage<numberOfPages}"
+               th:href="@{'/adventureHistory/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+            <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+            &nbsp;
+            <a th:if="${currentPage<numberOfPages}"
+               th:href="@{'/adventureHistory/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja </a>
+            <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+            &nbsp;
+
+
+        </div>
+        <div th:unless="${adventureHistory==true}" class="row justify-content-center">
+            Ukupno: [[${numberOfElementsAdventure}]] - Stranica [[${currentPageA}]] od [[${numberOfPagesAdventure}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPageA>1}"
+               th:href="@{'/reservations/page/' + ${currentPageB}+'/'+ ${currentPageH}+'/1'  + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Prva</a>
+            <span th:unless="${currentPageA>1}">Prva</span>
+            &nbsp;
+            <a th:if="${currentPageA>1}"
+               th:href="@{'/reservations/page/'+${currentPageB}+ '/'+${currentPageH}+ '/'+${currentPageA-1} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} +'&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}  }">Prethodna </a>
+            <span th:unless="${currentPageA>1}">prethodna</span>
+            &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, numberOfPagesAdventure)}">
+                <a th:if="${i != currentPageA}"
+                   th:href="@{'/reservations/page/' + ${currentPageB} + '/'+${currentPageH}+ '/'+${i} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }"> [[${i}]] </a>
+                <span th:unless="${i != currentPageA}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+            <a th:if="${currentPageA<numberOfPagesAdventure}"
+               th:href="@{'/reservations/page/'+${currentPageB} +'/'+${currentPageH}+ '/'+${currentPageA+1}  + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}  }">Sledeća</a>
+            <span th:unless="${currentPageA<numberOfPagesAdventure}">Sledeća</span>
+            &nbsp;
+            <a th:if="${currentPageA<numberOfPagesAdventure}"
+               th:href="@{'/reservations/page/'+${currentPageB} + '/'+${currentPageH}+ '/'+${numberOfPagesAdventure} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} + '&entity=adventure'}">Poslednja </a>
+            <span th:unless="${currentPageA<numberOfPagesAdventure}">Poslednja</span>
+            &nbsp;
+
+
+        </div>
+    </div>
+    <p></p>
+
+    <div th:if="${vacationHouseReservations}" >
+        <div class="row justify-content-center">
+
+
+            <table class="table table-striped">
+                <thead>
+                <div th:if="${vacationHouseHistory==true}">
+                    <h4>Istorija rezervacija vikendica</h4>
+                    <tr>
+                        <td>
+                            <a th:href="@{'/houseHistory/page/'+${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">id </a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/houseHistory/page/'+${currentPage} + '?sortField=reservationTime&sortDirection=' + ${reverseSortDirection}}">Vreme
+                                rezervacije</a></td>
+                        <td>
+                            <a th:href="@{'/houseHistory/page/'+${currentPage} + '?sortField=dateFrom&sortDirection=' + ${reverseSortDirection}}">Od</a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/houseHistory/page/'+${currentPage} + '?sortField=dateEnd&sortDirection=' + ${reverseSortDirection}}">Do</a>
+                        </td>
+                        <td>Ocena vikendice</td>
+                        <td>Vlasnik</td>
+                        <td>Vlasnik</td>
+
+                        <td>
+                            <a th:href="@{'/houseHistory/page/'+${currentPage} + '?sortField=price&sortDirection=' + ${reverseSortDirection}}">Cena</a>
+                        </td>
+                        <td>Vikendica</td>
+                    </tr>
+                </div>
+                <tr th:unless="${vacationHouseHistory==true}">
+                    <h4>Rezervacije vikendica</h4>
+                    <td>
+                        <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldH=id&sortFieldB='+${sortFieldB}+'&sortFieldA='+${sortFieldA} + '&sortDirectionH='+ ${reverseSortDirectionH} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionA='+ ${sortDirectionA}}">id</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldH=reservationTime&sortFieldB='+${sortFieldB}+'&sortFieldA='+${sortFieldA} + '&sortDirectionH='+ ${reverseSortDirectionH} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionA='+ ${sortDirectionA}}">Vreme rezervacije</a>
+
+                    </td>
+                    <td>
+                        <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldH=dateFrom&sortFieldB='+${sortFieldB}+'&sortFieldA='+${sortFieldA} + '&sortDirectionH='+ ${reverseSortDirectionH} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionA='+ ${sortDirectionA}}">Od</a>
+
+                    </td>
+                    <td>
+                        <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldH=dateEnd&sortFieldB='+${sortFieldB}+'&sortFieldA='+${sortFieldA} + '&sortDirectionH='+ ${reverseSortDirectionH} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionA='+ ${sortDirectionA}}">Do</a>
+
+                    </td>
+                    <td>Ocena vikendice</td>
+                    <td>Vlasnik</td>
+                    <td>Vlasnik</td>
+                    <td>
+                        <a th:href="@{'/reservations/page/'+${currentPageB}+'/'+${currentPageH}+'/'+${currentPageA} + '?sortFieldH=price&sortFieldB='+${sortFieldB}+'&sortFieldA='+${sortFieldA} + '&sortDirectionH='+ ${reverseSortDirectionH} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionA='+ ${sortDirectionA}}">Cena</a>
+
+                    </td>
+                    <td>Vikendica</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reservation:${vacationHouseReservations}">
+                    <td th:text="${reservation.id}">
+                    </td>
+                    <td th:text="${#temporals.format(reservation.reservationTime, 'dd-MM-yyyy HH:mm ')}">name</td>
+                    <td th:text="${#temporals.format(reservation.dateFrom, 'dd-MM-yyyy ')}">address</td>
+                    <td th:text="${#temporals.format(reservation.dateEnd, 'dd-MM-yyyy ')}">info</td>
+
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.avgRating}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.vacationHouseOwner.lastName}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+                    <td>
+                        <p th:if="${reservation.vacationHouse != null}" th:text="${reservation.vacationHouse.vacationHouseOwner.firstName}">rating</p>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+
+                    </td>
+
+
+
+
+                    <td th:text="${reservation.price}">cena</td>
+
+                    <td><a th:if="${reservation.vacationHouse != null}" th:href="@{/houses/{id}(id=${reservation.vacationHouse.id})}"
+                           th:text="${reservation.vacationHouse.id}">id</a>
+                        <p th:if="${reservation.vacationHouse == null}" th:text="Obrisana">rating</p>
+                    </td>
+
+                    <td th:if="${reservation.reservationType == T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED}">
+                        canceled
+                    </td>
+                    <td th:if="${reservation.reservationType != T(rs.ac.uns.ftn.isaprojekat.model.ReservationType).CANCELLED and vacationHouseHistory==true}">
+                        <a th:if="${reservation.vacationHouse!=null}" th:attr="data-house-id=''+${reservation.vacationHouse.id}+''" href="#rate_house_modal" data-toggle="modal">Oceni</a>
+                    </td>
+                    <td th:unless="${vacationHouseHistory==true}">
+                        <a class="btn btn-primary" href="#cancel_house_modal" data-toggle="modal"
+                           th:attr="data-house-reservation-id=''+${reservation.id}+'', data-house-date-from=''+${reservation.dateFrom}+'', data-house-date-end=''+${reservation.dateEnd}+'' ">Otkaži</a>
+
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row justify-content-center" th:if="${vacationHouseHistory==true and numberOfPages>0}">
+            Ukupno: [[${numberOfElements}]] - Stranica [[${currentPage}]] od [[${numberOfPages}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPage>1}"
+               th:href="@{'/houseHistory/page/1' + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection} }">Prva</a>
+            <span th:unless="${currentPage>1}">Prva</span>
+            &nbsp;
+            <a th:if="${currentPage>1}"
+               th:href="@{'/houseHistory/page/'+${currentPage-1}+ '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Prethodna</a>
+            <span th:unless="${currentPage>1}">prethodna</span>
+            &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, numberOfPages)}">
+                <a th:if="${i != currentPage}"
+                   th:href="@{'/houseHistory/page/' + ${i} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}"> [[${i}]] </a>
+                <span th:unless="${i != currentPage}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+            <a th:if="${currentPage<numberOfPages}"
+               th:href="@{'/houseHistory/page/'+${currentPage+1} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Sledeća</a>
+            <span th:unless="${currentPage<numberOfPages}">Sledeća</span>
+            &nbsp;
+            <a th:if="${currentPage<numberOfPages}"
+               th:href="@{'/houseHistory/page/'+${numberOfPages} + '?sortField='+ ${sortField} + '&sortDirection='+ ${sortDirection}}">Poslednja</a>
+            <span th:unless="${currentPage<numberOfPages}">Poslednja</span>
+            &nbsp;
+
+
+        </div>
+        <div th:unless="${vacationHouseHistory==true}" class="row justify-content-center">
+            Ukupno: [[${numberOfElementsHouse}]] - Stranica [[${currentPageA}]] od [[${numberOfPagesHouse}]]
+            &nbsp; - &nbsp;
+
+            <a th:if="${currentPageH>1}"
+               th:href="@{'/reservations/page/' + ${currentPageB}+'/1/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Prva</a>
+            <span th:unless="${currentPageH>1}">Prva</span>
+            &nbsp;
+            <a th:if="${currentPageH>1}"
+               th:href="@{'/reservations/page/'+${currentPageB}+ '/'+${currentPageH-1}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Prethodna </a>
+            <span th:unless="${currentPageH>1}">prethodna</span>
+            &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, numberOfPagesHouse)}">
+                <a th:if="${i != currentPageH}"
+                   th:href="@{'/reservations/page/' + ${currentPageB} + '/'+${i}+ '/'+${currentPageA}  + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }"> [[${i}]] </a>
+                <span th:unless="${i != currentPageH}"> [[${i}]] </span> &nbsp; &nbsp;
+            </span>
+
+
+            <a th:if="${currentPageH<numberOfPagesHouse}"
+               th:href="@{'/reservations/page/'+${currentPageB} + '/'+${currentPageH+1}+ '/'+${currentPageA}  + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH} }">Sledeća</a>
+            <span th:unless="${currentPageH<numberOfPagesHouse}">Sledeća</span>
+            &nbsp;
+            <a th:if="${currentPageH<numberOfPagesHouse}"
+               th:href="@{'/reservations/page/'+${currentPageB} + '/'+${numberOfPagesHouse}+ '/'+${currentPageA} + '?sortFieldA='+ ${sortFieldA}+'&sortFieldB='+${sortFieldB}+ '&sortFieldH' + ${sortFieldH} + '&sortDirectionA='+ ${sortDirectionA} + '&sortDirectionB='+ ${sortDirectionB} + '&sortDirectionH='+ ${sortDirectionH}}">Poslednja </a>
+            <span th:unless="${currentPageH<numberOfPagesHouse}">Poslednja</span>
+            &nbsp;
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/boat', 'cancel_boat_modal', 'boat')"></div>
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/adventure', 'cancel_adventure_modal', 'adventure')"></div>
+<div th:insert="/fragments/modal/_modals::cancelReservation('/reservations/cancel/house', 'cancel_house_modal', 'house')"></div>
+
+<div th:insert="/fragments/modal/_modals::ratingModal('/boat/rate', 'rate_boat_modal','boat')"></div>
+<div th:insert="/fragments/modal/_modals::ratingModal('/house/rate', 'rate_house_modal','house')"></div>
+<div th:insert="/fragments/modal/_modals::ratingModal('/adventure/rate', 'rate_adventure_modal','adventure')"></div>
+
+    <div th:insert="/index.html :: scripts"></div>
+
+<script>
+    $('#cancel_boat_modal').on('show.bs.modal', function (e) {
+        let bbutton = $(e.relatedTarget)
+        let bentityId = bbutton.data('boat-reservation-id');
+        let bdateFrom = bbutton.data('boat-date-from');
+        let bdateEnd = bbutton.data('boat-date-end');
+        $(e.currentTarget).find('input[name="boatentityId"]').val(bentityId);
+        $(e.currentTarget).find('input[name="boatdateFrom"]').val(bdateFrom);
+        $(e.currentTarget).find('input[name="boatdateEnd"]').val(bdateEnd);
+    });
+    $('#cancel_boat_modal').on('hidden.bs.modal', function () {
+        let v = document.getElementById('boatcancel-error-div');
+        v.style.display = "none";
+        console.log("hello");
+    })
+
+    $('#cancel_adventure_modal').on('show.bs.modal', function (e) {
+        let abutton = $(e.relatedTarget)
+        let aentityId = abutton.data('adventure-reservation-id');
+        let adateFrom = abutton.data('adventure-date-from');
+        let adateEnd = abutton.data('adventure-date-end');
+        $(e.currentTarget).find('input[name="adventureentityId"]').val(aentityId);
+        $(e.currentTarget).find('input[name="adventuredateFrom"]').val(adateFrom);
+        $(e.currentTarget).find('input[name="adventuredateEnd"]').val(adateEnd);
+    });
+
+    $('#cancel_house_modal').on('show.bs.modal', function (e) {
+        let hbutton = $(e.relatedTarget)
+        let hentityId = hbutton.data('house-reservation-id');
+        let hdateFrom = hbutton.data('house-date-from');
+        let hdateEnd = hbutton.data('house-date-end');
+        $(e.currentTarget).find('input[name="houseentityId"]').val(hentityId);
+        $(e.currentTarget).find('input[name="housedateFrom"]').val(hdateFrom);
+        $(e.currentTarget).find('input[name="housedateEnd"]').val(hdateEnd);
+    });
+
+
+    $('#rate_boat_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('boat-id');
+        $(e.currentTarget).find('input[name="boatIdRate"]').val(entityId);
+
+    });
+
+    $('#rate_house_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('house-id');
+
+        $(e.currentTarget).find('input[name="houseIdRate"]').val(entityId);
+
+    });
+
+    $('#rate_adventure_modal').on('show.bs.modal', function (e) {
+        let button = $(e.relatedTarget)
+        let entityId = button.data('adventure-id');
+
+        $(e.currentTarget).find('input[name="adventureIdRate"]').val(entityId);
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

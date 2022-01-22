@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Avanture</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-comment"></span>
+                <h3 class="panel-title">
+                    Ocene</h3>
+
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+
+
+                    <li th:each="ar:${reviews}" class="list-group-item container-fluid ">
+                        <div class="row ">
+                            <div class="col-xs-2 col-md-1">
+                                <img src="/img/user.png" width="100" class="img-circle img-responsive w-100 " alt="" /></div>
+                            <div class="col-xs-10 col-md-11">
+                                <div>
+                                    <p th:text="'ocena '+${ar.rating}"></p>
+                                    <div class="mic-info">
+                                        Od: <a th:text="${ar.user.email+' '+ar.user.firstName+' '+ar.user.lastName} " href="#"></a>
+                                        <p th:text="${#temporals.format(ar.reviewTime, 'dd-MM-yyyy hh:mm ') +' za '+ar.adventure.name}"> </p>
+                                    </div>
+                                </div>
+                                <div class="comment-text">
+                                    <p th:text="${ar.content}"></p>
+                                </div>
+                                <div class="action">
+                                    <span>
+                                    <form class="col-auto justify-content-end d-inline " th:action="@{/admin/reviews/adventures}" th:method="post">
+                                        <input type="number" th:value="${ar.id}" name="reviewId" hidden>
+                                        <button type="submit" class="btn btn-success">Prihvati</button>
+                                    </form>
+                                    </span>
+                                    </button>
+                                    <span>
+                                    <form class="col-auto justify-content-end d-inline " th:action="@{/admin/reviews/adventures}" th:method="put">
+                                        <input type="number" th:value="${ar.id}" name="reviewId" hidden>
+                                        <button type="submit" class="btn btn-danger">Odbij</button>
+                                    </form>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

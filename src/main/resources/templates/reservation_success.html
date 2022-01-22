@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Uspešna rezervacija</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+
+<header th:insert="/index.html :: header"></header>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h3>Uspešna Rezervacija</h3>
+            <h2>Pogledajte sve vaše rezervacije</h2>
+            <a class="btn-outline-primary btn" th:href="@{/reservations}">Rezervacije</a>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+<header th:insert="/index.html :: header"> </header>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>Početna strana za korisnika</h3>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <p></p>
+    </div>
+<div class="border-top">
+
+    <div class="row">
+        <div class="col text-center"> <h4>Ponude</h4> </div>
+        </div>
+    <div class="row text-center ">
+
+        <div class="col-4 ">
+            <a th:href="@{/houses}" class="btn btn-dark btn-lg">Vikendice</a>
+        </div>
+        <div class="col-4 ">
+            <a th:href="@{/boats}" class="btn btn-dark btn-lg">Brodovi</a>
+        </div>
+        <div class="col-4  ">
+            <a th:href="@{/adventures}" class="btn btn-dark btn-lg ">Avanture</a>
+        </div>
+    </div>
+</div>
+    <p></p>
+    <div class="border-top">
+
+        <div class="row">
+            <div class="col text-center"> <h4>Istorija rezervacija</h4> </div>
+        </div>
+    <div class="row text-center ">
+
+        <div class="col-4 ">
+            <a th:href="@{/houseHistory}" class="btn btn-dark btn-lg">Vikendice</a>
+        </div>
+        <div class="col-4 ">
+            <a th:href="@{/boatHistory}" class="btn btn-dark btn-lg">Brodovi</a>
+        </div>
+        <div class="col-4 ">
+            <a th:href="@{/adventureHistory}" class="btn btn-dark btn-lg">Avanture</a>
+        </div>
+
+    </div>
+    </div>
+    <p></p>
+    <div class="border-top">
+
+        <div class="row">
+            <div class="col text-center"> <h4>Akcije</h4> </div>
+        </div>
+        <div class="row text-center ">
+
+            <div class="col-4 ">
+                <a th:href="@{/houses/discount}" class="btn btn-dark btn-lg">Vikendice</a>
+            </div>
+            <div class="col-4 ">
+                <a th:href="@{/boats/discount}" class="btn btn-dark btn-lg">Brodovi</a>
+            </div>
+            <div class="col-4 ">
+                <a th:href="@{/adventures/discount}" class="btn btn-dark btn-lg">Avanture</a>
+            </div>
+        </div>
+    </div>
+
+    <p></p>
+    <div class="border-top">
+        <div class="row">
+            <div class="col text-center"> <h4></h4> </div>
+        </div>
+    <div class="row text-center justify-content-center ">
+        <div class="col-3">
+            <a th:href="@{/reservations}" class="btn btn-dark btn-lg">Zakazano</a>
+        </div>
+        <div class="col-3 ">
+            <a th:href="@{/subscriptions}" class="btn btn-dark btn-lg">Pretplate</a>
+        </div>
+        <div class="col-3 ">
+            <a th:href="@{/}" class="btn btn-dark btn-lg">Žalbe</a>
+        </div>
+        <div class="col-3 ">
+            <a th:href="@{/}" class="btn btn-dark btn-lg">Penali</a>
+        </div>
+
+    </div>
+    </div>
+
+    </div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

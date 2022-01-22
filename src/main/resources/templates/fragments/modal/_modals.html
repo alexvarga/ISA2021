@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<!-- Modal -->
+<div th:fragment="modal(id)" class="modal fade" th:id="${id}" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--rezervacija-->
+<div th:fragment="reservationModal(action)">
+    <div class="modal" id="my_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Rezervacija</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form th:action="@{${action}}" method="post">
+                            <div>
+                                <p>Potvrda rezervacije: </p>
+                                <input hidden readonly type="text" name="entityId" value=""/>
+                               <p>Od<input class="btn" readonly type="text" name="dateFrom" value=""/></p>
+                                <p>Do <input class="btn" readonly type="text" name="dateEnd" value=""/></p>
+                                <button class="btn btn-primary" type="submit">Rezerviši</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Otkaži</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="cancelReservation(action, modalId, entity)">
+    <div class="modal" th:id="${modalId}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Otkazivanje rezervacije</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form th:id="${entity}+'cancelForm'" th:action="@{${action}}" method="post" th:onsubmit="return checkCancelDate([[${entity}]])" >
+                            <div>
+                               <div th:id="${entity}+'cancel-error-div'" style="display: none"> <p id="cancel-error" name="cancel-error"  class="alert alert-danger">Otazivanje moguće bar tri dana pre početka rezervacije.</p></div>
+                                <p>Da li ste sigurni da želite da otkažete ovu rezervaciju? Pravljenje nove rezervacije u ovom periodu će vam biti onemogućeno.</p>
+                                <input hidden readonly type="text" th:name="${entity}+'entityId'" value=""/>
+                                <input hidden readonly class="" type="text" th:id="${entity}+'dateFrom'" th:name="${entity}+'dateFrom'" value=""/>
+                                <input hidden readonly type="text" th:name="${entity}+'dateEnd'" value=""/>
+                                <button class="btn btn-danger" type="submit">Otkaži</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--rate entity-->
+<div th:fragment="ratingModal(action, modalId, entity)">
+    <div class="modal" th:id="${modalId}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal header</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form  th:action="@{${action}}" method="post">
+                            <div>
+                                <p>Revizija:</p>
+                                <div class="form-outline">
+                                    <input type="number" th:name="${entity}+'ratingValue'" min="1" max="5" step="0.5" />
+                                    <textarea class="form-control" id="textAreaExample1" name="content" rows="4"></textarea>
+                                </div>
+                                <input  hidden readonly type="number"  th:name="${entity}+'IdRate'" value=""/>
+<!--                                <input  type="text" name="content" value=""/>-->
+
+                                <button class="btn btn-primary" type="submit">Pošalji</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--request deletion-->
+<div th:fragment="deletionModal">
+    <div class="modal" th:id="deletionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Zahtev za brisanje naloga</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form  th:action="@{'/profile/request'}" method="post">
+                            <div>
+                                <p>Obrazloženje:</p>
+                                <div class="form-outline">
+
+                                    <textarea class="form-control" id="deletionTextArea" name="content" rows="4"></textarea>
+                                </div>
+                                <input  hidden readonly type="number"  th:name="deletionRequestText" value=""/>
+
+                                <button class="btn btn-primary" type="submit">Pošalji</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Zatvori</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--make complaint-->
+<div th:fragment="complaintModal(action, modalId, entity, entityId)">
+    <div class="modal" th:id="${modalId}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Žalba</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form  th:action="@{${action}}" method="post">
+                            <div>
+                                <p>Žalba:</p>
+                                <div class="form-outline">
+                                   <textarea class="form-control" id="textArea" name="complaintContent" rows="4"></textarea>
+                                </div>
+                                <input  hidden readonly type="number"  th:name="${entity}+'Id'" th:value="${entityId}"/>
+
+
+                                <button class="btn btn-primary" type="submit">Pošalji</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Zatvori</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

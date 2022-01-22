@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Novi administrator</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+
+</head>
+<body>
+
+<header th:insert="/index.html :: header"></header>
+
+
+
+<div class="container text-center">
+    <div><h3>Novi administrator</h3></div>
+    <form th:action="@{/admin/new_admin/}" method="post"
+          th:object="${user}"
+          style="max-width: 600px; margin: 0 auto"
+    >
+
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-form-label col-4" for="">Email</label>
+                <div class="col-8">
+                    <input id="email" type="email" class="form-control" th:field="*{email}" required minlength="6" maxlength="64" />
+                    <div id="email-error" class="alert alert-danger " th:if="${#fields.hasErrors('email')}" th:errors="*{email}">a</div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-4" for="">Lozinka</label>
+                <div class="col-8">
+                    <input id="password" type="password" class="form-control" th:field="*{password}" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-4" for="">Lozinka potvrda</label>
+                <div class="col-8">
+                    <input id="password-confirm" type="password" th:name="password-confirm" class="form-control" required />
+                    <div id="password-error" class="alert alert-danger " th:if="${#fields.hasErrors('password')}" th:errors="*{password}">a</div>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-form-label col-4" for="">Ime</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" th:field="*{firstName}" required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-4" for="">Prezime</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" th:field="*{lastName}" required/>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Dodaj administratora</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>

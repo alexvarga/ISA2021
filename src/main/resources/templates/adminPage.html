@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html th:fragment="topside" lang="en" xmlns:th="http://www.thymeleaf.org"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator - početna</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<body>
+<header th:insert="/index.html :: header"></header>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Administrator početna</h2>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <p></p>
+    </div>
+    <div class="">
+
+
+    </div>
+
+    <div class="">
+
+        <div class="">
+
+            <div class="row text-center ">
+                <div class="col-3"><h3></h3></div>
+                <div class="col-3 ">
+                    <a th:href="@{/admin/instructors}" class="btn btn-dark btn-lg">Instruktori</a>
+                </div>
+                <div class="col-3 ">
+                    <a th:href="@{/admin/boatOwners}" class="btn btn-dark btn-lg">Vlasnici brodova</a>
+                </div>
+                <div class="col-3 ">
+                    <a th:href="@{/admin/houseOwners}" class="btn btn-dark btn-lg">Vlasnici vikendica</a>
+                </div>
+            </div>
+        </div>
+        <p></p>
+        <div class="row text-center justify-content-center ">
+            <div class="col-3">
+
+            </div>
+            <div class="col-3 ">
+                <a th:href="@{/admin/adventures}" class="btn btn-dark btn-lg">Avanture</a>
+            </div>
+            <div class="col-3 ">
+                <a th:href="@{/admin/boats}" class="btn btn-dark btn-lg">Brodovi</a>
+            </div>
+            <div class="col-3 ">
+                <a th:href="@{/admin/houses}" class="btn btn-dark btn-lg">Vikendice</a>
+            </div>
+
+        </div>
+
+        <p></p>
+
+        <div class="row text-center ">
+            <div class="col-3"><a th:href="@{/admin/deletion_requests}" class="btn btn-dark btn-lg">Klijenti</a></div>
+            <div class="col-3 ">
+                <a th:href="@{/profile/}" class="btn btn-dark btn-lg">Moji podaci</a>
+            </div>
+            <div class="col-3 ">
+                <a th:href="@{/admin/new_admin}" class="btn btn-dark btn-lg">Novi administrator</a>
+            </div>
+            <div class="col-3 ">
+                <a th:href="@{/admin/reports}" class="btn btn-dark btn-lg">Izveštaji</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:insert="/index.html :: scripts"></div>
+</body>
+</html>
